@@ -1,2 +1,2 @@
-:HL["/SpaceCam/_next/static/chunks/88779fe89ab61399.css","style"]
-0:{"buildId":"bljJ5DWrfzyJFbmsfSQs0","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+:HL["/SpaceCam/_next/static/chunks/8b54f0f08f1af034.css","style"]
+0:{"buildId":"9hww_WTgYqhK5Y-cKNxjC","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
