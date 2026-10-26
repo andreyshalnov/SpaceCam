@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[7863,["/SpaceCam/_next/static/chunks/62f36dd120793304.js","/SpaceCam/_next/static/chunks/d61d3b4b92652231.js"],"default"]
+2:I[7863,["/SpaceCam/_next/static/chunks/62f36dd120793304.js","/SpaceCam/_next/static/chunks/35bba81a9cfebc96.js"],"default"]
 3:I[97367,["/SpaceCam/_next/static/chunks/42879de7b8087bc9.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"8I568AqVuLRb8K6u9Juor","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/SpaceCam/_next/static/chunks/62f36dd120793304.js","async":true}],["$","script","script-1",{"src":"/SpaceCam/_next/static/chunks/d61d3b4b92652231.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"DsZUz01H_7sZwdOA_OptF","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/SpaceCam/_next/static/chunks/62f36dd120793304.js","async":true}],["$","script","script-1",{"src":"/SpaceCam/_next/static/chunks/35bba81a9cfebc96.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
