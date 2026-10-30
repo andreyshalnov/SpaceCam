@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[7863,["/SpaceCam/_next/static/chunks/f37d5bd82d84325e.js","/SpaceCam/_next/static/chunks/ece75271ee86550c.js","/SpaceCam/_next/static/chunks/f5edb310a5069656.js","/SpaceCam/_next/static/chunks/40554fbe2224f73e.js"],"default"]
-3:I[97367,["/SpaceCam/_next/static/chunks/42879de7b8087bc9.js"],"OutletBoundary"]
+2:I[77930,["/SpaceCam/_next/static/chunks/03f6171d1e0eab41.js","/SpaceCam/_next/static/chunks/df2080b7fb95676a.js","/SpaceCam/_next/static/chunks/df3ae3ca56794c86.js","/SpaceCam/_next/static/chunks/f644e49109bfd4dd.js"],"default"]
+3:I[40952,["/SpaceCam/_next/static/chunks/1884eba1b754a2ae.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"FDqyXOaNc_DTHedu9bMQy","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/SpaceCam/_next/static/chunks/f37d5bd82d84325e.js","async":true}],["$","script","script-1",{"src":"/SpaceCam/_next/static/chunks/ece75271ee86550c.js","async":true}],["$","script","script-2",{"src":"/SpaceCam/_next/static/chunks/f5edb310a5069656.js","async":true}],["$","script","script-3",{"src":"/SpaceCam/_next/static/chunks/40554fbe2224f73e.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"G8RYp1NOFN5fsBOnP98PN","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/SpaceCam/_next/static/chunks/03f6171d1e0eab41.js","async":true}],["$","script","script-1",{"src":"/SpaceCam/_next/static/chunks/df2080b7fb95676a.js","async":true}],["$","script","script-2",{"src":"/SpaceCam/_next/static/chunks/df3ae3ca56794c86.js","async":true}],["$","script","script-3",{"src":"/SpaceCam/_next/static/chunks/f644e49109bfd4dd.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null

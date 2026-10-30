@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
-2:I[39756,["/SpaceCam/_next/static/chunks/42879de7b8087bc9.js"],"default"]
-3:I[37457,["/SpaceCam/_next/static/chunks/42879de7b8087bc9.js"],"default"]
-0:{"buildId":"FDqyXOaNc_DTHedu9bMQy","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+2:I[88176,["/SpaceCam/_next/static/chunks/1884eba1b754a2ae.js"],"default"]
+3:I[92042,["/SpaceCam/_next/static/chunks/1884eba1b754a2ae.js"],"default"]
+0:{"buildId":"G8RYp1NOFN5fsBOnP98PN","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
