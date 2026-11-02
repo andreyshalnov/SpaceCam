@@ -1,0 +1,249 @@
+{
+ "generated": "2026-11-02",
+ "tables": [
+  {
+   "table": "prices",
+   "exists": false,
+   "err": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column prices.id does not exist\"}"
+  },
+  {
+   "table": "price_types",
+   "exists": true,
+   "cols_ok": [
+    "id"
+   ],
+   "note": "[{\"id\":2}]"
+  },
+  {
+   "table": "stock",
+   "exists": false,
+   "err": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column stock.id does not exist\"}"
+  },
+  {
+   "table": "warehouses",
+   "exists": true,
+   "cols_ok": [
+    "id"
+   ],
+   "note": "[]"
+  },
+  {
+   "table": "user_price_types",
+   "exists": false,
+   "err": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column user_price_types.id does not exist\"}"
+  },
+  {
+   "table": "profiles",
+   "exists": true,
+   "cols_ok": [
+    "id"
+   ],
+   "note": "[]"
+  },
+  {
+   "table": "projects",
+   "exists": true,
+   "cols_ok": [
+    "id"
+   ],
+   "note": "[]"
+  },
+  {
+   "table": "news",
+   "exists": true,
+   "cols_ok": [
+    "id"
+   ],
+   "note": "[{\"id\":1}]"
+  },
+  {
+   "table": "stock_snapshots",
+   "exists": false,
+   "err": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column stock_snapshots.id does not exist\"}"
+  },
+  {
+   "table": "sc_stock_backup_20261020",
+   "exists": false,
+   "err": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column sc_stock_backup_20261020.id does not exist\"}"
+  },
+  {
+   "table": "sc_popular_products",
+   "exists": false,
+   "err": "{\"code\":\"42703\",\"details\":null,\"hint\":null,\"message\":\"column sc_popular_products.id does not exist\"}"
+  }
+ ],
+ "columns": [
+  {
+   "col": "prices.sku",
+   "exists": true
+  },
+  {
+   "col": "prices.price_type_id",
+   "exists": true
+  },
+  {
+   "col": "prices.price",
+   "exists": true
+  },
+  {
+   "col": "prices.updated_at",
+   "exists": true
+  },
+  {
+   "col": "price_types.id",
+   "exists": true
+  },
+  {
+   "col": "price_types.name",
+   "exists": true
+  },
+  {
+   "col": "price_types.code",
+   "exists": true
+  },
+  {
+   "col": "price_types.sort_order",
+   "exists": true
+  },
+  {
+   "col": "stock.sku",
+   "exists": true
+  },
+  {
+   "col": "stock.warehouse_id",
+   "exists": true
+  },
+  {
+   "col": "stock.qty",
+   "exists": true
+  },
+  {
+   "col": "stock.updated_at",
+   "exists": true
+  },
+  {
+   "col": "warehouses.id",
+   "exists": true
+  },
+  {
+   "col": "warehouses.name",
+   "exists": true
+  },
+  {
+   "col": "warehouses.sort_order",
+   "exists": true
+  },
+  {
+   "col": "warehouses.code",
+   "exists": true
+  },
+  {
+   "col": "user_price_types.user_id",
+   "exists": true
+  },
+  {
+   "col": "user_price_types.price_type_id",
+   "exists": true
+  },
+  {
+   "col": "profiles.id",
+   "exists": true
+  },
+  {
+   "col": "profiles.email",
+   "exists": true
+  },
+  {
+   "col": "profiles.role",
+   "exists": true
+  },
+  {
+   "col": "profiles.company",
+   "exists": true
+  },
+  {
+   "col": "profiles.see_availability",
+   "exists": true
+  },
+  {
+   "col": "projects.id",
+   "exists": true
+  },
+  {
+   "col": "projects.owner_id",
+   "exists": true
+  },
+  {
+   "col": "projects.form",
+   "exists": true
+  },
+  {
+   "col": "projects.status",
+   "exists": false
+  },
+  {
+   "col": "projects.created_at",
+   "exists": true
+  },
+  {
+   "col": "projects.updated_at",
+   "exists": true
+  },
+  {
+   "col": "news.id",
+   "exists": true
+  },
+  {
+   "col": "news.news_date",
+   "exists": true
+  },
+  {
+   "col": "news.body",
+   "exists": true
+  },
+  {
+   "col": "news.published",
+   "exists": true
+  },
+  {
+   "col": "news.created_at",
+   "exists": true
+  }
+ ],
+ "rpcs": {
+  "sc_is_admin": {
+   "http": 200,
+   "resp": "false"
+  },
+  "sc_can_see_stock": {
+   "http": 200,
+   "resp": "false"
+  },
+  "sc_allowed_price_types": {
+   "http": 200,
+   "resp": "[1]"
+  },
+  "is_admin": {
+   "http": 200,
+   "resp": "false"
+  }
+ },
+ "counts": {
+  "news_visible_to_anon": "?",
+  "news_published": "?"
+ },
+ "news_public_dump": [
+  {
+   "id": 1,
+   "news_date": "2026-10-20",
+   "body": "Введен в строй портал, посвященный бренду SpaceCam и R-Lock. Здесь будут все данные о продуктах, ценах, сроках, механизм защиты проекта. Проект находится в стадии бета-тестирования.",
+   "published": true
+  },
+  {
+   "id": 2,
+   "news_date": "2026-10-20",
+   "body": "Зарегистрируйтесь на портале или получите учетную запись у администратора, чтобы получить доступ к расширенной информации о продуктах и возможности регистрировать проекты.",
+   "published": true
+  }
+ ]
+}
