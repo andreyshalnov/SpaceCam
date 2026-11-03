@@ -14,7 +14,9 @@ os.makedirs(OUT, exist_ok=True)
 
 TABLES = ["prices", "price_types", "stock", "warehouses", "user_price_types",
           "profiles", "projects", "news", "stock_snapshots",
-          "sc_stock_backup_20261020", "sc_popular_products"]
+          "sc_stock_backup_20261020", "sc_popular_products",
+          "object_types", "objects", "object_participants",
+          "object_specs", "object_spec_items", "app_settings"]
 
 def get(url, headers=None):
     h = {"apikey": KEY, "Authorization": f"Bearer {KEY}"}
