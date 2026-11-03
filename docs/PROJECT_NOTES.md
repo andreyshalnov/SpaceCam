@@ -114,6 +114,10 @@ INSERT в `news` → 42501; UPDATE → 0 строк. Цены — по `sc_allow
 
 - Полный дамп данных (prices/stock/warehouses/profiles/projects) требует service-ключа:
   скрипт `docs/backup/backup_supabase_full.py` (запуск: `SUPABASE_SERVICE_KEY=… python3 backup_supabase_full.py [dir]`).
+- Частичный бэкап anon-ключом от 03.11.2026: `docs/backup/anon_backup_20261103/` —
+  prices 207 (только тип 1 «95 Розница»), price_types 13, news 2, sc_popular_products 122;
+  stock/warehouses/profiles/projects/stock_snapshots — RLS отдаёт 0 (см. `_summary.json`).
+  Повтор: скрипт песочницы `backup_supabase_anon.py <dir> [ключ]` (постранично, со статусами).
 - История остатков (5 срезов) в БД появляется после запуска SQL-скрипта владельцем
   (Supabase SQL Editor) либо после загрузки 5 xlsx-файлов через «Сверку наличия».
 - При пересборке сайта из исходников перенести: пагинацию eK/eQ, eV/eF2, блок новостей,

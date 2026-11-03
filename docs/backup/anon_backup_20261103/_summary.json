@@ -1,0 +1,62 @@
+{
+ "generated": "2026-11-03T08:29:47",
+ "key_kind": "anon/publishable (RLS ограничивает выборку)",
+ "base": "https://kgdrtrfwsyixprvuzdqj.supabase.co/rest/v1",
+ "tables": {
+  "prices": {
+   "status": "ok",
+   "rows_saved": 207,
+   "server_total": "207"
+  },
+  "price_types": {
+   "status": "ok",
+   "rows_saved": 13,
+   "server_total": "13"
+  },
+  "stock": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "warehouses": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "user_price_types": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "profiles": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "projects": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "news": {
+   "status": "ok",
+   "rows_saved": 2,
+   "server_total": "2"
+  },
+  "stock_snapshots": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "sc_stock_backup_20261020": {
+   "status": "ok",
+   "rows_saved": 0,
+   "server_total": "0"
+  },
+  "sc_popular_products": {
+   "status": "ok",
+   "rows_saved": 122,
+   "server_total": "122"
+  }
+ }
+}

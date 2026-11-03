@@ -1,0 +1,490 @@
+[
+ {
+  "sku": "rl-em350-l0w",
+  "sold": 3
+ },
+ {
+  "sku": "sc-int-d008-1-msb",
+  "sold": 1
+ },
+ {
+  "sku": "sc-l3-48gp-680-6xg-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-eml280-l0s",
+  "sold": 23
+ },
+ {
+  "sku": "rl-em350-l0s",
+  "sold": 86
+ },
+ {
+  "sku": "rl-em500-l0g",
+  "sold": 9
+ },
+ {
+  "sku": "rl-br280-ug",
+  "sold": 0
+ },
+ {
+  "sku": "sc-16gp-285-2g-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br280-zw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-ac009-msb",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em500-lsg",
+  "sold": 4
+ },
+ {
+  "sku": "rl-em180-l0s",
+  "sold": 75
+ },
+ {
+  "sku": "sc-i-l2-8gp-240bt-2g-a",
+  "sold": 10
+ },
+ {
+  "sku": "sc-l3-16g-8g-4gx-a",
+  "sold": 1
+ },
+ {
+  "sku": "rl-br180-uw",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br500-lw",
+  "sold": 2
+ },
+ {
+  "sku": "sc-i-l2-16gp-380-4g-a",
+  "sold": 0
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm40-12701330-2",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br180-zg",
+  "sold": 0
+ },
+ {
+  "sku": "sc-l2-24g-4g-a",
+  "sold": 9
+ },
+ {
+  "sku": "rl-dcm-en3-00s",
+  "sold": 58
+ },
+ {
+  "sku": "sc-int-d100-2-msb",
+  "sold": 3
+ },
+ {
+  "sku": "rl-em180-lss",
+  "sold": 13
+ },
+ {
+  "sku": "sc-4gp-68-2g-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br280-uw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-4p-68-2-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em1200",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br350-ug",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em500-lss",
+  "sold": 3
+ },
+ {
+  "sku": "sc-l2-8g-2g-a",
+  "sold": 1
+ },
+ {
+  "sku": "sc-int-d004-1-mfb",
+  "sold": 0
+ },
+ {
+  "sku": "rl-eml500-l0s",
+  "sold": 4
+ },
+ {
+  "sku": "sc-i-8gp-240-2g-a",
+  "sold": 5
+ },
+ {
+  "sku": "rl-br280-zg",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em180-00g",
+  "sold": 2
+ },
+ {
+  "sku": "rl-br350-us",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-d008-1-mfb",
+  "sold": 0
+ },
+ {
+  "sku": "sc-i-l2-4gp-120-2g-a",
+  "sold": 20
+ },
+ {
+  "sku": "sc-int-ac003-rfs",
+  "sold": 0
+ },
+ {
+  "sku": "sc-l2-48gp-680-6xg-a",
+  "sold": 9
+ },
+ {
+  "sku": "sc-int-ac013-dsb",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-h11-lw",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br280-us",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em350-lsg",
+  "sold": 23
+ },
+ {
+  "sku": "rl-em280-lss",
+  "sold": 38
+ },
+ {
+  "sku": "rl-dcm-en2-00s",
+  "sold": 1
+ },
+ {
+  "sku": "rl-em500-lsw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-sfp-i-g-2lc-sm10-1310",
+  "sold": 46
+ },
+ {
+  "sku": "rl-br500-ls",
+  "sold": 10
+ },
+ {
+  "sku": "rl-em280-lsg",
+  "sold": 2
+ },
+ {
+  "sku": "rl-br500-zw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-g010-1-axb",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-v010-1-awb",
+  "sold": 7
+ },
+ {
+  "sku": "rl-br180-zw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-ac002-rss",
+  "sold": 0
+ },
+ {
+  "sku": "sc-i-l2-8gp-240-2g-a",
+  "sold": 19
+ },
+ {
+  "sku": "rl-br350-zg",
+  "sold": 14
+ },
+ {
+  "sku": "sc-l2-24gp-285-4g-a",
+  "sold": 4
+ },
+ {
+  "sku": "rl-em500-l0w",
+  "sold": 5
+ },
+ {
+  "sku": "rl-em280-l0g",
+  "sold": 5
+ },
+ {
+  "sku": "sc-8gp-120-2g-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br350-ls",
+  "sold": 83
+ },
+ {
+  "sku": "rl-em350-lss",
+  "sold": 64
+ },
+ {
+  "sku": "rl-br350-zw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-sfp-i-g-sc-sm3-13101550-2",
+  "sold": 4
+ },
+ {
+  "sku": "sc-int-ac008-msw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-l2-24gp-385-4g-a",
+  "sold": 25
+ },
+ {
+  "sku": "rl-br350-zs",
+  "sold": 3
+ },
+ {
+  "sku": "rl-br350-uw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-sfp-g-rj45",
+  "sold": 2
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm20-13301270-2",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em280-l0s",
+  "sold": 27
+ },
+ {
+  "sku": "rl-em500-l0s",
+  "sold": 0
+ },
+ {
+  "sku": "sc-sfp-g-2lc-sm20-1310",
+  "sold": 40
+ },
+ {
+  "sku": "rl-br180-ug",
+  "sold": 0
+ },
+ {
+  "sku": "sc-l2-8gp-120-2g-a",
+  "sold": 9
+ },
+ {
+  "sku": "sc-int-ac012-dss",
+  "sold": 4
+ },
+ {
+  "sku": "sc-i-l2-16gp-380bt-4g-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em350-l0g",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-h12-lw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-i-4g-120-1ght",
+  "sold": 0
+ },
+ {
+  "sku": "sc-l2-16g-4g-a",
+  "sold": 1
+ },
+ {
+  "sku": "sc-int-ac011-dsb",
+  "sold": 0
+ },
+ {
+  "sku": "sc-16p-285-2g-1g-a",
+  "sold": 2
+ },
+ {
+  "sku": "sc-sfp-g-lc-sm3-13101550-2",
+  "sold": 14
+ },
+ {
+  "sku": "rl-br500-lg",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br180-lw",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br280-lcs",
+  "sold": 1
+ },
+ {
+  "sku": "sc-sfp-i-g-sc-sm20-13101550-2",
+  "sold": 1
+ },
+ {
+  "sku": "rl-br280-zs",
+  "sold": 1
+ },
+ {
+  "sku": "rl-br180-lg",
+  "sold": 6
+ },
+ {
+  "sku": "rl-br280-ls",
+  "sold": 49
+ },
+ {
+  "sku": "rl-dcm-en5-00s",
+  "sold": 34
+ },
+ {
+  "sku": "rl-eml350-l0s",
+  "sold": 44
+ },
+ {
+  "sku": "rl-em280-l0w",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em280-lsw",
+  "sold": 3
+ },
+ {
+  "sku": "sc-int-d004-2-msb",
+  "sold": 14
+ },
+ {
+  "sku": "sc-24p-285-2g-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em180-0sg",
+  "sold": 0
+ },
+ {
+  "sku": "sc-sfp-g-lc-sm20-13101550-2",
+  "sold": 1
+ },
+ {
+  "sku": "rl-br180-zs",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-d100-1-msb",
+  "sold": 8
+ },
+ {
+  "sku": "sc-l3-48g-6gx-a",
+  "sold": 3
+ },
+ {
+  "sku": "sc-int-d004-2-mfb",
+  "sold": 0
+ },
+ {
+  "sku": "sc-int-v007-2-lwb",
+  "sold": 2
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm10-13301270-2",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br280-lw",
+  "sold": 2
+ },
+ {
+  "sku": "rl-em180-0sw",
+  "sold": 0
+ },
+ {
+  "sku": "sc-box-8gp-240-2g-ups-a",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br350-lw",
+  "sold": 6
+ },
+ {
+  "sku": "rl-br500-zg",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br350-lcs",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br280-lg",
+  "sold": 1
+ },
+ {
+  "sku": "sc-int-d004-1-msb",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br180-us",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br180-ls",
+  "sold": 20
+ },
+ {
+  "sku": "sc-sfp-10g-2lc-mm03-850",
+  "sold": 16
+ },
+ {
+  "sku": "rl-dcm-en4-00s",
+  "sold": 8
+ },
+ {
+  "sku": "rl-em350-lsw",
+  "sold": 0
+ },
+ {
+  "sku": "rl-em180-00w",
+  "sold": 0
+ },
+ {
+  "sku": "rl-br500-zs",
+  "sold": 12
+ },
+ {
+  "sku": "rl-br350-lg",
+  "sold": 14
+ }
+]

@@ -1,0 +1,1244 @@
+[
+ {
+  "sku": "rl-br180-lg",
+  "price_type_id": 1,
+  "price": 1122.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-ls",
+  "price_type_id": 1,
+  "price": 622.2,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-lw",
+  "price_type_id": 1,
+  "price": 1101.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-ug",
+  "price_type_id": 1,
+  "price": 1978.8,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-us",
+  "price_type_id": 1,
+  "price": 714.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-uw",
+  "price_type_id": 1,
+  "price": 1978.8,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-zg",
+  "price_type_id": 1,
+  "price": 2754.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-zs",
+  "price_type_id": 1,
+  "price": 918.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br180-zw",
+  "price_type_id": 1,
+  "price": 2754.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-lcs",
+  "price_type_id": 1,
+  "price": 1836.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-lg",
+  "price_type_id": 1,
+  "price": 1530.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-ls",
+  "price_type_id": 1,
+  "price": 918.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-lw",
+  "price_type_id": 1,
+  "price": 1530.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-ug",
+  "price_type_id": 1,
+  "price": 1836.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-us",
+  "price_type_id": 1,
+  "price": 1009.8,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-uw",
+  "price_type_id": 1,
+  "price": 1836.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-zg",
+  "price_type_id": 1,
+  "price": 2346.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-zs",
+  "price_type_id": 1,
+  "price": 1581.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br280-zw",
+  "price_type_id": 1,
+  "price": 2346.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-lcs",
+  "price_type_id": 1,
+  "price": 2140.98,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-lg",
+  "price_type_id": 1,
+  "price": 1632.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-ls",
+  "price_type_id": 1,
+  "price": 1122.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-lw",
+  "price_type_id": 1,
+  "price": 1632.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-ug",
+  "price_type_id": 1,
+  "price": 2040.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-us",
+  "price_type_id": 1,
+  "price": 1530.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-uw",
+  "price_type_id": 1,
+  "price": 2040.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-zg",
+  "price_type_id": 1,
+  "price": 2550.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-zs",
+  "price_type_id": 1,
+  "price": 1530.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br350-zw",
+  "price_type_id": 1,
+  "price": 2550.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br500-lg",
+  "price_type_id": 1,
+  "price": 2244.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br500-ls",
+  "price_type_id": 1,
+  "price": 1336.2,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br500-lw",
+  "price_type_id": 1,
+  "price": 2244.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br500-zg",
+  "price_type_id": 1,
+  "price": 3111.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br500-zs",
+  "price_type_id": 1,
+  "price": 1938.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-br500-zw",
+  "price_type_id": 1,
+  "price": 3774.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-dcm-en2-00s",
+  "price_type_id": 1,
+  "price": 2142.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-dcm-en3-00s",
+  "price_type_id": 1,
+  "price": 2448.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-dcm-en4-00s",
+  "price_type_id": 1,
+  "price": 3060.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-dcm-en5-00s",
+  "price_type_id": 1,
+  "price": 4284.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em1200",
+  "price_type_id": 1,
+  "price": 8670.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em180-00g",
+  "price_type_id": 1,
+  "price": 6222.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em180-00w",
+  "price_type_id": 1,
+  "price": 6222.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em180-0sg",
+  "price_type_id": 1,
+  "price": 7017.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em180-0sw",
+  "price_type_id": 1,
+  "price": 7017.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em180-l0s",
+  "price_type_id": 1,
+  "price": 2417.4,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em180-lss",
+  "price_type_id": 1,
+  "price": 2662.2,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em280-l0g",
+  "price_type_id": 1,
+  "price": 5253.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em280-l0s",
+  "price_type_id": 1,
+  "price": 2774.4,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em280-l0w",
+  "price_type_id": 1,
+  "price": 5253.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em280-lsg",
+  "price_type_id": 1,
+  "price": 7782.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em280-lss",
+  "price_type_id": 1,
+  "price": 3417.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em280-lsw",
+  "price_type_id": 1,
+  "price": 7782.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em350-l0g",
+  "price_type_id": 1,
+  "price": 8874.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em350-l0s",
+  "price_type_id": 1,
+  "price": 4151.4,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em350-l0w",
+  "price_type_id": 1,
+  "price": 8874.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em350-lsg",
+  "price_type_id": 1,
+  "price": 9486.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em350-lss",
+  "price_type_id": 1,
+  "price": 4386.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em350-lsw",
+  "price_type_id": 1,
+  "price": 9486.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em500-l0g",
+  "price_type_id": 1,
+  "price": 9975.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em500-l0s",
+  "price_type_id": 1,
+  "price": 6526.98,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em500-l0w",
+  "price_type_id": 1,
+  "price": 9975.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em500-lsg",
+  "price_type_id": 1,
+  "price": 11148.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em500-lss",
+  "price_type_id": 1,
+  "price": 6832.98,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-em500-lsw",
+  "price_type_id": 1,
+  "price": 11148.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-eml280-l0s",
+  "price_type_id": 1,
+  "price": 3651.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-eml350-l0s",
+  "price_type_id": 1,
+  "price": 4794.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "rl-eml500-l0s",
+  "price_type_id": 1,
+  "price": 7344.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-16gp-285-2g-a",
+  "price_type_id": 1,
+  "price": 30517.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-16p-285-2g-1g-a",
+  "price_type_id": 1,
+  "price": 16900.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-24p-285-2g-a",
+  "price_type_id": 1,
+  "price": 26234.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-4gp-68-2g-a",
+  "price_type_id": 1,
+  "price": 6290.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-4p-68-2-a",
+  "price_type_id": 1,
+  "price": 5500.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-5g-a",
+  "price_type_id": 1,
+  "price": 2734.91,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-8g-1xg-a",
+  "price_type_id": 1,
+  "price": 14826.07,
+  "updated_at": "2026-11-02T09:42:08.966972+00:00"
+ },
+ {
+  "sku": "sc-8g-a",
+  "price_type_id": 1,
+  "price": 4786.08,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-8gp-120-2g-a",
+  "price_type_id": 1,
+  "price": 9290.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-8p-120-2g-a",
+  "price_type_id": 1,
+  "price": 9996.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-6u-l2-24gp-385-4g-ups-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-box-8gp-240-2g-a",
+  "price_type_id": 1,
+  "price": 129000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-8gp-240-2g-ups-a",
+  "price_type_id": 1,
+  "price": 132000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-8gp-240-2g-ups-b",
+  "price_type_id": 1,
+  "price": 132000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-8gp-240-2g-ups-g",
+  "price_type_id": 1,
+  "price": 161874.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-9u-l2-48gp-680-6xg-ups-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-box-9u-l3-48gp-680-6xg-ups-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-box-l2-16gp-380-4g-ups-a",
+  "price_type_id": 1,
+  "price": 165000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-16gp-480-2g-ups-a",
+  "price_type_id": 1,
+  "price": 170000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-4gp-120-2g-a",
+  "price_type_id": 1,
+  "price": 153918.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-4gp-120-2g-ups-a",
+  "price_type_id": 1,
+  "price": 130000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-4gp-120-2g-ups-b",
+  "price_type_id": 1,
+  "price": 130000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-4gp-120-2g-ups-f",
+  "price_type_id": 1,
+  "price": 184620.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-4gp-120-2g-ups-g",
+  "price_type_id": 1,
+  "price": 173196.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-a",
+  "price_type_id": 1,
+  "price": 132000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-a",
+  "price_type_id": 1,
+  "price": 135000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-b",
+  "price_type_id": 1,
+  "price": 135000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-c",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-f",
+  "price_type_id": 1,
+  "price": 204000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-g",
+  "price_type_id": 1,
+  "price": 184722.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-l",
+  "price_type_id": 1,
+  "price": 181560.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-m",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-240-2g-ups-r",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-box-l2-8gp-300-4g-ups-a",
+  "price_type_id": 1,
+  "price": 240000.0,
+  "updated_at": "2026-11-02T09:42:08.966972+00:00"
+ },
+ {
+  "sku": "sc-i-16gp-360-2g-a",
+  "price_type_id": 1,
+  "price": 76354.25,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-4g-120-1g-ht",
+  "price_type_id": 1,
+  "price": 15526.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-4g-120-1ght",
+  "price_type_id": 1,
+  "price": 15526.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-i-4g-2g-a",
+  "price_type_id": 1,
+  "price": 27428.22,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-i-4gp-120-2g-a",
+  "price_type_id": 1,
+  "price": 28868.45,
+  "updated_at": "2026-11-02T09:42:08.966972+00:00"
+ },
+ {
+  "sku": "sc-i-8g-2g-a",
+  "price_type_id": 1,
+  "price": 29652.13,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-i-8gp-240-2g-a",
+  "price_type_id": 1,
+  "price": 19892.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-l2-16g-2g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-16g-4g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-16gp-380-2g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-16gp-380-4g-a",
+  "price_type_id": 1,
+  "price": 80000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-l2-16gp-380-4ght",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-16gp-380bt-4g-a",
+  "price_type_id": 1,
+  "price": 85000.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-l2-24g-4g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-24gp-385-4g-a",
+  "price_type_id": 1,
+  "price": 163086.74,
+  "updated_at": "2026-11-02T09:42:08.966972+00:00"
+ },
+ {
+  "sku": "sc-i-l2-2g-1g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-2gp-60-1g-a",
+  "price_type_id": 1,
+  "price": 29188.82,
+  "updated_at": "2026-11-02T09:42:08.966972+00:00"
+ },
+ {
+  "sku": "sc-i-l2-4g-2g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-4gp-120-2g-a",
+  "price_type_id": 1,
+  "price": 30919.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-l2-4gp-120bt-2g-a",
+  "price_type_id": 1,
+  "price": 64194.31,
+  "updated_at": "2026-11-02T09:42:08.966972+00:00"
+ },
+ {
+  "sku": "sc-i-l2-8g-2g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-i-l2-8gp-240-2g-a",
+  "price_type_id": 1,
+  "price": 36756.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-l2-8gp-240bt-2g-a",
+  "price_type_id": 1,
+  "price": 41945.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-i-l2-8gp-240bt-4g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-int-ac001-rss",
+  "price_type_id": 1,
+  "price": 19857.36,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac002-rss",
+  "price_type_id": 1,
+  "price": 19682.94,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac003-rfs",
+  "price_type_id": 1,
+  "price": 7732.62,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac004-bfb",
+  "price_type_id": 1,
+  "price": 4609.38,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac005-bfb",
+  "price_type_id": 1,
+  "price": 4255.44,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac006-bsb",
+  "price_type_id": 1,
+  "price": 3900.48,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac007-bfb",
+  "price_type_id": 1,
+  "price": 4964.34,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac008-msw",
+  "price_type_id": 1,
+  "price": 5283.6,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac009-msb",
+  "price_type_id": 1,
+  "price": 44990.16,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac010-rsb",
+  "price_type_id": 1,
+  "price": 7092.06,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac011-dsb",
+  "price_type_id": 1,
+  "price": 903.72,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac012-dss",
+  "price_type_id": 1,
+  "price": 6327.06,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-ac099",
+  "price_type_id": 1,
+  "price": 1718.7,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d000-1-rfb",
+  "price_type_id": 1,
+  "price": 21366.96,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d000-1-rsb",
+  "price_type_id": 1,
+  "price": 20241.9,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d000-2-rfb",
+  "price_type_id": 1,
+  "price": 23241.72,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d000-2-rsb",
+  "price_type_id": 1,
+  "price": 22116.66,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d000-3-rfb",
+  "price_type_id": 1,
+  "price": 27177.9,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d000-3-rsb",
+  "price_type_id": 1,
+  "price": 26052.84,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d004-1-mfb",
+  "price_type_id": 1,
+  "price": 69919.98,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d004-1-msb",
+  "price_type_id": 1,
+  "price": 69167.22,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d004-2-mfb",
+  "price_type_id": 1,
+  "price": 47450.4,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d004-2-msb",
+  "price_type_id": 1,
+  "price": 46697.64,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d008-1-mfb",
+  "price_type_id": 1,
+  "price": 136175.1,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d008-1-msb",
+  "price_type_id": 1,
+  "price": 136175.1,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d100-1-msb",
+  "price_type_id": 1,
+  "price": 14587.02,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d100-2-msb",
+  "price_type_id": 1,
+  "price": 12229.8,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d100-3-mfb",
+  "price_type_id": 1,
+  "price": 17983.62,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d100-3-msb",
+  "price_type_id": 1,
+  "price": 14944.02,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d100-4-mfb",
+  "price_type_id": 1,
+  "price": 26240.52,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d100-4-msb",
+  "price_type_id": 1,
+  "price": 21985.08,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d200-1-mfb",
+  "price_type_id": 1,
+  "price": 26595.48,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d200-1-msb",
+  "price_type_id": 1,
+  "price": 22340.04,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d500-1-mfb",
+  "price_type_id": 1,
+  "price": 28013.28,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-d500-1-msb",
+  "price_type_id": 1,
+  "price": 22693.98,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-g010-1-axb",
+  "price_type_id": 1,
+  "price": 64020.3,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h01-lb",
+  "price_type_id": 1,
+  "price": 5744.64,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h01-lw",
+  "price_type_id": 1,
+  "price": 5744.64,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h02-lb",
+  "price_type_id": 1,
+  "price": 6585.12,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h02-lw",
+  "price_type_id": 1,
+  "price": 6585.12,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h11-lb",
+  "price_type_id": 1,
+  "price": 6839.1,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h11-lw",
+  "price_type_id": 1,
+  "price": 6778.92,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h12-lb",
+  "price_type_id": 1,
+  "price": 8104.92,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-h12-lw",
+  "price_type_id": 1,
+  "price": 8033.52,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v007-1-anb",
+  "price_type_id": 1,
+  "price": 23403.9,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v007-1-awb",
+  "price_type_id": 1,
+  "price": 25176.66,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v007-2-lwb",
+  "price_type_id": 1,
+  "price": 14762.46,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v007-3-lnb",
+  "price_type_id": 1,
+  "price": 12600.06,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v010-1-anb",
+  "price_type_id": 1,
+  "price": 53544.9,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v010-1-awb",
+  "price_type_id": 1,
+  "price": 51517.14,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-int-v010-1-axb",
+  "price_type_id": 1,
+  "price": 56735.46,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-16g-4g-a",
+  "price_type_id": 1,
+  "price": 28911.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-16gp-285-4g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-l2-16gp-285bt-4g-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-l2-24g-4g-a",
+  "price_type_id": 1,
+  "price": 32123.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-24gp-285-4g-a",
+  "price_type_id": 1,
+  "price": 42773.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-24gp-385-4g-a",
+  "price_type_id": 1,
+  "price": 45240.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-48gp-680-6xg-a",
+  "price_type_id": 1,
+  "price": 92651.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-8g-2g-a",
+  "price_type_id": 1,
+  "price": 17132.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l2-8gp-120-2g-a",
+  "price_type_id": 1,
+  "price": 19274.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l3-16g-8g-4gx-a",
+  "price_type_id": 1,
+  "price": 82985.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l3-48g-6gx-a",
+  "price_type_id": 1,
+  "price": 82985.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l3-48gp-680-6xg-a",
+  "price_type_id": 1,
+  "price": 97915.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-l3-8gx-a",
+  "price_type_id": 1,
+  "price": 0.0,
+  "updated_at": "2026-11-02T10:18:38.521+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-2lc-mm03-850",
+  "price_type_id": 1,
+  "price": 1151.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm10-1330-1270-2",
+  "price_type_id": 1,
+  "price": 6692.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm10-13301270-2",
+  "price_type_id": 1,
+  "price": 6692.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm20-1330-1270-2",
+  "price_type_id": 1,
+  "price": 6692.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm20-13301270-2",
+  "price_type_id": 1,
+  "price": 6692.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm40-1270-1330-2",
+  "price_type_id": 1,
+  "price": 2677.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-10g-lc-sm40-12701330-2",
+  "price_type_id": 1,
+  "price": 2677.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-sfp-g-2lc-sm20-1310",
+  "price_type_id": 1,
+  "price": 2570.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-g-lc-sm20-1310-1550-2",
+  "price_type_id": 1,
+  "price": 9209.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-g-lc-sm20-13101550-2",
+  "price_type_id": 1,
+  "price": 9209.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-sfp-g-lc-sm3-1310-1550-2",
+  "price_type_id": 1,
+  "price": 2677.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-g-lc-sm3-13101550-2",
+  "price_type_id": 1,
+  "price": 2677.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-sfp-g-rj45",
+  "price_type_id": 1,
+  "price": 2409.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-i-g-2lc-sm10-1310",
+  "price_type_id": 1,
+  "price": 1338.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-i-g-sc-sm20-1310-1550-2",
+  "price_type_id": 1,
+  "price": 3293.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-i-g-sc-sm20-13101550-2",
+  "price_type_id": 1,
+  "price": 3293.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ },
+ {
+  "sku": "sc-sfp-i-g-sc-sm3-1310-1550-2",
+  "price_type_id": 1,
+  "price": 3105.0,
+  "updated_at": "2026-10-29T07:07:15.206869+00:00"
+ },
+ {
+  "sku": "sc-sfp-i-g-sc-sm3-13101550-2",
+  "price_type_id": 1,
+  "price": 3105.0,
+  "updated_at": "2026-11-02T10:51:57.119+00:00"
+ }
+]
