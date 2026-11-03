@@ -114,6 +114,11 @@ INSERT в `news` → 42501; UPDATE → 0 строк. Цены — по `sc_allow
 
 - Полный дамп данных (prices/stock/warehouses/profiles/projects) требует service-ключа:
   скрипт `docs/backup/backup_supabase_full.py` (запуск: `SUPABASE_SERVICE_KEY=… python3 backup_supabase_full.py [dir]`).
+  Выполнен 03.11.2026 (service-ключ владельца): prices 2487, price_types 13, stock 325,
+  warehouses 17, user_price_types 37, profiles 6, projects 0, news 2, stock_snapshots 1862
+  (6 дат: 173/346/338/337/334/334), sc_stock_backup_20261020 327, sc_popular_products 122
+  + OpenAPI. Дамп содержит email и внутренние цены → в публичный репо НЕ кладётся,
+  хранится у владельца; контрольная точка rl-em350-lss/Внуково/01.10.2026 = 337 шт — сходится.
 - Частичный бэкап anon-ключом от 03.11.2026: `docs/backup/anon_backup_20261103/` —
   prices 207 (только тип 1 «95 Розница»), price_types 13, news 2, sc_popular_products 122;
   stock/warehouses/profiles/projects/stock_snapshots — RLS отдаёт 0 (см. `_summary.json`).
