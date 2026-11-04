@@ -90,6 +90,7 @@ export function Header() {
   }, [])
 
   return (
+    <>
     <header
       className={`sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur transition-shadow ${
         scrolled ? 'border-[#e6e8de] shadow-sm' : 'border-transparent'
@@ -153,48 +154,52 @@ export function Header() {
           <Menu className="h-5 w-5" aria-hidden />
         </button>
       </div>
+    </header>
 
-      {open && (
-        <div className="fixed inset-0 z-[70] lg:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} aria-hidden />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] overflow-y-auto bg-white p-4 shadow-2xl">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-semibold text-[#111112]">Меню</span>
-              <button type="button" onClick={() => setOpen(false)} className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-[#f4f6ec]" aria-label="Закрыть меню">
-                <X className="h-5 w-5" aria-hidden />
-              </button>
-            </div>
-            <a href="#/about" onClick={() => setOpen(false)} className="block rounded-md p-2.5 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]">
-              О бренде
+    {/* Оверлей мобильного меню — ВНЕ <header>: backdrop-blur шапки создаёт containing block
+        для fixed-потомков, и «fixed inset-0» считался от 64-пиксельной шапки вместо вьюпорта —
+        меню схлопывалось в полоску поверх бургера и закрывалось его же крестиком (баг от 03.11). */}
+    {open && (
+      <div className="fixed inset-0 z-[70] lg:hidden">
+        <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} aria-hidden />
+        <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] overflow-y-auto bg-white p-4 shadow-2xl">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-semibold text-[#111112]">Меню</span>
+            <button type="button" onClick={() => setOpen(false)} className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-[#f4f6ec]" aria-label="Закрыть меню">
+              <X className="h-5 w-5" aria-hidden />
+            </button>
+          </div>
+          <a href="#/about" onClick={() => setOpen(false)} className="block rounded-md p-2.5 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]">
+            О бренде
+          </a>
+          <a href="#/news" onClick={() => setOpen(false)} className="block rounded-md p-2.5 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]">
+            Новости
+          </a>
+          <div className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-[#707075]">Продукция</div>
+          {PRODUCT_MENU.map((m) => (
+            <a key={m.href} href={m.href} onClick={() => setOpen(false)} className="flex items-start gap-3 rounded-md p-2.5 hover:bg-[#f4f6ec]">
+              <span className="mt-0.5">{m.icon}</span>
+              <span>
+                <span className="block text-sm font-semibold text-[#111112]">{m.label}</span>
+                <span className="block text-xs text-[#707075]">{m.desc}</span>
+              </span>
             </a>
-            <a href="#/news" onClick={() => setOpen(false)} className="block rounded-md p-2.5 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]">
-              Новости
+          ))}
+          <div className="px-2 pb-2 pt-3 text-xs font-semibold uppercase tracking-wide text-[#707075]">Разделы</div>
+          {NAV.map((n) => (
+            <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="block rounded-md p-2.5 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]">
+              {n.label}
             </a>
-            <div className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-[#707075]">Продукция</div>
-            {PRODUCT_MENU.map((m) => (
-              <a key={m.href} href={m.href} onClick={() => setOpen(false)} className="flex items-start gap-3 rounded-md p-2.5 hover:bg-[#f4f6ec]">
-                <span className="mt-0.5">{m.icon}</span>
-                <span>
-                  <span className="block text-sm font-semibold text-[#111112]">{m.label}</span>
-                  <span className="block text-xs text-[#707075]">{m.desc}</span>
-                </span>
-              </a>
-            ))}
-            <div className="px-2 pb-2 pt-3 text-xs font-semibold uppercase tracking-wide text-[#707075]">Разделы</div>
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="block rounded-md p-2.5 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]">
-                {n.label}
-              </a>
-            ))}
-            <div className="mt-3 space-y-2 border-t border-[#e6e8de] pt-3">
-              <AccountButton onNavigate={() => setOpen(false)} />
-              <Button variant="default" href="#/where" className="w-full" onClick={() => setOpen(false)}>
-                Запросить КП
-              </Button>
-            </div>
+          ))}
+          <div className="mt-3 space-y-2 border-t border-[#e6e8de] pt-3">
+            <AccountButton onNavigate={() => setOpen(false)} />
+            <Button variant="default" href="#/where" className="w-full" onClick={() => setOpen(false)}>
+              Запросить КП
+            </Button>
           </div>
         </div>
-      )}
-    </header>
+      </div>
+    )}
+    </>
   )
 }
