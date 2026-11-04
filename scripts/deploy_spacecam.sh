@@ -20,8 +20,9 @@
 #
 # Требования: bun, rsync, git. Рабочее пространство: $SPACECAM_WORK
 # (по умолчанию /home/z/my-project — там node_modules и public/).
-# Если workspace откатился снапшотом песочницы — сначала восстановить public/
-# из корня репо (docs/STATE.md § 4) и выполнить bun install.
+# Постаревший после отката песочницы public/ синхронизируется из корня репо
+# АВТОМАТИЧЕСКИ (шаг 2.5, урок инцидента 7194dcc от 05.11); чужой node_modules
+# лечится bun install внутри скрипта.
 # ═════════════════════════════════════════════════════════════════════════════
 set -euo pipefail
 
@@ -43,7 +44,20 @@ rsync -a --delete "$REPO/src/" "$WORK/src/"
 for f in next.config.ts package.json postcss.config.mjs tsconfig.json bun.lock components.json tailwind.config.ts; do
   [ -f "$REPO/$f" ] && cp "$REPO/$f" "$WORK/$f"
 done
-# next-env.d.ts генерируется сборкой; public/ в workspace не трогаем (не в репо).
+# next-env.d.ts генерируется сборкой.
+
+echo "── 2.5/6 Статика репо → workspace public/ (урок инцидента 05.11, 7194dcc) ──"
+# public/ workspace мог постареть после отката песочницы: сборка из него
+# вытерла бы статику репо при rsync --delete (инцидент 05.11: −304 фото,
+# −49 паспортов PDF, дилеры/бренд rsafe/solutions/logo.svg). Репо — источник
+# истины: синк ДО сборки, идемпотентно.
+for d in products brands dealers solutions; do
+  [ -d "$REPO/$d" ] && rsync -a --delete "$REPO/$d/" "$WORK/public/$d/"
+done
+mkdir -p "$WORK/public/docs" && cp -f "$REPO"/docs/*.pdf "$WORK/public/docs"/
+for f in logo.png logo-light.png logo.svg robots.txt; do
+  [ -f "$REPO/$f" ] && cp -f "$REPO/$f" "$WORK/public/$f"
+done
 
 echo "── 3/6 Сборка static export ──"
 cd "$WORK"
