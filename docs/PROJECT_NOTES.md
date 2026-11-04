@@ -1,20 +1,21 @@
 # SpaceCam — заметки по проекту (для быстрого ввода в курс)
 
-Обновлено: 02.11.2026. Документ сопровождения: структура сайта и БД, механизмы, протокол правок.
+Обновлено: 04.11.2026. Документ сопровождения: структура сайта и БД, механизмы, протокол правок.
 Секреты сюда НЕ включены сознательно (репозиторий публичный).
+**Точка фиксации, протоколы деплоя/восстановления и чек-лист входа — в [STATE.md](STATE.md).**
 
 ## 1. Что это
 
 - Публичный сайт-каталог брендов SpaceCam / R-Lock (ПТК, ООО «Технолайт», layta.ru):
   https://andreyshalnov.github.io/SpaceCam/
 - Next.js static export на GitHub Pages, ветка `main`. Базовый путь `/SpaceCam`,
-  маршрутизация хэшевая (`#/...`). Исходников (src/) в репо НЕТ — правки вносятся
-  точечными патчами в собранные чанки `_next/static/chunks/*.js`.
-- Главный чанк приложения (каталог, калькуляторы, админка, новости):
-  `_next/static/chunks/8900f5fffe636865.js` (~218 КБ, минифицирован). Клиент Supabase — в чанке `df3ae3ca56794c86.js`.
+  маршрутизация хэшевая (`#/...`). **С 03.11.2026 исходники `src/` хранятся в репо
+  и являются единственным источником правок.** Правки в собранные чанки
+  `_next/static/chunks/*.js` ЗАПРЕЩЕНЫ (исторический метод до 03.11 — привёл
+  к инциденту: деплой поверх устаревшей версии, см. § 8 STATE.md).
+- Деплой: `bash scripts/deploy_spacecam.sh "описание"` (pull → синк src → bun build
+  → статика в корень репо → push); верификация: `python3 scripts/verify_deploy.py`.
 - Кеш GitHub Pages: `max-age=600` → после деплоя проверять с `Ctrl+F5` или параметром `?v=<commit>`.
-- Протокол правок: python-патч с уникальными якорями и count-проверками → `node --check` →
-  commit → push → сборка Pages 1–3 мин → сверка md5 live-чанка с локальным → проверка в браузере.
 - `index.html` в корне — prerendered главная: при изменениях шапки/футера синхронизировать вручную.
 
 ## 2. Структура сайта (hash-маршруты)
@@ -46,8 +47,15 @@
 | `warehouses` | id, code, name, sort_order, is_active | 8 активных (id 1–8) + 9 служебных (id 21–29: Брак Внуково, Демозал Саратов, Недостача Очаково/Симферополь, Транзит ×4, «Объект не найден»; is_active=false — не видны на сайте и в «Продажах») |
 | `stock_snapshots` | snapshot_date, sku, warehouse_id, qty | снимки остатков 1С на день отчёта; дубли (дата, склад, артикул) исключены PK; читают аутентифицированные, запись — только admin/service (INSERT партнёра блокирует RLS — проверено); используется «Сверкой наличия» и «Продажами» |
 | `user_price_types` | user_id, price_type_id | индивидуальные наборы цен |
-| `profiles` | id→auth.users, email, role ('admin'\|'partner'), company, see_availability | 5 строк |
-| `projects` | id, owner_id→profiles, form (jsonb), created_at, updated_at | колонки verified (колонки `status` нет) |
+| `profiles` | id→auth.users, email, role ('admin'\|'partner'), company, see_availability | 14 строк: 2 admin + 12 partner (04.11) |
+| `projects` | id, owner_id→profiles, form (jsonb), created_at, updated_at | 0 строк — старые карточки мигрированы в objects |
+| `object_types` | id (identity), name, sort_order | 14 значений из Excel 1С |
+| `objects` | object_code (М00090xxx, уникальный, генерится из sequence 90001), owner_id→profiles, object_name, address + address_json (DaData), type_id→object_types, deadline, contractor, status (Новый/В работе/Реализация/Заморожен), summary, budget_amount + budget_currency (RUB/USD/EUR/CNY), spec (jsonb, позиции из формы), entry_date (из 1С), verified | 257 строк М00090001…М00090257; RLS: admin/владелец/соучастник |
+| `object_participants` | object_id, user_id | соучастники; 0 строк (пока не используются) |
+| `object_specs` | spec_no (М…, unique), object_id→objects, spec_date, source, protection, qty, sum | 436 строк, нумерация как в 1С |
+| `object_spec_items` | spec_id→object_specs, name, sku, qty, unit, sum, sort | 1094 строк |
+| `app_settings` | key, value (jsonb) | 1 строка: `dadata_api_key` (внесён владельцем 03.11) |
+| витрина `objects_overview` | id, object_code, object_name, address, created_at | security_invoker=false — базовая инфа всем аутентифицированным; гранты урезаны (`docs/sql/20261103_security_fix_grants.sql`) |
 | `news` | id, news_date, body, published, created_at | 2 строки; публично только `published=true` |
 | служебные | sc_stock_backup_20261020, sc_popular_products | бэкап остатков; популярные товары |
 
@@ -138,12 +146,32 @@ INSERT в `news` → 42501; UPDATE → 0 строк. Цены — по `sc_allow
   Повтор: скрипт песочницы `backup_supabase_anon.py <dir> [ключ]` (постранично, со статусами).
 - История остатков (5 срезов) в БД появляется после запуска SQL-скрипта владельцем
   (Supabase SQL Editor) либо после загрузки 5 xlsx-файлов через «Сверку наличия».
-- Объекты строительства (03.11.2026): ключ DaData внести в админке (вкладка
-  «Настройки» → `app_settings` → `dadata_api_key`), без него автодополнение адреса
-  просто не включается; полный бэкап v2 после импорта объектов — у владельца
+- Объекты строительства (03.11.2026): ключ DaData владелец внёс сам 03.11 11:58
+  (`app_settings.dadata_api_key`), без него автодополнение адреса просто не включается;
+  полный бэкап v2 после импорта объектов — у владельца
   (`supabase_backup_full_20261103_v2_objects.zip`), скрипт `docs/backup/backup_supabase_full.py`
   дополнен таблицами objects*; service-ключ передавался в чате → рекомендуется ротация
   (Supabase → Settings → API → Rotate), после ротации обновить его в скриптах бэкапа.
+- **04.11.2026 — ФИКСАЦИЯ**: создан `docs/STATE.md` (точка фиксации, источники
+  истины, протоколы деплоя/восстановления, чек-лист входа агента); канонические
+  скрипты в репо: `scripts/deploy_spacecam.sh` (единственный разрешённый деплой)
+  и `scripts/verify_deploy.py` (live==репо по хешам + git-состояние, с `--full` —
+  счётчики БД и anon-пробы); гранты security-фикса 03.11 закреплены в
+  `docs/sql/20261103_security_fix_grants.sql`. Счётчики БД на 04.11: objects 257 /
+  specs 436 / items 1094 / types 14 / profiles 14 (2 admin + 12 partner) / projects 0 —
+  дрейфа с импорта нет (pg_stat показывает оценку 307 по objects — артефакт
+  статистики, точный count(*) = 257). В этот же день песочница второй раз откатилась
+  (до состояния ~26.10, потеряны scripts/download/worklog) — восстановление из
+  GitHub заняло один re-clone + re-commit: фиксация окупилась.
+- **04.11.2026 — ФИКС МОБИЛЬНОГО МЕНЮ**: на мобильной версии бургер не открывал меню
+  на всех страницах кроме главной. Причина: оверлей меню (`fixed inset-0 z-[70]`)
+  рендерился ВНУТРИ `<header>`, у которого `backdrop-blur` — backdrop-filter создаёт
+  containing block для fixed-потомков, и «inset-0» считался от 64-пиксельной шапки
+  вместо вьюпорта: меню схлопывалось в полоску 320×64 px поверх бургера, тап попадал
+  в крестик «Закрыть меню» и ничего не происходило (доказано elementFromPoint +
+  отключением blur: высота 64 → 852). Фикс: оверлей вынесен из `<header>` (фрагмент
+  в Header), классы/навигация не менялись. Проверено headless-браузером на iPhone-
+  вьюпорте по всем маршрутам.
 - 03.11.2026 (день, ИНЦИДЕНТ+ВОССТАНОВЛЕНИЕ) — утренний деплой реестра объектов собрал
   сайт из устаревших исходников workspace: пропали все правки, жившие только в
   минифицированных чанках репозитория (раздел «Решения», «Новости», «Сверка наличия»
