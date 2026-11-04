@@ -62,7 +62,17 @@ rsync -a --delete "$WORK/out/" "$REPO/" \
   --exclude '/docs/backup' \
   --exclude '/docs/PROJECT_NOTES.md' \
   --exclude '/docs/TECH_SPEC.md' \
-  --exclude '/docs/STATE.md'
+  --exclude '/docs/STATE.md' \
+  --exclude '/package.json' \
+  --exclude '/bun.lock' \
+  --exclude '/tsconfig.json' \
+  --exclude '/next.config.ts' \
+  --exclude '/postcss.config.mjs' \
+  --exclude '/next-env.d.ts'
+# Корневые конфиги (package.json, bun.lock, tsconfig.json, next.config.ts,
+# postcss.config.mjs, next-env.d.ts) — часть «источника истины» в репо:
+# out/ их не содержит, без исключений rsync --delete стёр бы их при деплое
+# (найдено dry-run 04.11, до первой выкатки по каноническому скрипту).
 
 echo "── 5/6 Коммит + push ──"
 git add -A
