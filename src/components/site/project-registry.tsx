@@ -8,6 +8,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
+  BarChart3,
   Building2,
   FileDown,
   FilePlus2,
@@ -31,8 +32,11 @@ import {
   X,
 } from 'lucide-react'
 import { CONTACTS } from '@/data/site'
+import type { Product } from '@/data/site'
 import { Field, INPUT_CLS, ProjectCardView, ProjectForm } from './registry-form'
+import { normalizeSku } from '@/lib/price-store'
 import { supabase } from '@/lib/supabase'
+import { buildReport, REPORT_SECTIONS, type CatalogEntry, type ReportObject } from '@/lib/objects-report'
 import {
   Account,
   DADATA_KEY_SETTING,
@@ -40,14 +44,17 @@ import {
   OBJECT_STATUSES,
   ObjectSpec,
   Project,
+  SpecItemRow,
   ValidationErrors,
   changeOwnPassword,
   deleteObject,
   deleteSpec,
   downloadFile,
+  dmyToIsoDate,
   emptyForm,
   exportObjectJson,
   fetchAccounts,
+  fetchAllSpecItems,
   fetchObjectTypes,
   fetchObjects,
   fetchParticipants,
@@ -70,7 +77,7 @@ import {
   validateProject,
 } from '@/lib/registry'
 
-type Tab = 'objects' | 'accounts' | 'profile' | 'settings'
+type Tab = 'objects' | 'accounts' | 'report' | 'profile' | 'settings'
 type MainView = { kind: 'list' } | { kind: 'form'; id: string | null } | { kind: 'card'; id: string }
 
 const STATUS_BADGE: Record<string, string> = {
@@ -663,6 +670,321 @@ function SettingsView({
 }
 
 // ---------------------------------------------------------------------------
+// Отчёт по оборудованию в проектах (только администратор):
+// группировка «статус проекта × тип оборудования × артикул», фильтры по
+// периоду создания (дата из 1С) и сроку реализации (срок сдачи), сводка
+// прогноза по кварталам срока сдачи. Логика агрегации — src/lib/objects-report.ts
+// ---------------------------------------------------------------------------
+
+const REPORT_INPUT_CLS =
+  'h-9 rounded-md border border-[#e6e8de] bg-white px-2.5 text-sm text-[#111112] outline-none focus:border-[#a6ce39]'
+
+function ReportView({ objects }: { objects: Project[] }) {
+  const [items, setItems] = useState<SpecItemRow[]>([])
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [fCreated, setFCreated] = useState({ from: '', to: '' })
+  const [fDeadline, setFDeadline] = useState({ from: '', to: '' })
+
+  // Позиции спецификаций 1С по всем объектам (RLS отдаёт доступные)
+  useEffect(() => {
+    void (async () => {
+      setLoading(true)
+      setError('')
+      const r = await fetchAllSpecItems()
+      if (r.error) setError(r.error)
+      setItems(r.items)
+      setLoading(false)
+    })()
+  }, [])
+
+  // Справочник каталога — для типа оборудования и «красивых» артикулов
+  useEffect(() => {
+    void import('@/data/products.json').then((m) => setProducts(m.default as unknown as Product[]))
+  }, [])
+
+  const report = useMemo(() => {
+    const catalog = new Map<string, CatalogEntry>()
+    for (const p of products) {
+      const n = normalizeSku(p.sku)
+      if (n && !catalog.has(n)) catalog.set(n, { sku: p.sku, title: p.title, section: p.section })
+    }
+    const objs: ReportObject[] = objects.map((o) => ({
+      id: o.id,
+      objectCode: o.objectCode,
+      status: o.status,
+      createdIso: dmyToIsoDate(o.entryDate) || String(o.createdAt || '').slice(0, 10),
+      deadlineIso: dmyToIsoDate(o.deadline) || '',
+    }))
+    // позиции из «простой спецификации» формы (сейчас пустые, учитываем на будущее)
+    const formItems = objects.flatMap((o) =>
+      (o.specItems || [])
+        .map((i) => ({
+          objectId: o.id,
+          name: i.name,
+          qty: Number(String(i.qty).replace(/\s/g, '').replace(',', '.')) || 0,
+        }))
+        .filter((i) => i.qty > 0 && i.name.trim()),
+    )
+    return buildReport(objs, items, formItems, catalog, {
+      createdFrom: fCreated.from,
+      createdTo: fCreated.to,
+      deadlineFrom: fDeadline.from,
+      deadlineTo: fDeadline.to,
+    })
+  }, [objects, items, products, fCreated, fDeadline])
+
+  const fmt = (n: number) => Number(n || 0).toLocaleString('ru-RU', { maximumFractionDigits: 2 })
+  const today = new Date().toISOString().slice(0, 10)
+
+  function downloadCsv() {
+    try {
+      const head = ['Статус проекта;Тип оборудования;Артикул;Наименование;Кол-во, шт;Проектов']
+      const lines: string[] = []
+      for (const st of report.statuses)
+        for (const sec of st.sections)
+          for (const r of sec.rows)
+            lines.push(
+              [st.status, sec.label, r.sku.toUpperCase(), r.title, r.qty, r.objects]
+                .map((v) => String(v).replace(/;/g, ','))
+                .join(';'),
+            )
+      const blob = new Blob(['\ufeff' + head.concat(lines).join('\n')], { type: 'text/csv;charset=utf-8' })
+      const a = document.createElement('a')
+      a.href = URL.createObjectURL(blob)
+      a.download = `sc-otchet-proekty_${today.replace(/-/g, '')}.csv`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(a.href)
+    } catch {
+      /* экспорт необязателен */
+    }
+  }
+
+  return (
+    <div>
+      <div className="mb-4 rounded-xl border border-[#e6e8de] bg-white p-4 shadow-sm sm:p-5">
+        <div className="flex items-center gap-2">
+          <BarChart3 className="h-5 w-5 text-[#5c7a12]" aria-hidden />
+          <h3 className="text-base font-bold text-[#111112]">Отчёт по оборудованию в проектах</h3>
+        </div>
+        <p className="mt-2 text-xs leading-relaxed text-[#707075]">
+          Суммы по артикулам из спецификаций 1С и их количеству, с группировкой по статусу проекта и типу
+          оборудования. Фильтры — период создания проекта (дата внесения из 1С) и срок реализации (планируемый
+          срок сдачи) — формируют прогноз заказов на оборудование в заложенных проектах.
+        </p>
+      </div>
+
+      {/* Фильтры: период создания + срок реализации */}
+      <div className="mb-4 rounded-xl border border-[#e6e8de] bg-white p-4 shadow-sm">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-[#707075]">
+              Период создания проекта (дата из 1С)
+            </div>
+            <div className="mt-1.5 flex items-center gap-2">
+              <input
+                type="date"
+                className={REPORT_INPUT_CLS}
+                value={fCreated.from}
+                onChange={(e) => setFCreated((v) => ({ ...v, from: e.target.value }))}
+                aria-label="Создан с даты"
+              />
+              <span className="text-sm text-[#707075]">→</span>
+              <input
+                type="date"
+                className={REPORT_INPUT_CLS}
+                value={fCreated.to}
+                onChange={(e) => setFCreated((v) => ({ ...v, to: e.target.value }))}
+                aria-label="Создан по дату"
+              />
+            </div>
+          </div>
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-[#707075]">
+              Срок реализации (планируемый срок сдачи)
+            </div>
+            <div className="mt-1.5 flex items-center gap-2">
+              <input
+                type="date"
+                className={REPORT_INPUT_CLS}
+                value={fDeadline.from}
+                onChange={(e) => setFDeadline((v) => ({ ...v, from: e.target.value }))}
+                aria-label="Сдача с даты"
+              />
+              <span className="text-sm text-[#707075]">→</span>
+              <input
+                type="date"
+                className={REPORT_INPUT_CLS}
+                value={fDeadline.to}
+                onChange={(e) => setFDeadline((v) => ({ ...v, to: e.target.value }))}
+                aria-label="Сдача по дату"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setFCreated({ from: '', to: '' })
+              setFDeadline({ from: '', to: '' })
+            }}
+            className="inline-flex items-center gap-1.5 rounded-md border border-[#e6e8de] bg-white px-3 py-1.5 text-xs font-medium text-[#111112] hover:bg-[#f4f6ec]"
+          >
+            <X className="h-3.5 w-3.5" aria-hidden /> Сбросить фильтры
+          </button>
+          <span className="text-xs text-[#707075]">Пустые поля = без ограничения по дате.</span>
+        </div>
+      </div>
+
+      {/* Сводные показатели */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        <span className="rounded-full border border-[#e6e8de] bg-white px-3 py-1 text-xs font-medium text-[#111112]">
+          Объектов в отчёте: {report.objectsIn} из {report.objectsTotal}
+        </span>
+        <span className="rounded-full border border-[#e6e8de] bg-white px-3 py-1 text-xs font-medium text-[#111112]">
+          Позиций учтено: {fmt(report.itemsTotal)}
+        </span>
+        <span className="rounded-full border border-[#a6ce39] bg-[#f4f8e4] px-3 py-1 text-xs font-semibold text-[#3c5210]">
+          Итого: {fmt(report.qtyTotal)} шт
+        </span>
+        {report.qtyOther > 0 && (
+          <span className="rounded-full border border-[#e6e8de] bg-white px-3 py-1 text-xs font-medium text-[#4b4d45]">
+            «Прочее» (нет в каталоге): {fmt(report.qtyOther)} шт
+          </span>
+        )}
+      </div>
+
+      {error && (
+        <div className="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+          {error}
+        </div>
+      )}
+      {loading && <p className="mb-4 text-sm text-[#707075]">Загрузка спецификаций…</p>}
+
+      {/* Прогноз по кварталам срока сдачи */}
+      {!loading && report.quarters.length > 0 && (
+        <div className="mb-5 overflow-hidden rounded-xl border border-[#e6e8de] bg-white shadow-sm">
+          <div className="border-b border-[#e6e8de] bg-[#f8faf3] px-4 py-3">
+            <h4 className="text-sm font-bold text-[#111112]">
+              Прогноз заказов по кварталам срока сдачи
+            </h4>
+            <p className="mt-0.5 text-xs text-[#707075]">
+              Оборудование из проектов, сгруппированное по планируемому сроку сдачи.
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px] text-sm">
+              <thead>
+                <tr className="bg-white text-left text-xs uppercase tracking-wide text-[#707075]">
+                  <th className="px-4 py-2 font-semibold">Квартал</th>
+                  <th className="px-3 py-2 text-center font-semibold">Объектов</th>
+                  {REPORT_SECTIONS.map((s) => (
+                    <th key={s.id} className="px-3 py-2 text-center font-semibold">
+                      {s.label}
+                    </th>
+                  ))}
+                  <th className="px-4 py-2 text-center font-semibold">Всего, шт</th>
+                </tr>
+              </thead>
+              <tbody>
+                {report.quarters.map((qr) => (
+                  <tr key={qr.key} className="border-t border-[#f0f1ea]">
+                    <td className="px-4 py-2">
+                      <div className="font-semibold text-[#111112]">{qr.label}</div>
+                      <div className="text-[11px] text-[#707075]">{qr.range}</div>
+                    </td>
+                    <td className="px-3 py-2 text-center tabular-nums">{qr.objects}</td>
+                    {REPORT_SECTIONS.map((s) => (
+                      <td key={s.id} className="px-3 py-2 text-center tabular-nums">
+                        {qr.sections[s.id] ? fmt(qr.sections[s.id]) : '—'}
+                      </td>
+                    ))}
+                    <td className="px-4 py-2 text-center font-bold tabular-nums text-[#3c5210]">
+                      {fmt(qr.qty)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Группированный отчёт: статус → тип оборудования → артикулы */}
+      {!loading && report.statuses.length === 0 && (
+        <div className="rounded-xl border border-dashed border-[#c8ccba] bg-white px-6 py-12 text-center text-sm text-[#707075]">
+          Нет объектов под выбранные фильтры — измените период создания или срок реализации.
+        </div>
+      )}
+      {report.statuses.map((st) => (
+        <div key={st.status} className="mb-5">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <Badge className={STATUS_BADGE[st.status] ?? 'bg-[#f4f6ec] text-[#4b4d45]'}>{st.status}</Badge>
+            <span className="text-xs text-[#707075]">
+              Объектов: {st.objects} · Позиций: {fmt(st.qty)} шт
+            </span>
+          </div>
+          {st.sections.length === 0 ? (
+            <div className="rounded-lg border border-dashed border-[#c8ccba] bg-white px-4 py-6 text-center text-xs text-[#707075]">
+              В спецификациях проектов этого статуса позиций нет.
+            </div>
+          ) : (
+            st.sections.map((sec) => (
+              <div key={sec.id} className="mb-3 overflow-hidden rounded-lg border border-[#e6e8de] bg-white">
+                <div className="flex items-center justify-between border-b border-[#e6e8de] bg-[#fafbf5] px-4 py-2">
+                  <span className="text-sm font-semibold text-[#111112]">{sec.label}</span>
+                  <span className="text-xs font-medium text-[#4b4d45]">{fmt(sec.qty)} шт</span>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[640px] text-sm">
+                    <thead>
+                      <tr className="text-left text-xs uppercase tracking-wide text-[#707075]">
+                        <th className="px-4 py-2 font-semibold">Артикул</th>
+                        <th className="px-3 py-2 font-semibold">Наименование</th>
+                        <th className="px-3 py-2 text-center font-semibold">Кол-во, шт</th>
+                        <th className="px-4 py-2 text-center font-semibold">Проектов</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sec.rows.map((r) => (
+                        <tr key={r.key} className="border-t border-[#f0f1ea]">
+                          <td className="whitespace-nowrap px-4 py-2 font-mono text-xs font-medium text-[#111112]">
+                            {r.sku.toUpperCase()}
+                          </td>
+                          <td className="px-3 py-2 text-[#111112]">{r.title || '—'}</td>
+                          <td className="px-3 py-2 text-center font-semibold tabular-nums text-[#3c5210]">
+                            {fmt(r.qty)}
+                          </td>
+                          <td className="px-4 py-2 text-center tabular-nums">{r.objects}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      ))}
+
+      {!loading && report.statuses.length > 0 && (
+        <button
+          type="button"
+          onClick={downloadCsv}
+          className="inline-flex items-center gap-1.5 rounded-md border border-[#e6e8de] bg-white px-3 py-2 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]"
+        >
+          <FileDown className="h-4 w-4" aria-hidden /> Экспорт отчёта в CSV
+        </button>
+      )}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Главная страница раздела
 // ---------------------------------------------------------------------------
 
@@ -1140,6 +1462,18 @@ export default function ProjectRegistry() {
               </button>
               <button
                 type="button"
+                onClick={() => setTab('report')}
+                className={
+                  'inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-semibold transition-colors ' +
+                  (tab === 'report'
+                    ? 'bg-[#111112] text-white'
+                    : 'border border-[#e6e8de] bg-white text-[#111112] hover:bg-[#f4f6ec]')
+                }
+              >
+                <BarChart3 className="h-4 w-4" aria-hidden /> Отчёт
+              </button>
+              <button
+                type="button"
                 onClick={() => setTab('settings')}
                 className={
                   'inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-semibold transition-colors ' +
@@ -1358,6 +1692,8 @@ export default function ProjectRegistry() {
           </p>
         </>
       )}
+
+      {tab === 'report' && isAdmin && <ReportView objects={objects} />}
 
       {tab === 'accounts' && isAdmin && (
         <AccountsView

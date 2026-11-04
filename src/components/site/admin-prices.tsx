@@ -735,7 +735,7 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
   const sorted = useMemo(() => {
     const list = [...filtered]
     if (sortBy === 'got') return list.sort((a, b) => b.got - a.got)
-    if (sortBy === 'sku') return list.sort((a, b) => (a.sku < b.sku ? -1 : 1))
+    if (sortBy === 'sku') return list.sort((a, b) => (a.sku.toUpperCase() < b.sku.toUpperCase() ? -1 : 1))
     return list.sort((a, b) => b.sold - a.sold || b.got - a.got)
   }, [filtered, sortBy])
 
@@ -766,7 +766,7 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
         'Артикул;Наименование;Раздел;Остаток начало;Остаток конец;Продано шт;Поступило шт;Цена розничная;Выручка руб',
       ]
       const lines = sorted.map((r) =>
-        [r.sku, r.title, r.section, r.start, r.end, r.sold, r.got, r.price ?? '', r.rev ?? '']
+        [r.sku.toUpperCase(), r.title, r.section, r.start, r.end, r.sold, r.got, r.price ?? '', r.rev ?? '']
           .map((v) => String(v).replace(/;/g, ','))
           .join(';'),
       )
@@ -918,7 +918,7 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
             <tbody>
               {sorted.map((r) => (
                 <tr key={`sku:${r.sku}`}>
-                  <td>{r.sku}</td>
+                  <td>{r.sku.toUpperCase()}</td>
                   <td>{r.title}</td>
                   <td>{r.section || '—'}</td>
                   <td className="num">{fmt(r.start)}</td>

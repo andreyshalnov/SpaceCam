@@ -53,7 +53,7 @@
 | `objects` | object_code (М00090xxx, уникальный, генерится из sequence 90001), owner_id→profiles, object_name, address + address_json (DaData), type_id→object_types, deadline, contractor, status (Новый/В работе/Реализация/Заморожен), summary, budget_amount + budget_currency (RUB/USD/EUR/CNY), spec (jsonb, позиции из формы), entry_date (из 1С), verified | 257 строк М00090001…М00090257; RLS: admin/владелец/соучастник |
 | `object_participants` | object_id, user_id | соучастники; 0 строк (пока не используются) |
 | `object_specs` | spec_no (М…, unique), object_id→objects, spec_date, source, protection, qty, sum | 436 строк, нумерация как в 1С |
-| `object_spec_items` | spec_id→object_specs, name, sku, qty, unit, sum, sort | 1094 строк |
+| `object_spec_items` | spec_id→object_specs, name, sku, qty, unit, sum, sort | 1094 строк; колонка sku ПУСТАЯ (0/1094, 04.11) — артикул извлекается из name (первые 2 токена, нормализация как на сайте); ~6% позиций (SFP, аксессуары) в каталоге отсутствуют — в отчёте уходят в «Прочее» |
 | `app_settings` | key, value (jsonb) | 1 строка: `dadata_api_key` (внесён владельцем 03.11) |
 | витрина `objects_overview` | id, object_code, object_name, address, created_at | security_invoker=false — базовая инфа всем аутентифицированным; гранты урезаны (`docs/sql/20261103_security_fix_grants.sql`) |
 | `news` | id, news_date, body, published, created_at | 2 строки; публично только `published=true` |
@@ -172,6 +172,21 @@ INSERT в `news` → 42501; UPDATE → 0 строк. Цены — по `sc_allow
   отключением blur: высота 64 → 852). Фикс: оверлей вынесен из `<header>` (фрагмент
   в Header), классы/навигация не менялись. Проверено headless-браузером на iPhone-
   вьюпорте по всем маршрутам.
+- **04.11.2026 — ОТЧЁТ ПО ПРОЕКТАМ + ФИКС АРТИКУЛОВ (вечер)**: (1) «Продажи в штуках» —
+  артикулы снова ЗАГЛАВНЫМИ в таблице и CSV (правка a29f8e7 жила в минифицированных
+  чанках и была потеряна при восстановлении src 92b3739; теперь в исходниках, БД
+  хранит нормализованные артикулы как прежде). (2) Вкладка «Отчёт» для админа в
+  разделе «Объекты строительства»: группировка «статус проекта × тип оборудования
+  (4 линейки каталога + «Прочее») × артикул» по спецификациям 1С, фильтры «период
+  создания» (entry_date из 1С, для объектов из формы — дата карточки) и «срок
+  реализации» (deadline), сводка прогноза по кварталам срока сдачи, экспорт CSV.
+  Логика — чистый модуль `src/lib/objects-report.ts` (без React/Supabase);
+  `normalizeSku` вынесен в `src/lib/sku.ts` (price-store реэкспортирует — имя не
+  менялось). Позиции всех спецификаций тянет `fetchAllSpecItems()` (registry.ts,
+  постранично, RLS). Проверка: `SBP_TOKEN=… bun scripts/check_objects_report.ts` —
+  на живых данных 1094 позиции / 26 220 шт, суммы по всем статусам, фильтрам
+  (4 кейса) и кварталам сходятся с независимым SQL-агрегатом Management API один
+  в один. SQL в БД не потребовался — агрегация на фронтенде под RLS.
 - 03.11.2026 (день, ИНЦИДЕНТ+ВОССТАНОВЛЕНИЕ) — утренний деплой реестра объектов собрал
   сайт из устаревших исходников workspace: пропали все правки, жившие только в
   минифицированных чанках репозитория (раздел «Решения», «Новости», «Сверка наличия»

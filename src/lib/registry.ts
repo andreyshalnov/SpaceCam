@@ -546,6 +546,39 @@ export async function deleteSpec(specId: string): Promise<{ ok: boolean; error?:
   return error ? { ok: false, error: dbError(error) } : { ok: true }
 }
 
+/** Позиция спецификации 1С, приведённая к объекту (для отчёта админа). */
+export interface SpecItemRow {
+  objectId: string
+  name: string
+  sku: string // код из БД (обычно пуст — артикул внутри name)
+  qty: number
+}
+
+/** Все позиции спецификаций 1С по всем доступным объектам (отчёт админа, RLS отфильтрует). */
+export async function fetchAllSpecItems(): Promise<{ items: SpecItemRow[]; error: string | null }> {
+  const specs = await selectAll('object_specs', 'created_at')
+  if (specs.error) return { items: [], error: specs.error }
+  const specToObj = new Map<string, string>()
+  for (const r of specs.rows) {
+    if (r.id != null && r.object_id != null) specToObj.set(String(r.id), String(r.object_id))
+  }
+  const rows = await selectAll('object_spec_items', 'id')
+  if (rows.error) return { items: [], error: rows.error }
+  const items: SpecItemRow[] = []
+  for (const r of rows.rows) {
+    const objectId = specToObj.get(String(r.spec_id ?? ''))
+    if (!objectId) continue
+    const qty = Number(r.qty ?? 0) || 0
+    items.push({
+      objectId,
+      name: String(r.name ?? ''),
+      sku: String(r.sku ?? '').trim(),
+      qty,
+    })
+  }
+  return { items, error: null }
+}
+
 /** Соучастники по списку объектов: objectId → [user_id]. */
 export async function fetchParticipants(
   objectIds: string[],
