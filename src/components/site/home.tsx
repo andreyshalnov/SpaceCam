@@ -25,26 +25,67 @@ const FEATURE_ICONS = [
   <Award key="5" className="h-5 w-5 text-[#a6ce39]" aria-hidden />,
 ]
 
-const FLAGSHIPS = ['sc-l2-24gp-385-4g-a', 'sc-8gp-120-2g-a', 'sc-box-l2-4gp-120-2g-ups-a', 'sc-int-v007-2-lwb']
+// Флагманы по умолчанию — на случай, когда по группе нет продаж за период.
+const FLAGSHIP_BY_SECTION: Record<string, string> = {
+  nodes: 'sc-box-l2-4gp-120-2g-ups-a',
+  intercom: 'sc-int-v007-2-lwb',
+  switches: 'sc-l2-24gp-385-4g-a',
+  rlock: 'rl-br280-ls',
+}
+// Порядок вывода — как в постановке: узлы коммутации, домофоны, коммутаторы, замки.
+const FLAGSHIP_SECTION_ORDER = ['nodes', 'intercom', 'switches', 'rlock'] as const
 const HITS = ['sc-l2-24gp-385-4g-a', 'sc-8gp-120-2g-a', 'sc-box-l2-4gp-120-2g-ups-a', 'sc-int-v007-2-lwb']
+
+/** «2026-07-01» → «01.07.2026»; короткая форма при одном годе: «01.07–01.10.2026». */
+function fmtPeriod(from?: string | null, to?: string | null): string {
+  if (!from || !to) return ''
+  const f = String(from).split('-')
+  const t = String(to).split('-')
+  if (f.length < 3 || t.length < 3) return ''
+  const fd = `${f[2]}.${f[1]}.${f[0]}`
+  const td = `${t[2]}.${t[1]}.${t[0]}`
+  return f[0] === t[0] ? `${f[2]}.${f[1]}–${td}` : `${fd}–${td}`
+}
 
 export function Home({ products }: { products: Product[] }) {
   const visible = products
   const byId = new Map(visible.map((p) => [p.id, p]))
   const bySku = new Map(visible.map((p) => [normalizeSku(p.sku), p]))
-  const flagships = FLAGSHIPS.map((id) => byId.get(id)).filter(Boolean) as Product[]
-  // «Популярное» — лидеры продаж из sc_popular_products; пока нет данных — HITS.
-  const [popularRows, setPopularRows] = useState<Array<{ sku: string; sold: number }> | null>(null)
+  // Статистика продаж из sc_popular_products (view по stock_snapshots);
+  // пока нет данных — флагманы по умолчанию / HITS.
+  const [popularRows, setPopularRows] = useState<Array<{ sku: string; sold: number; period_from?: string | null; period_to?: string | null }> | null>(null)
   useEffect(() => {
     void (async () => {
       try {
-        const { data } = await supabase.from('sc_popular_products').select('sku,sold').order('sold', { ascending: false }).limit(8)
-        if (Array.isArray(data) && data.length) setPopularRows(data as Array<{ sku: string; sold: number }>)
+        // select('*') — совместимо и со старым вью (sku, sold), и с новым
+        // (добавлены period_from/period_to). Лимит с запасом: вью отдаёт только
+        // SKU с продажами, их ≤ числа артикулов каталога.
+        const { data } = await supabase.from('sc_popular_products').select('*').order('sold', { ascending: false }).limit(500)
+        if (Array.isArray(data) && data.length) {
+          setPopularRows(data as Array<{ sku: string; sold: number; period_from?: string | null; period_to?: string | null }>)
+        }
       } catch {
-        /* без статистики показываем HITS */
+        /* без статистики показываем флагманы по умолчанию */
       }
     })()
   }, [])
+  // «Флагманы линейки» — топ-продаж из КАЖДОЙ группы за период (задаётся в
+  // админке, по умолчанию квартал); нет продаж у группы — флагман по умолчанию.
+  const flagships = FLAGSHIP_SECTION_ORDER.map((sec) => {
+    let best: Product | null = null
+    let bestSold = 0
+    if (popularRows) {
+      for (const r of popularRows) {
+        const p = (bySku.get(normalizeSku(r.sku)) || byId.get(r.sku)) as Product | undefined
+        if (p && p.section === sec && r.sold > bestSold) {
+          best = p
+          bestSold = r.sold
+        }
+      }
+    }
+    return best || byId.get(FLAGSHIP_BY_SECTION[sec]) || null
+  }).filter(Boolean) as Product[]
+  const periodLabel = fmtPeriod(popularRows?.[0]?.period_from, popularRows?.[0]?.period_to)
   const hits = (
     popularRows
       ? popularRows.map((r) => bySku.get(normalizeSku(r.sku)) || byId.get(r.sku)).filter(Boolean)
@@ -92,13 +133,17 @@ export function Home({ products }: { products: Product[] }) {
           </div>
           <div className="relative">
             <div className="rounded-2xl border border-[#26271f] bg-[#121310] p-4 shadow-2xl">
-              <div className="mb-3 flex items-center justify-between px-1">
+              <div className="mb-3 flex items-center justify-between gap-2 px-1">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#85878d]">Флагманы линейки</span>
-                <span className="flex gap-1.5" aria-hidden="true">
-                  <span className="h-2 w-2 rounded-full bg-[#a6ce39]" />
-                  <span className="h-2 w-2 rounded-full bg-[#3a3b38]" />
-                  <span className="h-2 w-2 rounded-full bg-[#3a3b38]" />
-                </span>
+                {periodLabel ? (
+                  <span className="text-[10px] leading-tight text-[#85878d]">по продажам за {periodLabel}</span>
+                ) : (
+                  <span className="flex gap-1.5" aria-hidden="true">
+                    <span className="h-2 w-2 rounded-full bg-[#a6ce39]" />
+                    <span className="h-2 w-2 rounded-full bg-[#3a3b38]" />
+                    <span className="h-2 w-2 rounded-full bg-[#3a3b38]" />
+                  </span>
+                )}
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {flagships.map((p) => (
@@ -231,7 +276,9 @@ export function Home({ products }: { products: Product[] }) {
             <div className="mb-3 h-1 w-12 rounded bg-[#a6ce39]" aria-hidden="true" />
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-[#111112]">Популярное оборудование</h2>
             <p className="mt-2 text-sm leading-relaxed sm:text-base text-[#707075]">
-              Лидеры продаж по данным учёта остатков на складах.
+              {periodLabel
+                ? `Лидеры продаж за ${periodLabel} по данным учёта остатков на складах.`
+                : 'Лидеры продаж по данным учёта остатков на складах.'}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">

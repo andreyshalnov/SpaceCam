@@ -41,7 +41,7 @@ import {
   usePriceData,
   type PriceData,
 } from '@/lib/price-store'
-import { fetchAccounts, type Account } from '@/lib/registry'
+import { fetchAccounts, fetchSetting, saveSetting, type Account } from '@/lib/registry'
 import { supabase } from '@/lib/supabase'
 import type { Product } from '@/data/site'
 import { NewsAdminTab } from './news'
@@ -602,6 +602,12 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
   const [error, setError] = useState('')
   const [query, setQuery] = useState('')
   const [sortBy, setSortBy] = useState<'sold' | 'got' | 'sku'>('sold')
+  // Период топа продаж для главной («Флагманы линейки» / «Популярное»):
+  // хранится в app_settings (popular_from / popular_to), читается view
+  // sc_popular_products. Пустые значения — квартал по умолчанию.
+  const [pfFrom, setPfFrom] = useState('')
+  const [pfTo, setPfTo] = useState('')
+  const [pfStatus, setPfStatus] = useState('')
 
   useEffect(() => {
     void (async () => {
@@ -644,6 +650,45 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
       }
     })()
   }, [])
+
+  // Загрузка сохранённого периода для главной
+  useEffect(() => {
+    void (async () => {
+      try {
+        setPfFrom(await fetchSetting('popular_from'))
+        setPfTo(await fetchSetting('popular_to'))
+      } catch {
+        /* настройки недоступны — остаётся дефолт */
+      }
+    })()
+  }, [])
+
+  // Дефолтный период (прошлый завершённый квартал от последней выгрузки) — для подсказки
+  const pfDefault = useMemo(() => {
+    if (!snap || !snap.dates.length) return null
+    const last = snap.dates[snap.dates.length - 1]
+    const d = new Date(`${last}T00:00:00Z`)
+    if (Number.isNaN(d.getTime())) return null
+    const qStart = new Date(Date.UTC(d.getUTCFullYear(), Math.floor(d.getUTCMonth() / 3) * 3, 1))
+    const prev = new Date(qStart)
+    prev.setUTCMonth(prev.getUTCMonth() - 3)
+    const iso = (x: Date) => x.toISOString().slice(0, 10)
+    return { from: iso(prev), to: iso(qStart) }
+  }, [snap])
+
+  async function saveFlagshipPeriod(nextFrom: string, nextTo: string) {
+    if (nextFrom && nextTo && nextFrom > nextTo) {
+      setPfStatus('Дата начала позже даты конца — проверьте значения')
+      return
+    }
+    const r1 = await saveSetting('popular_from', nextFrom)
+    const r2 = await saveSetting('popular_to', nextTo)
+    if (r1.ok && r2.ok) {
+      setPfStatus('Сохранено — флагманы и «Популярное» на главной уже пересчитаны')
+    } else {
+      setPfStatus(`Ошибка сохранения: ${r1.error || r2.error || 'неизвестная'}`)
+    }
+  }
 
   const rows = useMemo(() => {
     if (!snap || !snap.dates.length) return []
@@ -740,6 +785,57 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
 
   return (
     <div>
+      {/* Период топа продаж для главной: «Флагманы линейки» / «Популярное» */}
+      <div className="mb-4 rounded-lg border border-[#e6e8de] bg-[#f8faf3] p-4">
+        <div className="mb-1 flex items-center gap-2">
+          <Megaphone className="h-4 w-4 text-[#5c7a12]" aria-hidden />
+          <span className="text-sm font-semibold text-[#111112]">Период топа продаж на главной</span>
+        </div>
+        <p className="mb-3 text-xs leading-relaxed text-[#707075]">
+          {`Блок «Флагманы линейки» показывает лучший товар каждой группы (узлы коммутации, домофоны, коммутаторы, замки), «Популярное оборудование» — лидеров продаж. Оба считаются за этот период; в нём должно быть минимум две выгрузки остатков. Пустые даты — квартал по умолчанию${
+            pfDefault
+              ? ` (сейчас: ${pfDefault.from.split('-').reverse().join('.')} – ${pfDefault.to.split('-').reverse().join('.')} по дате последней выгрузки)`
+              : ''
+          }.`}
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="date"
+            className="sales-select"
+            value={pfFrom}
+            onChange={(e) => setPfFrom(e.target.value)}
+            aria-label="Начало периода для главной"
+          />
+          <span className="text-sm text-[#707075]">→</span>
+          <input
+            type="date"
+            className="sales-select"
+            value={pfTo}
+            onChange={(e) => setPfTo(e.target.value)}
+            aria-label="Конец периода для главной"
+          />
+          <button
+            type="button"
+            onClick={() => void saveFlagshipPeriod(pfFrom, pfTo)}
+            className="sales-csv font-semibold text-[#4a6b12]"
+          >
+            Сохранить
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPfFrom('')
+              setPfTo('')
+              void saveFlagshipPeriod('', '')
+            }}
+            className="sales-csv"
+          >
+            Сбросить (квартал по умолчанию)
+          </button>
+          {pfStatus && <span className="text-xs text-[#707075]">{pfStatus}</span>}
+        </div>
+      </div>
+
       <div className="sales-toolbar">
         <select
           className="sales-select"
