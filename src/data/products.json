@@ -132,7 +132,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-8gp-240-2g-ups-a",
@@ -267,7 +269,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-8gp-240-2g-ups-a",
@@ -384,7 +388,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-8gp-240-2g-ups-g",
@@ -529,7 +535,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-8gp-240-2g-ups-g",
@@ -666,7 +674,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-4gp-120-2g-ups-g",
@@ -811,7 +821,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-16gp-480-2g-ups-a",
@@ -956,7 +968,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-8gp-240-2g-a",
@@ -1089,7 +1103,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-8gp-240-2g-a",
@@ -1218,7 +1234,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-4gp-120-2g-a",
@@ -1351,7 +1369,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-8gp-240-2g-ups-l",
@@ -1492,7 +1512,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-8gp-240-2g-ups-f",
@@ -1633,7 +1655,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-4gp-120-2g-ups-f",
@@ -1774,7 +1798,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-8gp-240-2g-ups-b",
@@ -1922,7 +1948,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-l2-4gp-120-2g-ups-b",
@@ -2070,7 +2098,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-box-8gp-240-2g-ups-b",
@@ -2207,7 +2237,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-24gp-385-4g-a",
@@ -2303,7 +2335,8 @@
   "flags": {
    "isHit": true
   },
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-48gp-680-6xg-a",
@@ -2407,7 +2440,8 @@
   "flags": {
    "isHit": true
   },
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l3-48gp-680-6xg-a",
@@ -2509,7 +2543,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-8gp-120-2g-a",
@@ -2594,7 +2629,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-24gp-285-4g-a",
@@ -2678,7 +2714,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-8g-2g-a",
@@ -2759,7 +2797,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-16g-4g-a",
@@ -2840,7 +2879,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l2-24g-4g-a",
@@ -2923,7 +2963,8 @@
   "flags": {
    "isHit": true
   },
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l3-48g-6gx-a",
@@ -3007,7 +3048,8 @@
   "flags": {
    "isHit": true
   },
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-l3-16g-8g-4gx-a",
@@ -3084,7 +3126,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-4p-68-2-a",
@@ -3156,7 +3199,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-8p-120-2g-a",
@@ -3225,7 +3270,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-16p-285-2g-1g-a",
@@ -3296,7 +3343,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-4gp-68-2g-a",
@@ -3372,7 +3421,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-8gp-120-2g-a",
@@ -3452,7 +3503,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-16gp-285-2g-a",
@@ -3532,7 +3585,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-24p-285-2g-a",
@@ -3599,7 +3654,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-l2-4gp-120-2g-a",
@@ -3715,7 +3772,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-l2-8gp-240-2g-a",
@@ -3831,7 +3889,8 @@
   ],
   "status": "found",
   "flags": {},
-  "tnved": "8517620003"
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-l2-16gp-380-4g-a",
@@ -3929,7 +3988,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-l2-8gp-240bt-2g-a",
@@ -4010,7 +4071,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-l2-16gp-380bt-4g-a",
@@ -4091,7 +4154,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-8gp-240-2g-a",
@@ -4196,7 +4261,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-16gp-360-2g-a",
@@ -4281,7 +4348,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-i-4g-120-1g-ht",
@@ -4369,7 +4438,9 @@
    }
   ],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.11.122"
  },
  {
   "id": "sc-sfp-10g-lc-sm10-1330-1270-2",
@@ -4434,7 +4505,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-10g-lc-sm20-1330-1270-2",
@@ -4499,7 +4572,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-g-2lc-sm20-1310",
@@ -4564,7 +4639,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-10g-2lc-mm03-850",
@@ -4629,7 +4706,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-g-lc-sm20-1310-1550-2",
@@ -4694,7 +4773,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-10g-lc-sm40-1270-1330-2",
@@ -4759,7 +4840,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-g-lc-sm3-1310-1550-2",
@@ -4824,7 +4907,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-g-rj45",
@@ -4865,7 +4950,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620003",
+  "okpd2": "26.30.23.120"
  },
  {
   "id": "sc-sfp-i-g-2lc-sm10-1310",
@@ -4932,7 +5019,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-i-g-sc-sm3-1310-1550-2",
@@ -4997,7 +5086,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-sfp-i-g-sc-sm20-1310-1550-2",
@@ -5062,7 +5153,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517620002",
+  "okpd2": "26.30.23.112"
  },
  {
   "id": "sc-int-ac002-rss",
@@ -5177,7 +5270,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8536490000",
+  "okpd2": "27.12.24.160"
  },
  {
   "id": "sc-int-ac009-msb",
@@ -5234,7 +5329,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8536490000",
+  "okpd2": "27.12.24.160"
  },
  {
   "id": "sc-int-ac011-dsb",
@@ -5421,7 +5518,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d004-1-msb",
@@ -5534,7 +5633,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d004-2-mfb",
@@ -5643,7 +5744,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d004-2-msb",
@@ -5748,7 +5851,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d008-1-mfb",
@@ -5861,7 +5966,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d008-1-msb",
@@ -5974,7 +6081,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d100-1-msb",
@@ -6085,7 +6194,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d100-2-msb",
@@ -6200,7 +6311,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d100-3-mfb",
@@ -6317,7 +6430,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d100-3-msb",
@@ -6434,7 +6549,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d100-4-mfb",
@@ -6555,7 +6672,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d100-4-msb",
@@ -6676,7 +6795,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d200-1-mfb",
@@ -6793,7 +6914,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d200-1-msb",
@@ -6910,7 +7033,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d500-1-mfb",
@@ -7027,7 +7152,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-d500-1-msb",
@@ -7144,7 +7271,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-g010-1-axb",
@@ -7232,7 +7361,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517692000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-h01-lw",
@@ -7293,7 +7424,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517692000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-h02-lw",
@@ -7354,7 +7487,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517692000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-h11-lw",
@@ -7425,7 +7560,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517692000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-h12-lw",
@@ -7504,7 +7641,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517692000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-v007-2-lwb",
@@ -7611,7 +7750,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-v007-3-lnb",
@@ -7704,7 +7845,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-v010-1-anb",
@@ -7797,7 +7940,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-v010-1-awb",
@@ -7904,7 +8049,9 @@
   "status": "found",
   "flags": {
    "isHit": true
-  }
+  },
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "sc-int-v010-1-axb",
@@ -8001,7 +8148,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8517691000",
+  "okpd2": "26.30.23.143"
  },
  {
   "id": "rl-dcm-en2-00s",
@@ -8098,7 +8247,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8302600009",
+  "okpd2": "25.72.14.120"
  },
  {
   "id": "rl-dcm-en3-00s",
@@ -8195,7 +8346,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8302600009",
+  "okpd2": "25.72.14.120"
  },
  {
   "id": "rl-dcm-en4-00s",
@@ -8300,7 +8453,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8302600009",
+  "okpd2": "25.72.14.120"
  },
  {
   "id": "rl-dcm-en5-00s",
@@ -8397,7 +8552,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8302600009",
+  "okpd2": "25.72.14.120"
  },
  {
   "id": "rl-br180-lg",
@@ -8465,7 +8622,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-ls",
@@ -8532,7 +8691,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-lw",
@@ -8600,7 +8761,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-ug",
@@ -8668,7 +8831,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-us",
@@ -8736,7 +8901,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-uw",
@@ -8804,7 +8971,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-zg",
@@ -8871,7 +9040,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-zs",
@@ -8939,7 +9110,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br180-zw",
@@ -9007,7 +9180,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-lg",
@@ -9075,7 +9250,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-ls",
@@ -9132,7 +9309,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-lw",
@@ -9200,7 +9379,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-ug",
@@ -9268,7 +9449,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-us",
@@ -9336,7 +9519,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-uw",
@@ -9404,7 +9589,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-zg",
@@ -9472,7 +9659,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-zs",
@@ -9540,7 +9729,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br280-zw",
@@ -9608,7 +9799,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-lg",
@@ -9661,7 +9854,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-ls",
@@ -9729,7 +9924,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-lw",
@@ -9797,7 +9994,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-ug",
@@ -9865,7 +10064,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-us",
@@ -9933,7 +10134,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-uw",
@@ -10001,7 +10204,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-zg",
@@ -10058,7 +10263,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-zs",
@@ -10126,7 +10333,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-zw",
@@ -10194,7 +10403,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br500-lg",
@@ -10262,7 +10473,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br500-ls",
@@ -10319,7 +10532,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br500-lw",
@@ -10387,7 +10602,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br500-zg",
@@ -10455,7 +10672,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br500-zs",
@@ -10512,7 +10731,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br500-zw",
@@ -10579,7 +10800,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-em180-00g",
@@ -10664,7 +10887,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em180-00w",
@@ -10749,7 +10974,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em180-0sg",
@@ -10838,7 +11065,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em180-0sw",
@@ -10927,7 +11156,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em180-l0s",
@@ -11016,7 +11247,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em180-lss",
@@ -11105,7 +11338,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em280-l0g",
@@ -11198,7 +11433,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em280-l0s",
@@ -11291,7 +11528,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em280-l0w",
@@ -11384,7 +11623,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em280-lsg",
@@ -11477,7 +11718,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em280-lss",
@@ -11570,7 +11813,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em280-lsw",
@@ -11663,7 +11908,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em350-l0g",
@@ -11756,7 +12003,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em350-l0s",
@@ -11848,7 +12097,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em350-l0w",
@@ -11940,7 +12191,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em350-lsg",
@@ -12033,7 +12286,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em350-lss",
@@ -12126,7 +12381,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em350-lsw",
@@ -12219,7 +12476,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em500-l0s",
@@ -12307,7 +12566,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em500-lss",
@@ -12400,7 +12661,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em500-lsw",
@@ -12489,7 +12752,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-eml280-l0s",
@@ -12585,7 +12850,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-eml350-l0s",
@@ -12670,7 +12937,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-eml500-l0s",
@@ -12762,7 +13031,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-br280-lcs",
@@ -12802,7 +13073,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-br350-lcs",
@@ -12842,7 +13115,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "rl-em1200",
@@ -12911,7 +13186,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  },
  {
   "id": "rl-em500-lsg",
@@ -13008,6 +13285,8 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "8301401900",
+  "okpd2": "27.33.13.163"
  }
 ]
