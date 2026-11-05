@@ -116,6 +116,17 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                   <dt className="shrink-0">Код товара:</dt>
                   <dd className="font-mono font-medium text-[#111112]">{p.sku}</dd>
                 </div>
+                {/* ОКПД2/ТНВЭД — в каждой карточке (задача владельца 06.11); коды лежат
+                    в статическом каталоге products.json (окопд2/тнвэд-таблиц в БД нет —
+                    проверено живым пробингом PostgREST 06.11), нет значения — «не назначен». */}
+                <div className="flex gap-2">
+                  <dt className="shrink-0">Код ОКПД 2:</dt>
+                  <dd className={p.okpd2 ? 'font-mono font-medium text-[#111112]' : 'text-[#85878d]'}>{p.okpd2 || 'не назначен'}</dd>
+                </div>
+                <div className="flex gap-2">
+                  <dt className="shrink-0">Код ТН ВЭД:</dt>
+                  <dd className={p.tnved ? 'font-mono font-medium text-[#111112]' : 'text-[#85878d]'}>{p.tnved || 'не назначен'}</dd>
+                </div>
                 <div className="flex gap-2">
                   <dt className="shrink-0">Производитель:</dt>
                   <dd className="font-medium text-[#111112]">{p.section === 'rlock' ? 'R-Lock · семейство брендов ПТК, Россия' : 'SpaceCam · ООО «Технолайт», Россия'}</dd>

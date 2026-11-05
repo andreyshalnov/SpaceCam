@@ -15,6 +15,8 @@ export interface DocItem {
 export interface Product {
   id: string
   sku: string
+  okpd2?: string
+  tnved?: string
   title: string
   section: SectionId
   subcategory: string
