@@ -25,7 +25,7 @@ const NAV = [
 
 export function Logo() {
   return (
-    <a href="#/" className="inline-flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[#a6ce39] rounded" aria-label="SpaceCam — на главную">
+    <a href="#/" className="inline-flex shrink-0 items-center outline-none focus-visible:ring-2 focus-visible:ring-[#a6ce39] rounded" aria-label="SpaceCam — на главную">
       <img src={withBase('/logo.png')} alt="SpaceCam" className="h-9 w-auto sm:h-10" decoding="async" />
     </a>
   )
@@ -40,12 +40,12 @@ export function AccountButton({ onNavigate }: { onNavigate?: () => void }) {
         <a
           href="#/admin-prices"
           onClick={onNavigate}
-          className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]"
+          className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]"
           title="Цены и наличие"
         >
           <Tag className="h-4 w-4 text-[#a6ce39]" aria-hidden /> Цены
         </a>
-        <span className="max-w-[160px] truncate text-sm font-medium text-[#111112]" title={account.login}>
+        <span className="max-w-24 truncate text-sm font-medium text-[#111112]" title={account.login}>
           {account.login}
         </span>
         <button
@@ -62,7 +62,7 @@ export function AccountButton({ onNavigate }: { onNavigate?: () => void }) {
     <a
       href="#/login"
       onClick={onNavigate}
-      className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]"
+      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]"
     >
       <KeyRound className="h-4 w-4 text-[#5c7a12]" aria-hidden /> Войти
     </a>
@@ -99,19 +99,22 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Logo />
 
-        {/* Desktop */}
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Основная навигация">
-          <a href="#/about" className="rounded-md px-3 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]">
+        {/* Desktop: с xl (1280) — ниже бургер. При lg шапка переполнялась
+            (логотип 165 + меню 734 + аккаунт-блок 314 у авторизованного > 1232
+            потолка max-w-7xl), флекс сжимал логотип-ссылку без shrink-0 —
+            дисторсия — и обрезал CTA (скрин владельца 06.11). */}
+        <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Основная навигация">
+          <a href="#/about" className="whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]">
             О бренде
           </a>
-          <a href="#/news" className="rounded-md px-3 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]">
+          <a href="#/news" className="whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]">
             Новости
           </a>
           <div className="relative" ref={ddRef}>
             <button
               type="button"
               onClick={() => setProdOpen((v) => !v)}
-              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-[#111112] outline-none transition-colors hover:bg-[#f4f6ec] focus-visible:ring-2 focus-visible:ring-[#a6ce39]"
+              className="inline-flex items-center gap-1 whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] outline-none transition-colors hover:bg-[#f4f6ec] focus-visible:ring-2 focus-visible:ring-[#a6ce39]"
               aria-expanded={prodOpen}
               aria-haspopup="menu"
             >
@@ -133,13 +136,13 @@ export function Header() {
             )}
           </div>
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="rounded-md px-3 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]">
+            <a key={n.href} href={n.href} className="whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]">
               {n.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden shrink-0 items-center gap-2.5 xl:flex">
           <AccountButton />
           <Button variant="default" href="#/where">Запросить КП</Button>
         </div>
@@ -148,7 +151,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#e6e8de] lg:hidden"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#e6e8de] xl:hidden"
           aria-label="Открыть меню"
         >
           <Menu className="h-5 w-5" aria-hidden />
@@ -160,7 +163,7 @@ export function Header() {
         для fixed-потомков, и «fixed inset-0» считался от 64-пиксельной шапки вместо вьюпорта —
         меню схлопывалось в полоску поверх бургера и закрывалось его же крестиком (баг от 03.11). */}
     {open && (
-      <div className="fixed inset-0 z-[70] lg:hidden">
+      <div className="fixed inset-0 z-[70] xl:hidden">
         <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} aria-hidden />
         <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] overflow-y-auto bg-white p-4 shadow-2xl">
           <div className="mb-2 flex items-center justify-between">
