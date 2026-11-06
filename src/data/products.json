@@ -5188,7 +5188,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "sc-int-ac003-rfs",
@@ -5221,7 +5223,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "sc-int-ac008-msw",
@@ -5368,7 +5372,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7326909409",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "sc-int-ac012-dss",
@@ -5405,7 +5411,9 @@
   ],
   "documents": [],
   "status": "found",
-  "flags": {}
+  "flags": {},
+  "tnved": "7616999008",
+  "okpd2": "25.72.14.190"
  },
  {
   "id": "sc-int-d004-1-mfb",
