@@ -181,6 +181,21 @@
 }
 .sales-table td.num,
 .sales-table th.num {
-  text-align: right;
+  text-align: center;
   font-variant-numeric: tabular-nums;
+}
+/* Длинные текстовые колонки («Наименование», «Раздел») — ограниченная ширина
+   с многоточием (полное название — в подсказке при наведении и в CSV):
+   без этого nowrap-колонка распирает таблицу и числовые поля уходят за экран. */
+.sales-table .ttl-clip {
+  max-width: 22rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sales-table .sec-clip {
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

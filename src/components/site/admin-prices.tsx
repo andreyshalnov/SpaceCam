@@ -924,8 +924,16 @@ function SalesTab({ pd, products }: { pd: PriceData; products: Product[] }) {
               {sorted.map((r) => (
                 <tr key={`sku:${r.sku}`}>
                   <td>{r.sku.toUpperCase()}</td>
-                  <td>{r.title}</td>
-                  <td>{r.section || '—'}</td>
+                  <td>
+                    <div className="ttl-clip" title={r.title}>
+                      {r.title || '—'}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="sec-clip" title={r.section || ''}>
+                      {r.section || '—'}
+                    </div>
+                  </td>
                   <td className="num">{fmt(r.start)}</td>
                   <td className="num">{fmt(r.end)}</td>
                   <td className="num" style={r.sold > 0 ? { fontWeight: 700, color: '#4a6b12' } : undefined}>
@@ -1480,6 +1488,7 @@ export function ReconTab({ pd }: { pd: PriceData }) {
   const [wh, setWh] = useState('all')
   const [period, setPeriod] = useState({ from: '', to: '' })
   const [query, setQuery] = useState('')
+  const [sortBy, setSortBy] = useState<'sku' | 'd_desc' | 'd_asc'>('sku')
   const [impMsg, setImpMsg] = useState('')
   const [parsed, setParsed] = useState<{ date: string; rows: number; warehouses: number; skipped: string[] } | null>(null)
   const [impRows, setImpRows] = useState<SnapshotRow[]>([])
@@ -1670,6 +1679,16 @@ export function ReconTab({ pd }: { pd: PriceData }) {
     }
   }, [snap, period, wh, query, productBySku])
 
+  // Сортировка «Сверки наличия»: по артикулу (как раньше) или по «Изменению»
+  // (d_desc: от наибольшей прибыли к наибольшей убыли; d_asc — наоборот,
+  // самая большая убыль сверху).
+  const sortedRows = useMemo(() => {
+    const list = [...view.rows]
+    if (sortBy === 'd_desc') return list.sort((a, b) => b.d - a.d)
+    if (sortBy === 'd_asc') return list.sort((a, b) => a.d - b.d)
+    return list.sort((a, b) => (a.sku.toUpperCase() < b.sku.toUpperCase() ? -1 : 1))
+  }, [view.rows, sortBy])
+
   const fmt = (n: number) => Number(n || 0).toLocaleString('ru-RU')
   const d2s = (d: string) => String(d || '').replace(/-/g, '').slice(0, 8)
 
@@ -1689,7 +1708,7 @@ export function ReconTab({ pd }: { pd: PriceData }) {
 
   function downloadCsv() {
     try {
-      const lines = view.rows.map((r) =>
+      const lines = sortedRows.map((r) =>
         [r.sku.toUpperCase(), r.title, r.s0, r.e0, r.d].map((v) => String(v).replace(/;/g, ',')).join(';'),
       )
       const head = 'Артикул;Наименование;Остаток на начало;Остаток на конец;Изменение'
@@ -1740,6 +1759,26 @@ export function ReconTab({ pd }: { pd: PriceData }) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Поиск по артикулу или названию"
         />
+        <div className="flex gap-1 rounded-md border border-[#e6e8de] bg-white p-1">
+          {(
+            [
+              ['sku', 'По артикулу'],
+              ['d_desc', 'Изменение ↓'],
+              ['d_asc', 'Изменение ↑'],
+            ] as const
+          ).map(([v, l]) => (
+            <button
+              key={v}
+              type="button"
+              onClick={() => setSortBy(v)}
+              className={`rounded px-3 py-1.5 text-sm font-medium ${
+                sortBy === v ? 'bg-[#f4f8e4] text-[#4a6b12]' : 'text-[#707075]'
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
         <button type="button" className="sales-csv" onClick={downloadCsv}>
           Скачать CSV
         </button>
@@ -1844,10 +1883,14 @@ export function ReconTab({ pd }: { pd: PriceData }) {
               </tr>
             </thead>
             <tbody>
-              {view.rows.map((r) => (
+              {sortedRows.map((r) => (
                 <tr key={r.sku}>
                   <td>{r.sku.toUpperCase()}</td>
-                  <td>{r.title || '—'}</td>
+                  <td>
+                    <div className="ttl-clip" title={r.title}>
+                      {r.title || '—'}
+                    </div>
+                  </td>
                   <td className="num">{fmt(r.s0)}</td>
                   <td className="num">{fmt(r.e0)}</td>
                   <td className="num">
