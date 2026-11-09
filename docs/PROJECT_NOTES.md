@@ -144,6 +144,19 @@ INSERT в `news` → 42501; UPDATE → 0 строк. Цены — по `sc_allow
   prices 207 (только тип 1 «95 Розница»), price_types 13, news 2, sc_popular_products 122;
   stock/warehouses/profiles/projects/stock_snapshots — RLS отдаёт 0 (см. `_summary.json`).
   Повтор: скрипт песочницы `backup_supabase_anon.py <dir> [ключ]` (постранично, со статусами).
+- **Полный дамп v4 от 09.11.2026 через MAPI** (владелец выдал `sbp_…`-токен в чате,
+  токен одноразовый, нигде не хранится): скрипт `docs/backup/backup_supabase_mapi_v4.py`
+  (запуск `SBP_TOKEN=sbp_… python3 docs/backup/backup_supabase_mapi_v4.py <dir>`).
+  27 файлов, 0 ошибок, sha256 27/27 OK; 16 таблиц public = 6886 строк (prices 2487,
+  stock_snapshots 1862, object_spec_items 1094, objects 257, sc_stock_backup_20261020 327,
+  stock 325, warehouses 17, user_price_types 37, object_types 14, profiles 14,
+  price_types 13, news 2, app_settings 1, object_participants 0, projects 0),
+  вью `objects_overview` 257 и `sc_popular_products` 29 (+ pg-определения обеих),
+  `auth.users` 14 (bcrypt 14/14) + `auth.identities` 14, схема (колонки/констрейнты/
+  триггеры), 47 RLS-политик, 632 гранта public+auth. Сверка count(*) по каждой
+  таблице — совпало; профилей 14 (на 03.11 было 6), `sc_popular_products` теперь
+  вью (29 строк) после применения владельцем 05.11. Дампы у владельца
+  (`supabase_backup_20261109.zip`, 185 КиБ), в публичный репо НЕ класть.
 - История остатков (5 срезов) в БД появляется после запуска SQL-скрипта владельцем
   (Supabase SQL Editor) либо после загрузки 5 xlsx-файлов через «Сверку наличия».
 - Объекты строительства (03.11.2026): ключ DaData владелец внёс сам 03.11 11:58

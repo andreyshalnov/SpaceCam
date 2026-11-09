@@ -95,7 +95,7 @@
 
 | Секрет | Где живёт | Ротация |
 | --- | --- | --- |
-| Management API токен (`sbp_…`) | владельцем перевыпущен 04.11; копии в песочнице ПОТЕРЯНЫ при откатах (состояние на 06.11) — дамп-скрипт `scripts/backup_supabase_mapi_v4.py` ждёт SBP_TOKEN из окружения | supabase.com → Access Tokens |
+| Management API токен (`sbp_…`) | владельцем перевыпущен 09.11, использован ОДНОРАЗОВО для дампа v4 (09.11, 0 ошибок), нигде не сохранялся; повторный дамп — владелец выдаёт токен в чате снова. Скрипт теперь в репо: `docs/backup/backup_supabase_mapi_v4.py` (запуск: `SBP_TOKEN=sbp_… python3 docs/backup/backup_supabase_mapi_v4.py <dir>`) | supabase.com → Access Tokens |
 | service_role ключ (`eyJ…`) | у владельца (копии в песочнице потеряны при откатах 04.11); бэкапы теперь можно делать MAPI-токеном через SQL (скрипт `scripts/backup_supabase_mapi_v3.py`) | **рекомендована ротация** |
 | publishable ключ | `src/lib/supabase.ts` | публичный по дизайну, не секрет |
 | пароли 8 партнёров | `accounts_spacecam_20261103.csv` у владельца | смена — через Auth admin API |
@@ -136,6 +136,19 @@ RLS объектов: admin / владелец / соучастник — пол
   `scripts/backup_supabase_mapi_v4.py` готов (таблицы + auth.users с bcrypt +
   вью + RLS + гранты + manifest с sha256), но MAPI-токен `sbp_…` потерян при
   откатах песочницы — ждём перевыпуска от владельца, дамп одной командой.
+- **09.11 — дамп БД v4 ВЫПОЛНЕН** (владелец выдал `sbp_…` в чате, песочница
+  восстановлена из GitHub main `4e67e9d`): `download/supabase_backup_20261109/`
+  + `supabase_backup_20261109.zip` (185 КиБ) у владельца. Состав: 16 таблиц public
+  (6886 строк: prices 2487, object_spec_items 1094, stock_snapshots 1862,
+  objects 257, stock 325, sc_stock_backup_20261020 327, warehouses 17,
+  user_price_types 37, profiles 14, price_types 13, object_types 14, news 2,
+  app_settings 1, object_participants 0, projects 0) + 2 вью с определениями
+  (`objects_overview` 257, `sc_popular_products` 29 — теперь вью, см. 05.11) +
+  `auth.users` 14 (bcrypt 14/14) + `auth.identities` 14 + колонки/констрейнты/
+  триггеры + **47 RLS-политик** (все 15 RLS-таблиц) + **632 гранта** (public+auth).
+  Манифест: 27 файлов, **sha256 27/27 OK, 0 ошибок**, count(*)-сверка по каждой
+  таблице. Скрипт закреплён в репо (`docs/backup/backup_supabase_mapi_v4.py`),
+  STATE/PROJECT_NOTES обновлены (`<этот коммит>`).
 - Дампы содержат e-mail и внутренние цены → в публичный репо не класть.
 
 ## 8. Инциденты — чтобы не повторить
