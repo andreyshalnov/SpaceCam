@@ -8253,7 +8253,15 @@
    "/products/rlock/rl-dcm-en2-00s-5.jpg",
    "/products/rlock/rl-dcm-en2-00s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/55/5b/iwNFgKpCem6RYnhMK7lb.pdf",
+    "public_path": "/docs/rl-dcm-en2-00s__RL-DCM-EN2-00S__pasport.pdf",
+    "size_kb": 1684
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8302600009",
@@ -8352,7 +8360,15 @@
    "/products/rlock/rl-dcm-en3-00s-5.jpg",
    "/products/rlock/rl-dcm-en3-00s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/b8/2c/NJibnxrGOn2rGzSQ2Ium.pdf",
+    "public_path": "/docs/rl-dcm-en3-00s__RL-DCM-EN3-00S__pasport.pdf",
+    "size_kb": 1684
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8302600009",
@@ -8459,7 +8475,15 @@
    "/products/rlock/rl-dcm-en4-00s-5.jpg",
    "/products/rlock/rl-dcm-en4-00s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/f9/f7/b8uNcP8fwHChA87lJND6.pdf",
+    "public_path": "/docs/rl-dcm-en4-00s__RL-DCM-EN4-00S__pasport.pdf",
+    "size_kb": 1684
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8302600009",
@@ -8558,7 +8582,15 @@
    "/products/rlock/rl-dcm-en5-00s-5.jpg",
    "/products/rlock/rl-dcm-en5-00s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/0f/23/dV9WHluxpX1AcrKdihTb.pdf",
+    "public_path": "/docs/rl-dcm-en5-00s__RL-DCM-EN5-00S__pasport.pdf",
+    "size_kb": 1684
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8302600009",
@@ -10893,7 +10925,15 @@
    "/products/rlock/rl-em180-00g-5.jpg",
    "/products/rlock/rl-em180-00g-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/91/76/3yPH23O8Ab7DEaJjvZAr.pdf",
+    "public_path": "/docs/rl-em180-00g__RL-EM180-00G__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -10980,7 +11020,15 @@
    "/products/rlock/rl-em180-00w-5.jpg",
    "/products/rlock/rl-em180-00w-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/91/fc/MlNnt3AW3qTHbdQGVJ5A.pdf",
+    "public_path": "/docs/rl-em180-00w__RL-EM180-00W__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11071,7 +11119,15 @@
    "/products/rlock/rl-em180-0sg-5.jpg",
    "/products/rlock/rl-em180-0sg-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/7c/3d/EnsPB7QOlzXZhZO2BZBm.pdf",
+    "public_path": "/docs/rl-em180-0sg__RL-EM180-0SG__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11162,7 +11218,15 @@
    "/products/rlock/rl-em180-0sw-5.jpg",
    "/products/rlock/rl-em180-0sw-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/fe/b3/nZi42Iu5JFZam4o9bGTL.pdf",
+    "public_path": "/docs/rl-em180-0sw__RL-EM180-0SW__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11253,7 +11317,15 @@
    "/products/rlock/rl-em180-l0s-5.jpg",
    "/products/rlock/rl-em180-l0s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/13/46/T13AdpU7mAD2kbqcB3on.pdf",
+    "public_path": "/docs/rl-em180-l0s__RL-EM180-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11344,7 +11416,15 @@
    "/products/rlock/rl-em180-lss-5.jpg",
    "/products/rlock/rl-em180-lss-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/77/39/UYS0yhgtA8VuGHr1L2Hg.pdf",
+    "public_path": "/docs/rl-em180-lss__RL-EM180-LSS__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11439,7 +11519,15 @@
    "/products/rlock/rl-em280-l0g-5.jpg",
    "/products/rlock/rl-em280-l0g-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/2e/25/sNuJDTaHUisWz153Oq00.pdf",
+    "public_path": "/docs/rl-em280-l0g__RL-EM280-L0G__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11534,7 +11622,15 @@
    "/products/rlock/rl-em280-l0s-5.jpg",
    "/products/rlock/rl-em280-l0s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/49/0b/6Snfj7p4u4dzL3YxzL47.pdf",
+    "public_path": "/docs/rl-em280-l0s__RL-EM280-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11629,7 +11725,15 @@
    "/products/rlock/rl-em280-l0w-5.jpg",
    "/products/rlock/rl-em280-l0w-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/30/75/nrvMNqC1FhaiKkEBjjxd.pdf",
+    "public_path": "/docs/rl-em280-l0w__RL-EM280-L0W__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11724,7 +11828,15 @@
    "/products/rlock/rl-em280-lsg-5.jpg",
    "/products/rlock/rl-em280-lsg-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/d3/87/25x4acJ3O57Q4U5msbIF.pdf",
+    "public_path": "/docs/rl-em280-lsg__RL-EM280-LSG__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11819,7 +11931,15 @@
    "/products/rlock/rl-em280-lss-5.jpg",
    "/products/rlock/rl-em280-lss-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/f2/25/fgdj6UVKOUrCqnZ7zVYN.pdf",
+    "public_path": "/docs/rl-em280-lss__RL-EM280-LSS__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -11914,7 +12034,15 @@
    "/products/rlock/rl-em280-lsw-5.jpg",
    "/products/rlock/rl-em280-lsw-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/76/b9/WpmsKmEErNNWpXyJmYju.pdf",
+    "public_path": "/docs/rl-em280-lsw__RL-EM280-LSW__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12009,7 +12137,15 @@
    "/products/rlock/rl-em350-l0g-5.jpg",
    "/products/rlock/rl-em350-l0g-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/d8/d6/aMl6R5iDtUub5fJFs8Ns.pdf",
+    "public_path": "/docs/rl-em350-l0g__RL-EM350-L0G__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12103,7 +12239,15 @@
    "/products/rlock/rl-em350-l0s-4.jpg",
    "/products/rlock/rl-em350-l0s-5.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/8c/60/OUgHbmXEmDCsvqmBxNcF.pdf",
+    "public_path": "/docs/rl-em350-l0s__RL-EM350-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12197,7 +12341,15 @@
    "/products/rlock/rl-em350-l0w-4.jpg",
    "/products/rlock/rl-em350-l0w-5.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/d5/da/4vZVI6MhUfNvx7bL29zu.pdf",
+    "public_path": "/docs/rl-em350-l0w__RL-EM350-L0W__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12292,7 +12444,15 @@
    "/products/rlock/rl-em350-lsg-5.jpg",
    "/products/rlock/rl-em350-lsg-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/6a/6c/2eayvGiVZTr2FnXVePwV.pdf",
+    "public_path": "/docs/rl-em350-lsg__RL-EM350-LSG__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12387,7 +12547,15 @@
    "/products/rlock/rl-em350-lss-5.jpg",
    "/products/rlock/rl-em350-lss-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/1e/4f/TTOxjAiYeH5ZlXoH3rhN.pdf",
+    "public_path": "/docs/rl-em350-lss__RL-EM350-LSS__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12482,7 +12650,15 @@
    "/products/rlock/rl-em350-lsw-5.jpg",
    "/products/rlock/rl-em350-lsw-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/6c/56/DPqRWNmXVDqWXXgvGYrw.pdf",
+    "public_path": "/docs/rl-em350-lsw__RL-EM350-LSW__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12572,7 +12748,15 @@
    "/products/rlock/rl-em500-l0s-4.jpg",
    "/products/rlock/rl-em500-l0s-5.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/30/4b/w61eJ2NI8O8LeAszKPwX.pdf",
+    "public_path": "/docs/rl-em500-l0s__RL-EM500-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12667,7 +12851,15 @@
    "/products/rlock/rl-em500-lss-5.jpg",
    "/products/rlock/rl-em500-lss-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/98/c0/EOQoKzJAZ67TUxvGwYLV.pdf",
+    "public_path": "/docs/rl-em500-lss__RL-EM500-LSS__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12758,7 +12950,15 @@
    "/products/rlock/rl-em500-lsw-5.jpg",
    "/products/rlock/rl-em500-lsw-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/17/92/qXUcADvhRH3TjKNHieEU.pdf",
+    "public_path": "/docs/rl-em500-lsw__RL-EM500-LSW__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12856,7 +13056,15 @@
    "/products/rlock/rl-eml280-l0s-4.jpg",
    "/products/rlock/rl-eml280-l0s-5.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/b3/57/WbTQN1FQChCIpgZk54Rx.pdf",
+    "public_path": "/docs/rl-eml280-l0s__RL-EML280-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -12943,7 +13151,15 @@
    "/products/rlock/rl-eml350-l0s-5.jpg",
    "/products/rlock/rl-eml350-l0s-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/d4/1c/gJbcy4r74RfcmUQarRjy.pdf",
+    "public_path": "/docs/rl-eml350-l0s__RL-EML350-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -13037,7 +13253,15 @@
    "/products/rlock/rl-eml500-l0s-4.jpg",
    "/products/rlock/rl-eml500-l0s-5.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/0b/d1/WJHaVZt7iUI8CzrbMt6m.pdf",
+    "public_path": "/docs/rl-eml500-l0s__RL-EML500-L0S__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",
@@ -13291,7 +13515,15 @@
    "/products/rlock/rl-em500-lsg-5.jpg",
    "/products/rlock/rl-em500-lsg-6.jpg"
   ],
-  "documents": [],
+  "documents": [
+   {
+    "type": "passport",
+    "name": "Паспорт",
+    "url": "https://storage.layta.ru/catalog/products/2b/f6/gNgzlnp8h79B5Ct7TdJp.pdf",
+    "public_path": "/docs/rl-em500-lsg__RL-EM500-LSG__pasport.pdf",
+    "size_kb": 1935
+   }
+  ],
   "status": "found",
   "flags": {},
   "tnved": "8301401900",

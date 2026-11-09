@@ -17,11 +17,24 @@ function leadTime(section: string): string {
   return section === 'nodes' ? 'от 2 недель' : 'от 3 мес.'
 }
 
-const CERTS = [
+// Сертификация/гарантия (задача владельца 09.11):
+//  - ТУ и декларация ЕАЭС — только у «Узлов коммутации» (nodes), в остальных
+//    карточках убраны;
+//  - гарантия: домофоны 12 мес., коммерческие коммутаторы 36 мес.,
+//    промышленные коммутаторы 60 мес., замки и доводчики 12 мес.;
+//    узлы коммутации — без изменений («до 60 месяцев»).
+const CERTS_NODES = [
   { icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'ТУ 26.30.23-002-02123310-2023' },
   { icon: <ShieldCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'Декларация ЕАЭС N RU Д-RU.РА10.В.82587/23' },
   { icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'Гарантия до 60 месяцев' },
 ]
+
+function warrantyMonths(p: Product): number {
+  if (p.section === 'intercom') return 12
+  if (p.section === 'rlock') return 12
+  // switches: промышленные подсекции — 60, остальные (коммерческие и SFP) — 36
+  return /^промышленн/i.test(p.subcategory || '') ? 60 : 36
+}
 
 function docMailto(sku: string, what: string, brand = 'SpaceCam') {
   const subject = `${what}: ${sku}`
@@ -158,15 +171,19 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                   )
                 ) : null}
               </div>
+              {/* Уровни цен — свёрнуты под шапку, как «Наличие по складам РФ» (09.11) */}
               {livePrices.length > 1 && (
-                <dl className="mt-3 grid max-w-md grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-sm">
-                  {livePrices.slice(1).map(({ type, value }) => (
-                    <React.Fragment key={type.id}>
-                      <dt className="text-[#707075]">{shortTypeName(type.name)}</dt>
-                      <dd className="text-right font-semibold text-[#111112]">{formatPrice(value)}</dd>
-                    </React.Fragment>
-                  ))}
-                </dl>
+                <details className="mt-3 max-w-md rounded-lg border border-[#e6e8de] bg-[#fafaf6] px-4 py-2.5">
+                  <summary className="cursor-pointer text-sm font-semibold text-[#111112]">Все уровни цен</summary>
+                  <dl className="mt-2 grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-sm">
+                    {livePrices.map(({ type, value }) => (
+                      <React.Fragment key={type.id}>
+                        <dt className="text-[#707075]">{shortTypeName(type.name)}</dt>
+                        <dd className="text-right font-semibold text-[#111112]">{formatPrice(value)}</dd>
+                      </React.Fragment>
+                    ))}
+                  </dl>
+                </details>
               )}
               {pd.ready && pd.canSeeStock && pd.warehouses.length > 0 && stockSum != null && (
                 <details className="mt-3 max-w-md rounded-lg border border-[#e6e8de] bg-[#fafaf6] px-4 py-2.5">
@@ -233,24 +250,26 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                         </li>
                       )
                     })}
+                    <li>
+                      <a
+                        href={docMailto(p.sku, 'Копии сертификатов', p.section === 'rlock' ? 'R-Lock' : 'SpaceCam')}
+                        className="inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-[#5c7a12] hover:underline"
+                      >
+                        <Mail className="h-4 w-4" aria-hidden />
+                        Запросить копии сертификатов
+                      </a>
+                    </li>
                   </ul>
-                ) : (
-                  <p className="mt-3 text-xs leading-relaxed text-[#707075]">
-                    Паспорт, руководство по эксплуатации и схемы включения для этой позиции — по запросу.
-                  </p>
-                )}
-                <a
-                  href={docMailto(p.sku, docs.length > 0 ? 'Копии сертификатов' : 'Документация и сертификаты', p.section === 'rlock' ? 'R-Lock' : 'SpaceCam')}
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5c7a12] hover:underline"
-                >
-                  <Mail className="h-4 w-4" aria-hidden />
-                  {docs.length > 0 ? 'Запросить копии сертификатов' : 'Запросить документацию и сертификаты'}
-                </a>
+                ) : null}
+                {/* Нет документов — раздел пуст (без «по запросу», задача 09.11) */}
               </div>
 
-              {/* Сертификация */}
+              {/* Сертификация и гарантия */}
               <div className="mt-5 flex flex-wrap items-center gap-2">
-                {CERTS.map((c) => (
+                {(p.section === 'nodes'
+                  ? CERTS_NODES
+                  : [{ icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: `Гарантия ${warrantyMonths(p)} месяцев` }]
+                ).map((c) => (
                   <Badge key={c.text} className="border border-[#e6e8de] bg-white text-[#4b4d45]">
                     {c.icon} {c.text}
                   </Badge>
