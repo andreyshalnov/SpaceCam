@@ -22,7 +22,9 @@ export function parseHash(hash: string): Route {
   if (!h) return { page: 'home' }
   const parts = h.split('/')
   if (parts[0] === 'product' && parts[1]) return { page: 'product', id: decodeURIComponent(parts[1]) }
-  if (['intercom', 'switches', 'nodes', 'rlock'].includes(parts[0])) return { page: 'section', section: parts[0] }
+  // ТЗ v2.0: 8 плоских пунктов меню «Продукция» (4 исходных + 4 новых группы ПТК / VIM)
+  if (['intercom', 'switches', 'nodes', 'rlock', 'ptk-sks', 'ptk-akb', 'vim-akb', 'ptk-okl'].includes(parts[0]))
+    return { page: 'section', section: parts[0] }
   if (['about', 'projects', 'support', 'where', 'solutions', 'project-reg', 'login', 'admin-prices', 'news'].includes(parts[0]))
     return { page: parts[0] as 'about' }
   return { page: 'notfound' }
@@ -41,7 +43,8 @@ export function useHashRoute(): Route {
   return route
 }
 
-export function formatPrice(n: number): string {
+export function formatPrice(n: number | null | undefined): string {
+  if (n === null || n === undefined) return 'Цена по запросу'
   const rounded = Math.round(n)
   return rounded.toLocaleString('ru-RU') + ' ₽'
 }

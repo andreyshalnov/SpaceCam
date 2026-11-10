@@ -1,24 +1,45 @@
 export type Spec = { name: string; value: string };
 export type Doc = { type?: string; name?: string; url?: string; public_path?: string; size_kb?: number };
+
+// ТЗ v2.0 (10.11.2026): расширение каталога — 4 группы ПТК / VIM.
+// Слои наполнения: full — полная карточка (описание/ТХ/фото/документы),
+// registry — позиция реестра ОКЛ (прайс ∪ каталоги ptcab.ru, компактный рендер).
+export type ProductSection =
+  | "intercom" | "switches" | "nodes" | "rlock"
+  | "ptk-sks" | "ptk-akb" | "vim-akb" | "ptk-okl";
+
 export type Product = {
   id: string;
   sku: string;
   okpd2?: string;
   tnved?: string;
   title: string;
-  section: "intercom" | "switches" | "nodes" | "rlock";
+  section: ProductSection;
   subcategory: string;
   description: string;
   features: string[];
   specs: Spec[];
-  price: number;
+  price: number | null;                       // null → «Цена по запросу» + CTA «Запросить КП»
+  priceUnit?: "шт" | "м" | "бух" | "рулон" | "компл";    // единица из прайса ОКЛ
+  priceTiers?: { minQty: number; price: number }[];     // РЕЗЕРВ под каскады цен; v1 не рендерит
+  priceSource?: "layta" | "ptcab-price-2025-09-18" | "ptcab-catalog"; // аудит источника цены
   stock_qty: number;
-  stock_status: "in_stock" | "pre_order";
+  stock_status: "in_stock" | "pre_order";     // легаси-поле исходных разделов
+  stockStatus?: "in_stock" | "order";         // ТЗ v2.0; у старых карточек дефолт из stock_status
+  layer?: "full" | "registry";                // у старых карточек дефолт = "full"
   images: string[];
   documents: Doc[];
-  status: "found" | "placeholder";
+  status: "found" | "active" | "placeholder"; // placeholder = SKU только из презентации производителя
   flags: { isHit?: boolean; isNew?: boolean };
 };
+
+// Разделы, добавленные ТЗ v2.0 (в них не рендерится числитель остатков и нет данных в базе цен)
+export const NEW_SECTIONS: ProductSection[] = ["ptk-sks", "ptk-akb", "vim-akb", "ptk-okl"];
+
+export function stockOf(p: Product): "in_stock" | "order" {
+  if (p.stockStatus) return p.stockStatus;
+  return p.stock_status === "in_stock" ? "in_stock" : "order";
+}
 
 export const SECTIONS = [
   {
@@ -48,6 +69,34 @@ export const SECTIONS = [
     title: "Замки и доводчики R-Lock",
     desc: "Электромагнитные замки 180–1200 кг (в том числе сдвиговые врезные), дверные доводчики EN2–EN5, кронштейны и уголки для монтажа. Комплектация СКУД на дверях любого типа: металлических, деревянных, из профиля.",
     bullets: ["Электромагнитные замки 180–1200 кг", "Доводчики EN2–EN5, −40…+50 °C", "Кронштейны L/Z/U для любых дверей"],
+  },
+  {
+    id: "ptk-sks",
+    href: "#/ptk-sks",
+    title: "СКС ПожТехКабель (ПТК)",
+    desc: "Структурированные кабельные системы ТМ ПожТехКабель: LAN-кабели кат. 5e/6, патч-панели и патч-корды, модули Keystone, PDU 19″, оптика и телекоммуникационные шкафы 6–42U.",
+    bullets: ["LAN-кабели U/UTP, F/UTP кат. 5e/6", "Шкафы настенные 6–18U и напольные 22–42U", "PDU 19″, оптика, инструмент"],
+  },
+  {
+    id: "ptk-akb",
+    href: "#/ptk-akb",
+    title: "АКБ ПТК (PTK-BATTERY)",
+    desc: "Свинцово-кислотные аккумуляторы AGM 12 В ТМ ПожТехКабель (PTK-BATTERY): ёмкости 1,2–100 Ач для систем безопасности, домофонии и ИБП.",
+    bullets: ["Технология AGM, 12 В", "Ёмкости 1,2–100 Ач (артикулы 412-XXX)", "Декларация ЕАЭС до 21.04.2027"],
+  },
+  {
+    id: "vim-akb",
+    href: "#/vim-akb",
+    title: "АКБ VIM",
+    desc: "Аккумуляторы AGM 12 В отдельного бренда VIM: экономичная серия 1,2–40 Ач для видеонаблюдения, СКУД и домофонии.",
+    bullets: ["Технология AGM, 12 В", "Ёмкости 1,2–40 Ач", "Экономичный ценовой сегмент"],
+  },
+  {
+    id: "ptk-okl",
+    href: "#/ptk-okl",
+    title: "ОКЛ PTK-Line (ПТК)",
+    desc: "Огнестойкие кабельные линии PTK-Line ТМ ПожТехКабель: держатели ДМОУ, лотки ЛМПО/ЛМНО/ЛМПРО, монтажные коробки КМОП/КМОМ, кабель-каналы ККМОМ, трубы и металлорукав, тросовые системы — полный реестр номенклатуры ptcab.ru.",
+    bullets: ["Держатели ДМОУ, коробки КМОП/КМОМ", "Лотки ЛМПО/ЛМНО/ЛМПРО, кабель-канал", "Трубы, металлорукав, тросовые системы"],
   },
 ] as const;
 
@@ -79,6 +128,7 @@ export type Brand = { name: string; logo: string; desc: string; primary: boolean
 export const BRANDS: Brand[] = [
   { name: "ПТК", logo: "/brands/ptk.png", desc: "Огнестойкие кабельные линии и СКС, модули газового пожаротушения", primary: true, url: "https://ptcab.ru", linkLabel: "ptcab.ru" },
   { name: "R-LOCK", logo: "/brands/rlock.png", desc: "Электромагнитные замки 180–1200 кг, доводчики и кронштейны для СКУД", primary: false, url: "https://layta.ru/brands/r_lock-936", linkLabel: "Каталог R-Lock на layta.ru" },
+  { name: "VIM", logo: "/brands/vim.png", desc: "Экономичные АКБ AGM 12 В (1,2–40 Ah)", primary: false, url: "https://layta.ru/brands/vim-183", linkLabel: "Каталог VIM на layta.ru" },
   { name: "SpaceCam", logo: "/brands/spacecam.png", desc: "Сетевое оборудование и IP-домофония для систем безопасности", primary: true },
 ];
 

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { ArrowRight, Building2, ShieldCheck, Zap, Network, Layers, Award, Lock } from 'lucide-react'
+import { ArrowRight, Battery, BatteryCharging, Building2, Cable, Flame, ShieldCheck, Zap, Network, Layers, Award, Lock } from 'lucide-react'
 import { Button } from './ui'
 import { ProductCard } from './product-card'
 import { SECTIONS, FEATURES, PROJECTS, SCHEME } from '@/data/site'
@@ -15,6 +15,10 @@ const SECTION_ICONS: Record<string, React.ReactNode> = {
   switches: <Network className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
   nodes: <ShieldCheck className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
   rlock: <Lock className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
+  'ptk-sks': <Cable className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
+  'ptk-akb': <BatteryCharging className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
+  'vim-akb': <Battery className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
+  'ptk-okl': <Flame className="h-6 w-6 text-[#5c7a12]" aria-hidden />,
 }
 const FEATURE_ICONS = [
   <ShieldCheck key="0" className="h-5 w-5 text-[#a6ce39]" aria-hidden />,

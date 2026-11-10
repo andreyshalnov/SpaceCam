@@ -329,13 +329,14 @@ export function stockTotal(stock: Record<string, Record<string, number>>, sku: s
   return sum
 }
 
-/** Первая доступная цена из списка разрешённых типов (fallback — статическая). */
+/** Первая доступная цена из списка разрешённых типов (fallback — статическая;
+ *  для позиций ТЗ v2.0 без цены fallback = null → «Цена по запросу»). */
 export function livePrice(
   prices: Record<string, Record<string, number>>,
   sku: string,
   allowedIds: number[],
-  fallback: number,
-): number {
+  fallback: number | null,
+): number | null {
   const row = prices[normalizeSku(sku)]
   if (row) {
     for (const id of allowedIds) {

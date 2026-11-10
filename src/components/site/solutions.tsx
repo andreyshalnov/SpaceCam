@@ -434,7 +434,7 @@ function IntercomCalculator({ products }: { products: Product[] }) {
   const pd = usePriceData()
   const bySku = useMemo(() => new Map(products.map((p) => [p.sku, p])), [products])
   const priceOf = (sku: string) =>
-    bySku.get(sku) ? livePrice(pd.prices, sku, pd.allowedIds, bySku.get(sku)!.price) : 0
+    bySku.get(sku) ? livePrice(pd.prices, sku, pd.allowedIds, bySku.get(sku)!.price) ?? 0 : 0
 
   const items: EstimateItem[] = []
   const push = (sku: string, qty: number, label: string, note?: string) => {
@@ -678,7 +678,7 @@ function SwitchConfigurator({ products }: { products: Product[] }) {
           mgmt: management,
           env: environment,
           sfp: hasSfp,
-          price: livePrice(pd.prices, p.sku, pd.allowedIds, p.price),
+          price: livePrice(pd.prices, p.sku, pd.allowedIds, p.price) ?? 0,
         }
       })
       .sort((a, b) => a.price - b.price)

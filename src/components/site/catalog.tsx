@@ -3,22 +3,34 @@
 import React, { useMemo, useState } from 'react'
 import { ArrowDownWideNarrow, Search } from 'lucide-react'
 import { ProductCard } from './product-card'
-import { SECTIONS } from '@/data/site'
+import { SECTIONS, stockOf } from '@/data/site'
 import type { Product } from '@/data/site'
 
 type SortKey = 'stock' | 'price_asc' | 'price_desc' | 'sku'
 
 // Сортировка по доступному количеству: в наличии сначала, больше остаток — выше
+// ТЗ v2.0: позиции с price=null при сортировке по цене уходят в конец;
+// сортировки/фильтры существующих разделов сохранены
 const sorters: Record<SortKey, (a: Product, b: Product) => number> = {
   stock: (a, b) => {
-    const sa = a.stock_status === 'in_stock' ? 0 : 1
-    const sb = b.stock_status === 'in_stock' ? 0 : 1
+    const sa = stockOf(a) === 'in_stock' ? 0 : 1
+    const sb = stockOf(b) === 'in_stock' ? 0 : 1
     if (sa !== sb) return sa - sb
     if ((b.stock_qty || 0) !== (a.stock_qty || 0)) return (b.stock_qty || 0) - (a.stock_qty || 0)
     return a.sku.localeCompare(b.sku, 'ru')
   },
-  price_asc: (a, b) => (a.price || 0) - (b.price || 0) || a.sku.localeCompare(b.sku, 'ru'),
-  price_desc: (a, b) => (b.price || 0) - (a.price || 0) || a.sku.localeCompare(b.sku, 'ru'),
+  price_asc: (a, b) => {
+    if (a.price == null && b.price == null) return a.sku.localeCompare(b.sku, 'ru')
+    if (a.price == null) return 1
+    if (b.price == null) return -1
+    return a.price - b.price || a.sku.localeCompare(b.sku, 'ru')
+  },
+  price_desc: (a, b) => {
+    if (a.price == null && b.price == null) return a.sku.localeCompare(b.sku, 'ru')
+    if (a.price == null) return 1
+    if (b.price == null) return -1
+    return b.price - a.price || a.sku.localeCompare(b.sku, 'ru')
+  },
   sku: (a, b) => a.sku.localeCompare(b.sku, 'ru'),
 }
 
@@ -42,7 +54,7 @@ export function SectionPage({ section, products }: { section: string; products: 
   const found = useMemo(() => {
     const query = q.trim().toLowerCase()
     const list = all.filter((p) => {
-      if (stock !== 'all' && p.stock_status !== stock) return false
+      if (stock !== 'all' && stockOf(p) !== stock) return false
       if (sub !== 'all' && p.subcategory !== sub) return false
       if (!query) return true
       const hay = [p.sku, p.title, p.description, ...(p.features || []), ...(p.specs || []).map((s) => `${s.name} ${s.value}`)]

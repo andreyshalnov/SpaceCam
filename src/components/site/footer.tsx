@@ -1,6 +1,6 @@
 'use client'
 
-import { Cctv, Globe, Lock, Mail, MapPin, Network, Package, Phone } from 'lucide-react'
+import { Battery, BatteryCharging, Cable, Cctv, Flame, Globe, Lock, Mail, MapPin, Network, Package, Phone } from 'lucide-react'
 import { withBase } from '@/lib/base-path'
 import { CONTACTS } from '@/data/site'
 
@@ -39,6 +39,26 @@ export function Footer() {
             <li>
               <a href="#/rlock" className="inline-flex items-center gap-2 hover:text-[#a6ce39]">
                 <Lock className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> Замки и доводчики R-Lock
+              </a>
+            </li>
+            <li>
+              <a href="#/ptk-sks" className="inline-flex items-center gap-2 hover:text-[#a6ce39]">
+                <Cable className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> СКС ПожТехКабель (ПТК)
+              </a>
+            </li>
+            <li>
+              <a href="#/ptk-akb" className="inline-flex items-center gap-2 hover:text-[#a6ce39]">
+                <BatteryCharging className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> АКБ ПТК (PTK-BATTERY)
+              </a>
+            </li>
+            <li>
+              <a href="#/vim-akb" className="inline-flex items-center gap-2 hover:text-[#a6ce39]">
+                <Battery className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> АКБ VIM
+              </a>
+            </li>
+            <li>
+              <a href="#/ptk-okl" className="inline-flex items-center gap-2 hover:text-[#a6ce39]">
+                <Flame className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> ОКЛ PTK-Line (ПТК)
               </a>
             </li>
             <li>

@@ -5,7 +5,7 @@ import { ChevronRight, Download, FileText, ShieldCheck, BadgeCheck, Mail } from 
 import { formatPrice } from './router'
 import { Badge } from './ui'
 import { withBase } from '@/lib/base-path'
-import { CONTACTS } from '@/data/site'
+import { CONTACTS, NEW_SECTIONS, stockOf } from '@/data/site'
 import type { Product } from '@/data/site'
 import { normalizeSku, shortTypeName, stockTotal, usePriceData } from '@/lib/price-store'
 
@@ -41,6 +41,39 @@ function docMailto(sku: string, what: string, brand = 'SpaceCam') {
   const body = `Здравствуйте!\nПрошу направить ${what.toLowerCase()} по товару ${sku} (${brand}).\nЗаранее спасибо.`
   return `mailto:${CONTACTS.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
+
+// ТЗ v2.0: производители новых разделов (данные — из декларации ЕАЭС и брендбука ПТК)
+const MANUFACTURER: Record<string, string> = {
+  intercom: 'SpaceCam · ООО «Технолайт», Россия',
+  switches: 'SpaceCam · ООО «Технолайт», Россия',
+  nodes: 'SpaceCam · ООО «Технолайт», Россия',
+  rlock: 'R-Lock · семейство брендов ПТК, Россия',
+  'ptk-sks': 'ПожТехКабель (ПТК) · ООО «Технолайт», Россия',
+  'ptk-akb': 'ПожТехКабель (ПТК) · ООО «Технолайт», Россия',
+  'vim-akb': 'VIM · заявитель ООО «Технолайт», Россия',
+  'ptk-okl': 'ПожТехКабель (ПТК) · ООО «Технолайт», Россия',
+}
+
+// Сноска об источнике цены — для позиций ТЗ v2.0
+function priceNote(p: Product): string {
+  if (p.priceSource === 'layta') return `Цена layta.ru с НДС · наличие на ${STOCK_AS_OF}`
+  if (p.priceSource === 'ptcab-price-2025-09-18') return 'Цена по прайс-листу ОКЛ ПТК от 18.09.2025 (ptcab.ru)'
+  if (p.section === 'ptk-okl') return 'Реестр номенклатуры ptcab.ru · цена и срок поставки — по запросу'
+  return `Наличие и цена актуальны на ${STOCK_AS_OF}`
+}
+
+// ТЗ v2.0: CTA «Запросить КП» для позиций без цены (почта КП ptcab.ru)
+function kpMailto(p: Product): string {
+  const subject = `Запрос КП: ${p.sku}`
+  const body = `Здравствуйте!\nПрошу направить коммерческое предложение по позиции ${p.sku} — ${p.title} (${p.subcategory}).\nЗаранее спасибо.`
+  return `mailto:opr@layta.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
+
+// Декларация ЕАЭС на АКБ AGM 12 В (PTK-BATTERY и VIM, действ. до 21.04.2027)
+const AKB_CERTS = [
+  { icon: <ShieldCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'Декларация ЕАЭС № РОСС RU Д-CN.PA01.В.16643/24' },
+  { icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'Технология AGM, 12 В' },
+]
 
 export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: string }) {
   const [active, setActive] = useState(0)
@@ -142,7 +175,7 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                 </div>
                 <div className="flex gap-2">
                   <dt className="shrink-0">Производитель:</dt>
-                  <dd className="font-medium text-[#111112]">{p.section === 'rlock' ? 'R-Lock · семейство брендов ПТК, Россия' : 'SpaceCam · ООО «Технолайт», Россия'}</dd>
+                  <dd className="font-medium text-[#111112]">{MANUFACTURER[p.section] || 'SpaceCam · ООО «Технолайт», Россия'}</dd>
                 </div>
                 <div className="flex gap-2">
                   <dt className="shrink-0">Раздел каталога:</dt>
@@ -152,7 +185,40 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
 
               <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-[#111112] sm:text-3xl">{title}</h1>
 
-              {/* Цена и наличие (живые данные из базы цен) */}
+              {/* Цена и наличие — ТЗ v2.0: 3 состояния ценового блока */}
+              {NEW_SECTIONS.includes(p.section) ? (
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  {p.price !== null ? (
+                    <span className="text-3xl font-extrabold text-[#111112]">
+                      {formatPrice(p.price)}
+                      <span className="ml-1 text-sm font-medium text-[#707075]">/ {p.priceUnit || 'шт'}</span>
+                    </span>
+                  ) : (
+                    <span className="text-3xl font-extrabold text-[#111112]">Цена по запросу</span>
+                  )}
+                  {p.priceSource === 'layta' && (
+                    <Badge className="border border-[#e6e8de] bg-white text-[#4b4d45]">layta, с НДС</Badge>
+                  )}
+                  {(p.priceSource === 'ptcab-price-2025-09-18' || p.priceSource === 'ptcab-catalog') && (
+                    <Badge className="border border-[#e6e8de] bg-white text-[#4b4d45]">Прайс ОКЛ 18.09.2025</Badge>
+                  )}
+                  {stockOf(p) === 'in_stock' ? (
+                    <Badge className="bg-[#eef6d8] text-[#4a6b12] border border-[#cfe39a]">В наличии</Badge>
+                  ) : (
+                    <Badge className="border border-[#e3c98a] bg-[#faf3e0] text-[#8a6d1f]">Под заказ</Badge>
+                  )}
+                  {p.price === null && (
+                    <a
+                      href={kpMailto(p)}
+                      className="inline-flex items-center gap-1.5 rounded-md bg-[#a6ce39] px-3.5 py-2 text-sm font-semibold text-black transition-colors hover:bg-[#95bb31]"
+                    >
+                      <Mail className="h-4 w-4" aria-hidden /> Запросить КП
+                    </a>
+                  )}
+                  <p className="mt-1.5 w-full text-xs text-[#85878d]">{priceNote(p)}</p>
+                </div>
+              ) : (
+              /* Исходные разделы: живые данные из базы цен */
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <span className="text-3xl font-extrabold text-[#111112]">
                   {formatPrice(primary ? primary.value : p.price)}
@@ -171,8 +237,9 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                   )
                 ) : null}
               </div>
-              {/* Уровни цен — свёрнуты под шапку, как «Наличие по складам РФ» (09.11) */}
-              {livePrices.length > 1 && (
+              )}
+              {/* Уровни цен — свёрнуты под шапку, как «Наличие по складам РФ» (09.11); ТЗ v2.0 — только исходные разделы */}
+              {!NEW_SECTIONS.includes(p.section) && livePrices.length > 1 && (
                 <details className="mt-3 max-w-md rounded-lg border border-[#e6e8de] bg-[#fafaf6] px-4 py-2.5">
                   <summary className="cursor-pointer text-sm font-semibold text-[#111112]">Все уровни цен</summary>
                   <dl className="mt-2 grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-sm">
@@ -185,7 +252,7 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                   </dl>
                 </details>
               )}
-              {pd.ready && pd.canSeeStock && pd.warehouses.length > 0 && stockSum != null && (
+              {!NEW_SECTIONS.includes(p.section) && pd.ready && pd.canSeeStock && pd.warehouses.length > 0 && stockSum != null && (
                 <details className="mt-3 max-w-md rounded-lg border border-[#e6e8de] bg-[#fafaf6] px-4 py-2.5">
                   <summary className="cursor-pointer text-sm font-semibold text-[#111112]">Наличие по складам РФ</summary>
                   <ul className="mt-2 space-y-1">
@@ -201,6 +268,7 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                   </ul>
                 </details>
               )}
+              {!NEW_SECTIONS.includes(p.section) && (
               <p className="mt-1.5 text-xs text-[#85878d]">
                 {pd.ready && pd.canSeeStock
                   ? pd.updatedAtMax
@@ -220,6 +288,7 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                     : `Наличие и цена актуальны на ${STOCK_AS_OF}`
                   : 'Розничная цена. Наличие и персональные цены — после входа в аккаунт или у менеджеров.'}
               </p>
+              )}
 
               {/* Документация — активные ссылки на скачивание из карточки */}
               <div className="mt-6 rounded-xl border border-[#e6e8de] bg-[#fafaf6] p-4">
@@ -252,7 +321,7 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                     })}
                     <li>
                       <a
-                        href={docMailto(p.sku, 'Копии сертификатов', p.section === 'rlock' ? 'R-Lock' : 'SpaceCam')}
+                        href={docMailto(p.sku, 'Копии сертификатов', p.section === 'rlock' ? 'R-Lock' : NEW_SECTIONS.includes(p.section) ? 'ПТК' : 'SpaceCam')}
                         className="inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-[#5c7a12] hover:underline"
                       >
                         <Mail className="h-4 w-4" aria-hidden />
@@ -264,17 +333,27 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
                 {/* Нет документов — раздел пуст (без «по запросу», задача 09.11) */}
               </div>
 
-              {/* Сертификация и гарантия */}
-              <div className="mt-5 flex flex-wrap items-center gap-2">
-                {(p.section === 'nodes'
-                  ? CERTS_NODES
-                  : [{ icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: `Гарантия ${warrantyMonths(p)} месяцев` }]
-                ).map((c) => (
-                  <Badge key={c.text} className="border border-[#e6e8de] bg-white text-[#4b4d45]">
-                    {c.icon} {c.text}
-                  </Badge>
-                ))}
-              </div>
+              {/* Сертификация и гарантия — ТЗ v2.0: для АКБ декларация ЕАЭС, для СКС/ОКЛ документы выше */}
+              {(p.section === 'ptk-akb' || p.section === 'vim-akb') ? (
+                <div className="mt-5 flex flex-wrap items-center gap-2">
+                  {AKB_CERTS.map((c) => (
+                    <Badge key={c.text} className="border border-[#e6e8de] bg-white text-[#4b4d45]">
+                      {c.icon} {c.text}
+                    </Badge>
+                  ))}
+                </div>
+              ) : p.section === 'ptk-sks' || p.section === 'ptk-okl' ? null : (
+                <div className="mt-5 flex flex-wrap items-center gap-2">
+                  {(p.section === 'nodes'
+                    ? CERTS_NODES
+                    : [{ icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: `Гарантия ${warrantyMonths(p)} месяцев` }]
+                  ).map((c) => (
+                    <Badge key={c.text} className="border border-[#e6e8de] bg-white text-[#4b4d45]">
+                      {c.icon} {c.text}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -299,11 +378,17 @@ export function ProductPage({ p, sectionTitle }: { p: Product; sectionTitle: str
             </div>
             <div>
               <h2 className="text-lg font-bold text-[#111112]">Описание</h2>
-              <div className="mt-3 space-y-3 text-sm leading-relaxed text-[#4b4d45]">
-                {(p.description || '').split('\n').filter(Boolean).map((par, i) => (
-                  <p key={i}>{par}</p>
-                ))}
-              </div>
+              {p.description ? (
+                <div className="mt-3 space-y-3 text-sm leading-relaxed text-[#4b4d45]">
+                  {p.description.split('\n').filter(Boolean).map((par, i) => (
+                    <p key={i}>{par}</p>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-3 text-sm leading-relaxed text-[#707075]">
+                  Позиция входит в номенклатуру раздела. Технические данные, цену и срок поставки уточняйте через проектный отдел — подготовим подбор аналогов и коммерческое предложение.
+                </p>
+              )}
               {features.length > 0 && (
                 <ul className="mt-4 space-y-1.5">
                   {features.map((f, i) => (
