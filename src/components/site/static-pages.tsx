@@ -114,7 +114,7 @@ export function Support() {
       <PageHeader
         kicker="Поддержка"
         title="Поддержка"
-        sub="Общая почта для вопросов о продукции SpaceCam и контакты ответственных специалистов."
+        sub="Общая почта для вопросов о продукции и контакты ответственных специалистов по направлениям."
       />
       <section className="bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -133,7 +133,7 @@ export function Support() {
           <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="rounded-xl border border-[#e6e8de] bg-white p-6 shadow-sm">
               <h3 className="text-lg font-bold text-[#111112]">Виктор П. Батищев</h3>
-              <div className="mt-1 text-sm font-medium text-[#707075]">Эксперт по продукту</div>
+              <div className="mt-1 text-sm font-medium text-[#707075]">Эксперт по продукту SpaceCam и R-Lock</div>
               <ul className="mt-4 space-y-3 text-sm text-[#4b4d45]">
                 <li className="flex items-center gap-2.5">
                   <Phone className="h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
@@ -155,7 +155,7 @@ export function Support() {
             </div>
             <div className="rounded-xl border border-[#e6e8de] bg-white p-6 shadow-sm">
               <h3 className="text-lg font-bold text-[#111112]">Андрей И. Шальнов</h3>
-              <div className="mt-1 text-sm font-medium text-[#707075]">Руководитель направлений</div>
+              <div className="mt-1 text-sm font-medium text-[#707075]">Руководитель направлений SpaceCam и R-Lock</div>
               <ul className="mt-4 space-y-3 text-sm text-[#4b4d45]">
                 <li className="flex items-center gap-2.5">
                   <Phone className="h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
@@ -172,6 +172,50 @@ export function Support() {
                 <li className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
                   <span>Москва, Рябиновая 45А, стр. 24</span>
+                </li>
+              </ul>
+            </div>
+            <div className="rounded-xl border border-[#e6e8de] bg-white p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-[#111112]">Алексей В. Михалев</h3>
+              <div className="mt-1 text-sm font-medium text-[#707075]">Менеджер по развитию продукта ПТК СКС</div>
+              <ul className="mt-4 space-y-3 text-sm text-[#4b4d45]">
+                <li className="flex items-center gap-2.5">
+                  <Phone className="h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
+                  <a href="tel:88004443500" className="font-semibold text-[#111112] hover:text-[#5c7a12]">
+                    8 (800) 444-35-00 доб. 002-825
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Mail className="h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
+                  <a href="mailto:mihalevav@ptcab.ru" className="font-semibold text-[#111112] hover:text-[#5c7a12]">
+                    mihalevav@ptcab.ru
+                  </a>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
+                  <span>г. Саратов, ул. Ульяновская, д. 28</span>
+                </li>
+              </ul>
+            </div>
+            <div className="rounded-xl border border-[#e6e8de] bg-white p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-[#111112]">Игорь Латышев</h3>
+              <div className="mt-1 text-sm font-medium text-[#707075]">Менеджер по развитию продуктов ПТК ОКЛ</div>
+              <ul className="mt-4 space-y-3 text-sm text-[#4b4d45]">
+                <li className="flex items-center gap-2.5">
+                  <Phone className="h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
+                  <a href="tel:88004443500" className="font-semibold text-[#111112] hover:text-[#5c7a12]">
+                    8 (800) 444-35-00 доб. 002-441
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Mail className="h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
+                  <a href="mailto:latyshevid@layta.ru" className="font-semibold text-[#111112] hover:text-[#5c7a12]">
+                    latyshevid@layta.ru
+                  </a>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#5c7a12]" aria-hidden />
+                  <span>г. Саратов, ул. Ульяновская, д. 28</span>
                 </li>
               </ul>
             </div>
