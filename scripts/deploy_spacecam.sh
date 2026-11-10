@@ -55,7 +55,7 @@ for d in products brands dealers solutions; do
   [ -d "$REPO/$d" ] && rsync -a --delete "$REPO/$d/" "$WORK/public/$d/"
 done
 mkdir -p "$WORK/public/docs" && cp -f "$REPO"/docs/*.pdf "$WORK/public/docs"/
-for f in logo.png logo-light.png logo.svg robots.txt sitemap.xml; do
+for f in logo.png logo-light.png logo.svg logo-ptk.png robots.txt sitemap.xml; do
   [ -f "$REPO/$f" ] && cp -f "$REPO/$f" "$WORK/public/$f"
 done
 

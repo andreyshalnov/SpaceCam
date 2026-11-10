@@ -9,8 +9,10 @@ export function Footer() {
     <footer className="mt-auto bg-[#0b0b0c] text-[#b8bab0]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <a href="#/" className="inline-flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[#a6ce39] rounded" aria-label="SpaceCam — на главную">
-            <img src={withBase('/logo-light.png')} alt="SpaceCam" className="h-9 w-auto sm:h-10" decoding="async" />
+          <a href="#/" className="inline-flex items-center outline-none focus-visible:ring-2 focus-visible:ring-[#a6ce39] rounded" aria-label="ПТК — на главную">
+            <span className="inline-flex items-center rounded-md bg-white px-2.5 py-2">
+              <img src={withBase('/logo-ptk.png')} alt="ПТК — Политехкабель" className="h-8 w-auto sm:h-9" decoding="async" />
+            </span>
           </a>
           <p className="mt-4 text-sm leading-relaxed">
             Сетевое оборудование для систем безопасности и IP-домофония. Производство — Санкт-Петербург,

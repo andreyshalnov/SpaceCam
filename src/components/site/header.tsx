@@ -30,8 +30,8 @@ const NAV = [
 
 export function Logo() {
   return (
-    <a href="#/" className="inline-flex shrink-0 items-center outline-none focus-visible:ring-2 focus-visible:ring-[#a6ce39] rounded" aria-label="SpaceCam — на главную">
-      <img src={withBase('/logo.png')} alt="SpaceCam" className="h-9 w-auto sm:h-10" decoding="async" />
+    <a href="#/" className="inline-flex shrink-0 items-center outline-none focus-visible:ring-2 focus-visible:ring-[#a6ce39] rounded" aria-label="ПТК — на главную">
+      <img src={withBase('/logo-ptk.png')} alt="ПТК — Политехкабель" className="h-10 w-auto sm:h-11" decoding="async" />
     </a>
   )
 }
