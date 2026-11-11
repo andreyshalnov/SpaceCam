@@ -119,7 +119,7 @@ export function Support() {
       <section className="bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="rounded-xl border border-[#e6e8de] bg-[#f8faf1] p-6">
-            <h2 className="text-lg font-bold text-[#111112]">Общая почта</h2>
+            <h2 className="text-lg font-bold text-[#111112]">Связаться с командой</h2>
             <a
               href="mailto:products@layta.ru"
               className="mt-3 inline-flex items-center gap-2.5 text-base font-semibold text-[#111112] hover:text-[#5c7a12]"
@@ -127,7 +127,7 @@ export function Support() {
               <Mail className="h-5 w-5 text-[#5c7a12]" aria-hidden /> products@layta.ru
             </a>
             <p className="mt-2 text-sm leading-relaxed text-[#4b4d45]">
-              Единый адрес для запросов о продукции SpaceCam: цены, наличие, документация, гарантия и сервис.
+              Единый адрес для запросов о продукции SpaceCam, R-Lock, ПТК СКС, ПТК АКБ, ПТК VIM и ПТК ОКЛ: цены, наличие, документация, гарантия и сервис.
             </p>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
