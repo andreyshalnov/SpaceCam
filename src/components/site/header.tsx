@@ -16,7 +16,7 @@ const PRODUCT_MENU = [
   { href: '#/nodes', label: 'Узлы коммутации', desc: 'Всепогодные шкафы SC-Box, IP66, с ИБП', icon: <Package className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
   { href: '#/rlock', label: 'Замки и доводчики R-Lock', desc: 'Электромагнитные замки, доводчики, кронштейны', icon: <Lock className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
   { href: '#/ptk-sks', label: 'СКС ПожТехКабель (ПТК)', desc: 'LAN-кабели, патч-панели, PDU, шкафы 19″', icon: <Cable className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
-  { href: '#/ptk-akb', label: 'АКБ ПТК (PTK-BATTERY)', desc: 'Аккумуляторы AGM 12 В, 1,2–100 Ач', icon: <BatteryCharging className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
+  { href: '#/ptk-akb', label: 'АКБ ПТК (PTK-BAT)', desc: 'Аккумуляторы AGM 12 В, 1,2–100 Ач', icon: <BatteryCharging className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
   { href: '#/vim-akb', label: 'АКБ VIM', desc: 'Аккумуляторы AGM 12 В, 1,2–40 Ач', icon: <Battery className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
   { href: '#/ptk-okl', label: 'ОКЛ PTK-Line (ПТК)', desc: 'ДМОУ, лотки, коробки, кабель-канал, трубы', icon: <Flame className="h-5 w-5 text-[#5c7a12]" aria-hidden /> },
 ]

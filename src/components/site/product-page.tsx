@@ -9,8 +9,8 @@ import { CONTACTS, NEW_SECTIONS, stockOf } from '@/data/site'
 import type { Product } from '@/data/site'
 import { normalizeSku, shortTypeName, stockTotal, usePriceData } from '@/lib/price-store'
 
-// Актуальность остатков (выгрузка витрины 26.10.2026) — fallback, пока нет обновлений в БД
-const STOCK_AS_OF = '26.10.2026'
+// Актуальность остатков (выгрузка витрины 11.11.2026) — fallback, пока нет обновлений в БД
+const STOCK_AS_OF = '11.11.2026'
 
 /** Срок поставки под заказ: узлы коммутации — от 2 недель, остальное — от 3 мес. */
 function leadTime(section: string): string {
@@ -69,7 +69,7 @@ function kpMailto(p: Product): string {
   return `mailto:opr@layta.ru?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
-// Декларация ЕАЭС на АКБ AGM 12 В (PTK-BATTERY и VIM, действ. до 21.04.2027)
+// Декларация ЕАЭС на АКБ AGM 12 В (PTK-BAT и VIM, действ. до 21.04.2027)
 const AKB_CERTS = [
   { icon: <ShieldCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'Декларация ЕАЭС № РОСС RU Д-CN.PA01.В.16643/24' },
   { icon: <BadgeCheck className="h-4 w-4 text-[#5c7a12]" aria-hidden />, text: 'Технология AGM, 12 В' },

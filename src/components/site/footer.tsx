@@ -50,7 +50,7 @@ export function Footer() {
             </li>
             <li>
               <a href="#/ptk-akb" className="inline-flex items-center gap-2 hover:text-[#a6ce39]">
-                <BatteryCharging className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> АКБ ПТК (PTK-BATTERY)
+                <BatteryCharging className="h-3.5 w-3.5 text-[#a6ce39]" aria-hidden /> АКБ ПТК (PTK-BAT)
               </a>
             </li>
             <li>
