@@ -18,7 +18,8 @@ export type Route =
   | { page: 'notfound' }
 
 export function parseHash(hash: string): Route {
-  const h = hash.replace(/^#\/?/, '')
+  // query-часть (#/solutions?calc=okl&s=…) не участвует в маршрутизации — её читает страница
+  const h = hash.replace(/^#\/?/, '').split('?')[0]
   if (!h) return { page: 'home' }
   const parts = h.split('/')
   if (parts[0] === 'product' && parts[1]) return { page: 'product', id: decodeURIComponent(parts[1]) }

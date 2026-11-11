@@ -51,6 +51,7 @@
     "src/hooks",
     "download",
     "kb",
-    "repos"
+    "repos",
+    "src/lib/okl/engine.test.ts"
   ]
 }

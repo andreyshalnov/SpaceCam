@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Cctv,
   FileText,
+  Flame,
   Info,
   Lock,
   Network,
@@ -25,6 +26,7 @@ import { Projects } from './static-pages'
 import { withBase } from '@/lib/base-path'
 import { livePrice, normalizeSku, usePriceData } from '@/lib/price-store'
 import type { Product } from '@/data/site'
+import { OklCalculator } from './okl-calculator'
 
 // ---------------------------------------------------------------------------
 // Утилиты
@@ -823,7 +825,10 @@ function SwitchConfigurator({ products }: { products: Product[] }) {
 export function SolutionsPage({ products }: { products: Product[] }) {
   const scrollTo = (id: string) => () =>
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  const [calc, setCalc] = useState<'intercom' | 'switches'>('intercom')
+  // FR-2: прямая ссылка #/solutions?calc=okl открывает вкладку «Калькулятор ОКЛ»
+  const [calc, setCalc] = useState<'intercom' | 'switches' | 'okl'>(() =>
+    typeof window !== 'undefined' && window.location.hash.includes('calc=okl') ? 'okl' : 'intercom',
+  )
 
   return (
     <>
@@ -862,7 +867,7 @@ export function SolutionsPage({ products }: { products: Product[] }) {
             </p>
           </div>
           <div
-            className="mb-6 inline-flex overflow-hidden rounded-xl border border-[#e6e8de] bg-white"
+            className="mb-6 flex flex-wrap overflow-hidden rounded-xl border border-[#e6e8de] bg-white max-w-full"
             role="tablist"
             aria-label="Калькуляторы"
           >
@@ -871,7 +876,7 @@ export function SolutionsPage({ products }: { products: Product[] }) {
               role="tab"
               aria-selected={calc === 'intercom'}
               onClick={() => setCalc('intercom')}
-              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold transition-colors sm:px-6 ${
+              className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors sm:px-6 sm:py-2.5 sm:text-sm ${
                 calc === 'intercom' ? 'bg-[#a6ce39] text-black' : 'text-[#707075] hover:bg-[#f4f6ec]'
               }`}
             >
@@ -882,14 +887,31 @@ export function SolutionsPage({ products }: { products: Product[] }) {
               role="tab"
               aria-selected={calc === 'switches'}
               onClick={() => setCalc('switches')}
-              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold transition-colors sm:px-6 ${
+              className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors sm:px-6 sm:py-2.5 sm:text-sm ${
                 calc === 'switches' ? 'bg-[#a6ce39] text-black' : 'text-[#707075] hover:bg-[#f4f6ec]'
               }`}
             >
               <Network className="h-4 w-4" aria-hidden /> Конфигуратор коммутаторов
             </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={calc === 'okl'}
+              onClick={() => setCalc('okl')}
+              className={`flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors sm:px-6 sm:py-2.5 sm:text-sm ${
+                calc === 'okl' ? 'bg-[#a6ce39] text-black' : 'text-[#707075] hover:bg-[#f4f6ec]'
+              }`}
+            >
+              <Flame className="h-4 w-4" aria-hidden /> Калькулятор ОКЛ
+            </button>
           </div>
-          {calc === 'intercom' ? <IntercomCalculator products={products} /> : <SwitchConfigurator products={products} />}
+          {calc === 'intercom' ? (
+            <IntercomCalculator products={products} />
+          ) : calc === 'switches' ? (
+            <SwitchConfigurator products={products} />
+          ) : (
+            <OklCalculator products={products} />
+          )}
           <p className="mt-6 text-xs leading-relaxed text-[#85878d]">
             Все расчёты предварительные и не являются публичной офертой. Окончательная стоимость, комплектация и
             технические решения фиксируются в коммерческом предложении или договоре поставки.
