@@ -54,7 +54,7 @@ check(behind_ahead == "0\t0", f"git: HEAD {head} синхронизирован 
 check(not dirty, "git: рабочее дерево чистое" if not dirty else f"git: есть незакоммиченные изменения: {dirty[:200]}")
 
 # ── 2. live vs репо: фиксированные файлы + топ-8 чанков по размеру ───────────
-fixed = ["index.html", "404.html", "robots.txt"]
+fixed = ["index.html", "404.html", "robots.txt", "favicon.ico", "icon.png", "apple-icon.png"]
 chunks_dir = os.path.join(REPO, "_next", "static", "chunks")
 try:
     chunks = sorted(
