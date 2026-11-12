@@ -84,7 +84,9 @@ const STATUS_BADGE: Record<string, string> = {
   Новый: 'bg-sky-50 text-sky-700',
   'В работе': 'bg-amber-50 text-amber-700',
   Реализация: 'bg-emerald-50 text-emerald-700',
+  'Объект оснащен': 'bg-[#e7f0fb] text-[#1d4f91]',
   Заморожен: 'bg-gray-100 text-gray-600',
+  Отклонен: 'bg-red-50 text-red-600',
 }
 
 function Badge({ children, className = '' }: { children: React.ReactNode; className?: string }) {

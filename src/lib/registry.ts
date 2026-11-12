@@ -40,6 +40,18 @@ export interface SpecItem {
   qty: string
 }
 
+/** Данные бренд-строки CRM (object_specs.extra, импорт выгрузки 1С 12.11.2026). */
+export interface SpecExtra {
+  brand?: string
+  tech?: string // ответственный тех специалист
+  supplier?: string // поставщик
+  buyer?: string // ответственный закупщик
+  fact?: number // сумма факт
+  remain?: number // осталось отгрузить
+  profit?: number // валовая прибыль
+  margin?: number // рентабельность, %
+}
+
 /** Спецификация 1С (таблица object_specs + object_spec_items). */
 export interface ObjectSpec {
   id?: string
@@ -48,6 +60,8 @@ export interface ObjectSpec {
   source: string // '' | ключ SOURCE_OPTIONS
   protection: string // '' | ключ PROTECTION_OPTIONS
   items: SpecItem[]
+  sum?: number | null // сумма план (бренд-строка CRM)
+  extra?: SpecExtra | null
 }
 
 /** Структура адреса DaData (сохраняется в objects.address_json). */
@@ -97,7 +111,15 @@ export interface Project extends FormData {
 // Справочники
 // ---------------------------------------------------------------------------
 
-export const OBJECT_STATUSES = ['Новый', 'В работе', 'Реализация', 'Заморожен'] as const
+// Статусы CRM (миграция 20261112: + «Объект оснащен», «Отклонен» — из выгрузки 1С):
+export const OBJECT_STATUSES = [
+  'Новый',
+  'В работе',
+  'Реализация',
+  'Объект оснащен',
+  'Заморожен',
+  'Отклонен',
+] as const
 
 export const SOURCE_OPTIONS = [
   'Проработка с нуля',
@@ -128,6 +150,9 @@ export const OBJECT_TYPES_FALLBACK: Array<{ id: number; name: string }> = [
   { id: 12, name: 'Объекты иностранных государств' },
   { id: 13, name: 'Зоны массового пребывания людей' },
   { id: 14, name: 'Сельскохозяйственный объект' },
+  // Миграция 20261112: типы из CRM-выгрузки, которых не было в 1С:
+  { id: 15, name: 'Торговая недвижимость' },
+  { id: 16, name: 'Программы категории "Безопасный город" / "Безопасный регион"' },
 ]
 
 export const CURRENCIES = ['RUB', 'USD', 'EUR', 'CNY'] as const
@@ -467,7 +492,9 @@ export async function fetchObjectTypes(): Promise<Array<{ id: number; name: stri
 export async function fetchSpecs(objectId: string): Promise<ObjectSpec[]> {
   const { data, error } = await supabase
     .from('object_specs')
-    .select('id, spec_no, spec_date, source, protection, object_spec_items(name, qty, unit, sort)')
+    .select(
+      'id, spec_no, spec_date, source, protection, sum, extra, object_spec_items(name, qty, unit, sort)',
+    )
     .eq('object_id', objectId)
     .order('spec_date', { ascending: true })
   if (error || !data) return []
@@ -477,6 +504,8 @@ export async function fetchSpecs(objectId: string): Promise<ObjectSpec[]> {
     spec_date: string | null
     source: string | null
     protection: string | null
+    sum: number | string | null
+    extra: Record<string, unknown> | null
     object_spec_items: Array<{ name: string; qty: number | null; unit: string | null }> | null
   }
   return (data as unknown as SpecJoined[]).map((s) => ({
@@ -498,6 +527,20 @@ export async function fetchSpecs(objectId: string): Promise<ObjectSpec[]> {
       name: String(it.name ?? ''),
       qty: it.qty != null ? String(it.qty) : '',
     })),
+    sum: s.sum != null ? Number(s.sum) : null,
+    extra:
+      s.extra && typeof s.extra === 'object'
+        ? {
+            brand: s.extra.brand != null ? String(s.extra.brand) : undefined,
+            tech: s.extra.tech != null ? String(s.extra.tech) : undefined,
+            supplier: s.extra.supplier != null ? String(s.extra.supplier) : undefined,
+            buyer: s.extra.buyer != null ? String(s.extra.buyer) : undefined,
+            fact: s.extra.fact != null ? Number(s.extra.fact) : undefined,
+            remain: s.extra.remain != null ? Number(s.extra.remain) : undefined,
+            profit: s.extra.profit != null ? Number(s.extra.profit) : undefined,
+            margin: s.extra.margin != null ? Number(s.extra.margin) : undefined,
+          }
+        : null,
   }))
 }
 

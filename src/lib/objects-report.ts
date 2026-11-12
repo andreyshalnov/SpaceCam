@@ -96,7 +96,8 @@ export interface ReportResult {
   quarters: QuarterRow[]
 }
 
-const STATUS_ORDER = ['Новый', 'В работе', 'Реализация', 'Заморожен']
+// Порядок статусов отчёта: воронка CRM → «Объект оснащен»; служебные — в конце
+const STATUS_ORDER = ['Новый', 'В работе', 'Реализация', 'Объект оснащен', 'Заморожен', 'Отклонен']
 
 /** Артикул-кандидаты из названия номенклатуры 1С: первые два токена. */
 export function skuCandidates(name: string): string[] {

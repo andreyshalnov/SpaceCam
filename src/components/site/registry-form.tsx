@@ -72,7 +72,67 @@ const STATUS_BADGE: Record<string, string> = {
   Новый: 'bg-sky-50 text-sky-700',
   'В работе': 'bg-amber-50 text-amber-700',
   Реализация: 'bg-emerald-50 text-emerald-700',
+  'Объект оснащен': 'bg-[#e7f0fb] text-[#1d4f91]',
   Заморожен: 'bg-gray-100 text-gray-600',
+  Отклонен: 'bg-red-50 text-red-600',
+}
+
+// Сумма в ₽: 530162.25 → «530 162,25 ₽»
+function rub(n?: number | null): string {
+  if (n == null || !Number.isFinite(n)) return ''
+  return n.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' ₽'
+}
+
+// Данные бренд-строки CRM (импорт выгрузки 1С 12.11.2026): план/факт/прибыль и ответственные
+function renderSpecExtra(s: ObjectSpec): React.ReactNode {
+  const e = s.extra
+  if (!e && s.sum == null) return null
+  const money: Array<[string, number | undefined]> = [
+    ['План', s.sum ?? undefined],
+    ['Факт', e?.fact],
+    ['Осталось отгрузить', e?.remain],
+    ['Валовая прибыль', e?.profit],
+  ]
+  const people: Array<[string, string | undefined]> = [
+    ['Техспециалист', e?.tech],
+    ['Поставщик', e?.supplier],
+    ['Закупщик', e?.buyer],
+  ]
+  return (
+    <div className="mt-2 space-y-1 border-t border-[#f0f1ea] pt-2">
+      {(money.some(([, v]) => v != null) || e?.margin != null) && (
+        <div className="flex flex-wrap gap-x-5 gap-y-0.5 text-xs text-[#4b4d45]">
+          {money
+            .filter(([, v]) => v != null)
+            .map(([k, v]) => (
+              <span key={k}>
+                <span className="text-[#707075]">{k}:</span>{' '}
+                <span className="font-semibold text-[#111112]">{rub(v)}</span>
+              </span>
+            ))}
+          {e?.margin != null && (
+            <span>
+              <span className="text-[#707075]">Рентабельность:</span>{' '}
+              <span className="font-semibold text-[#111112]">
+                {e.margin.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} %
+              </span>
+            </span>
+          )}
+        </div>
+      )}
+      {people.some(([, v]) => v) && (
+        <div className="flex flex-wrap gap-x-5 gap-y-0.5 text-xs text-[#707075]">
+          {people
+            .filter(([, v]) => v)
+            .map(([k, v]) => (
+              <span key={k}>
+                {k}: <span className="text-[#4b4d45]">{v}</span>
+              </span>
+            ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function SectionTitle({ n, title, desc }: { n: number; title: string; desc?: string }) {
@@ -751,6 +811,7 @@ export function ProjectCardView({
                     ))}
                   </ul>
                 )}
+                {renderSpecExtra(s)}
               </div>
             ))}
           </div>
