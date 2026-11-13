@@ -31,6 +31,10 @@ export interface Account {
   company: string
   /** партнёр видит вкладку «Наличие» (profiles.see_availability, по умолчанию true) */
   seeAvailability: boolean
+  /** видит все объекты базы в #/project-reg (profiles.see_all_projects; admin видит все независимо от флага) */
+  seeAllProjects: boolean
+  /** при see_all_projects=false: видит свои (owner_id) и соучастные объекты (profiles.see_own_projects) */
+  seeOwnProjects: boolean
   profile: { managerName: string; phone: string; email: string }
   createdAt: string
 }
@@ -177,6 +181,8 @@ interface ProfileRow {
   phone: string
   email: string
   see_availability?: boolean | null
+  see_all_projects?: boolean | null
+  see_own_projects?: boolean | null
   created_at: string
 }
 
@@ -222,6 +228,11 @@ function profileToAccount(row: ProfileRow, email = ''): Account {
     role: row.role === 'admin' ? 'admin' : 'partner',
     company: String(row.company ?? ''),
     seeAvailability: row.see_availability !== false,
+    // чекбоксы «Видит все проекты»/«Видит свои проекты»: null → false
+    // (решение по умолчанию 13.11.2026 — без выданного админом доступа партнёр
+    // не видит ни одного объекта; см. миграцию 20261113_user_project_visibility.sql)
+    seeAllProjects: row.see_all_projects === true,
+    seeOwnProjects: row.see_own_projects === true,
     profile: {
       managerName: String(row.manager_name ?? ''),
       phone: String(row.phone ?? ''),

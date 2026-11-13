@@ -446,6 +446,8 @@ function UsersTab({ pd }: { pd: PriceData }) {
   const [users, setUsers] = useState<Account[]>([])
   const [rights, setRights] = useState<Record<string, number[]>>({})
   const [seeAvail, setSeeAvail] = useState<Record<string, boolean>>({})
+  const [seeAllProj, setSeeAllProj] = useState<Record<string, boolean>>({})
+  const [seeOwnProj, setSeeOwnProj] = useState<Record<string, boolean>>({})
   const [roles, setRoles] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState<string>('')
   const [note, setNote] = useState('')
@@ -456,14 +458,20 @@ function UsersTab({ pd }: { pd: PriceData }) {
     const r: Record<string, number[]> = {}
     const s: Record<string, boolean> = {}
     const ro: Record<string, string> = {}
+    const sa: Record<string, boolean> = {}
+    const so: Record<string, boolean> = {}
     for (const a of accounts) {
       r[a.id] = all[a.id] ?? []
       s[a.id] = a.seeAvailability
       ro[a.id] = a.role
+      sa[a.id] = a.seeAllProjects
+      so[a.id] = a.seeOwnProjects
     }
     setRights(r)
     setSeeAvail(s)
     setRoles(ro)
+    setSeeAllProj(sa)
+    setSeeOwnProj(so)
   }
 
   useEffect(() => {
@@ -478,6 +486,9 @@ function UsersTab({ pd }: { pd: PriceData }) {
     const err2 = await updateProfileRow(u.id, {
       role: roles[u.id] ?? u.role,
       see_availability: seeAvail[u.id] ?? true,
+      // чекбоксы проектов: для админа всегда истина (админ видит всё независимо от флагов)
+      see_all_projects: (roles[u.id] ?? u.role) === 'admin' ? true : seeAllProj[u.id] ?? false,
+      see_own_projects: (roles[u.id] ?? u.role) === 'admin' ? true : seeOwnProj[u.id] ?? false,
     })
     setSaving('')
     if (err1 || err2) setNote([err1, err2].filter(Boolean).join('; '))
@@ -507,6 +518,19 @@ function UsersTab({ pd }: { pd: PriceData }) {
                 {u.seeAvailability && roles[u.id] !== 'admin' && (
                   <Badge className="border border-[#e6e8de] bg-white text-[#4b4d45]">наличие</Badge>
                 )}
+                {roles[u.id] !== 'admin' && (
+                  <Badge
+                        className={
+                          seeAllProj[u.id]
+                            ? 'border border-[#a6ce39] bg-[#f4f8e4] text-[#3c5210]'
+                            : seeOwnProj[u.id]
+                              ? 'border border-[#e6e8de] bg-white text-[#4b4d45]'
+                              : 'border border-[#f0d9d9] bg-[#fdf6f6] text-[#8a4a4a]'
+                        }
+                  >
+                    {seeAllProj[u.id] ? 'проекты: все' : seeOwnProj[u.id] ? 'проекты: свои' : 'проекты: нет'}
+                  </Badge>
+                )}
                 <span className="ml-auto text-xs text-[#707075]">
                   {list.length === 0 ? 'цены: по умолчанию (95 + МРЦ)' : `типов цен: ${list.length}`}
                 </span>
@@ -528,6 +552,30 @@ function UsersTab({ pd }: { pd: PriceData }) {
                       onChange={(e) => setSeeAvail((r) => ({ ...r, [u.id]: e.target.checked }))}
                     />
                     Видит наличие на складах РФ
+                  </label>
+                  <label
+                    className="inline-flex items-center gap-1.5"
+                    title="Все объекты базы в разделе «Объекты строительства» (для админа всегда включено)"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={roles[u.id] === 'admin' || (seeAllProj[u.id] ?? false)}
+                      disabled={roles[u.id] === 'admin'}
+                      onChange={(e) => setSeeAllProj((r) => ({ ...r, [u.id]: e.target.checked }))}
+                    />
+                    Видит все проекты
+                  </label>
+                  <label
+                    className="inline-flex items-center gap-1.5"
+                    title="При выключенном «Видит все»: только объекты, где пользователь владелец или соучастник"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={roles[u.id] === 'admin' || (seeOwnProj[u.id] ?? false)}
+                      disabled={roles[u.id] === 'admin'}
+                      onChange={(e) => setSeeOwnProj((r) => ({ ...r, [u.id]: e.target.checked }))}
+                    />
+                    Видит свои проекты
                   </label>
                 </div>
                 <div className="mt-3">

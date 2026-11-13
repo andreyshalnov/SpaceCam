@@ -310,7 +310,12 @@ export async function updateUserRights(userId: string, priceTypeIds: number[]): 
 
 export async function updateProfileRow(
   userId: string,
-  patch: { role?: string; see_availability?: boolean },
+  patch: {
+    role?: string
+    see_availability?: boolean
+    see_all_projects?: boolean
+    see_own_projects?: boolean
+  },
 ): Promise<string | null> {
   const { error } = await supabase.from('profiles').update(patch).eq('id', userId)
   return error ? mapDbError(error) : null

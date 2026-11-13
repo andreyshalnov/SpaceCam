@@ -1144,6 +1144,11 @@ export default function ProjectRegistry() {
 
   const user = me
   const isAdmin = user.role === 'admin'
+  // Видимость проектов — чекбоксы «Видит все проекты»/«Видит свои проекты»
+  // во вкладке «Пользователи» (profiles.see_all_projects / see_own_projects,
+  // миграция 20261113): admin видит все; «свои» — объекты с полным доступом RLS.
+  const seeAllProjects = isAdmin || user.seeAllProjects
+  const seeOwnProjects = seeAllProjects || user.seeOwnProjects
 
   // --- Форма объекта ---
   function openNew() {
@@ -1404,7 +1409,15 @@ export default function ProjectRegistry() {
   }
 
   // ---- Список / аккаунты / профиль / настройки ----
-  const visible = onlyMine ? objects.filter((o) => o.ownerId === user.id) : objects
+  // Ограничение видимости (см. миграцию 20261113): чужие объекты отсекает
+  // уже сама БД (витрина objects_overview) — фильтр ниже дублирует её в UI.
+  // «Свои» = полный доступ RLS: владелец (owner_id) + соучастник (participants).
+  const scoped = seeAllProjects
+    ? objects
+    : seeOwnProjects
+      ? objects.filter((o) => o.access === 'full')
+      : [] // оба чекбокса выключены — пустой список + баннер
+  const visible = onlyMine ? scoped.filter((o) => o.ownerId === user.id) : scoped
   const s = q.trim().toLowerCase()
   const base = visible.filter((o) => {
     if (!s) return true
@@ -1518,6 +1531,12 @@ export default function ProjectRegistry() {
 
       {tab === 'objects' && (
         <>
+          {!seeAllProjects && !seeOwnProjects && (
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-[#e6e8de] bg-[#f8f9f4] px-4 py-3 text-sm text-[#5c5f54]">
+              <Lock className="h-4 w-4 shrink-0" aria-hidden />
+              Показ объектов ограничен администратором. Для доступа обратитесь к администратору.
+            </div>
+          )}
           {/* Панель инструментов */}
           <div className="mb-4 flex flex-col gap-3">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -1534,27 +1553,31 @@ export default function ProjectRegistry() {
                     placeholder="Поиск по ID, названию, адресу…"
                   />
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setOnlyMine((v) => !v)}
-                  className={
-                    'inline-flex items-center gap-2 rounded-md border px-3.5 py-2 text-sm font-semibold transition-colors ' +
-                    (onlyMine
-                      ? 'border-[#a6ce39] bg-[#f4f8e4] text-[#3c5210]'
-                      : 'border-[#e6e8de] bg-white text-[#111112] hover:bg-[#f4f6ec]')
-                  }
-                >
-                  Только мои
-                </button>
+                {seeAllProjects && (
+                  <button
+                    type="button"
+                    onClick={() => setOnlyMine((v) => !v)}
+                    className={
+                      'inline-flex items-center gap-2 rounded-md border px-3.5 py-2 text-sm font-semibold transition-colors ' +
+                      (onlyMine
+                        ? 'border-[#a6ce39] bg-[#f4f8e4] text-[#3c5210]'
+                        : 'border-[#e6e8de] bg-white text-[#111112] hover:bg-[#f4f6ec]')
+                    }
+                  >
+                    Только мои
+                  </button>
+                )}
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={openNew}
-                  className="inline-flex items-center gap-2 rounded-md bg-[#a6ce39] px-4 py-2 text-sm font-semibold text-black shadow-xs hover:bg-[#95bb31]"
-                >
-                  <FilePlus2 className="h-4 w-4" aria-hidden /> Новый объект
-                </button>
+                {(seeAllProjects || seeOwnProjects) && (
+                  <button
+                    type="button"
+                    onClick={openNew}
+                    className="inline-flex items-center gap-2 rounded-md bg-[#a6ce39] px-4 py-2 text-sm font-semibold text-black shadow-xs hover:bg-[#95bb31]"
+                  >
+                    <FilePlus2 className="h-4 w-4" aria-hidden /> Новый объект
+                  </button>
+                )}
                 {isAdmin && (
                   <>
                     <button
