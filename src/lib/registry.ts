@@ -489,6 +489,160 @@ export async function fetchObjects(): Promise<FetchObjectsResult> {
   return { objects, error: null }
 }
 
+// ---------------------------------------------------------------------------
+// Серверная страница списка объектов (оптимизация 16.11.2026).
+//
+// Раздел «Объекты строительства» раньше загружал ВСЕ объекты разом
+// (selectAll objects + objects_overview; при ~22,7 тыс. объектов — десятки МБ
+// и десятки секунд). Теперь список берётся страницами по N сводок из витрины
+// objects_overview (лёгкие поля), поиск и фильтры выполняются на сервере,
+// полная карточка грузится по требованию (fetchObject). fetchObjects остаётся
+// для выгрузки CSV и отчёта админа — по явному действию пользователя.
+// ---------------------------------------------------------------------------
+
+export interface ObjectPage {
+  rows: Project[]
+  total: number
+}
+
+/** Значение внутри or=() не терпит спецсимволов — чистим ввод пользователя. */
+function sanitizeSearchObj(raw: string): string {
+  return raw
+    .trim()
+    .replace(/["',*()]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .slice(0, 80)
+}
+
+/** Лёгкие колонки витрины: базовые + статус/тип/владелец (миграция 20261116). */
+const OBJECT_PAGE_SELECT_LIGHT =
+  'id,object_code,object_name,address,created_at,status,type_id,owner_id'
+/** Легаси-вариант: витрина без доп. колонок (SQL-пак 20261116 ещё не применён). */
+const OBJECT_PAGE_SELECT_LEGACY = 'id,object_code,object_name,address,created_at'
+
+/**
+ * Серверная страница лёгкого списка: PostgREST отдаёт страницу сводок из
+ * objects_overview (без форм и спецификаций) + общее число доступных объектов.
+ * Поиск (код/название/адрес), фильтр статуса и «Только мои» — на сервере.
+ * Для каждой страницы одним запросом (.in id) подтягиваются полные строки
+ * `objects`, доступные по RLS (свои/соучастные/админ) — у остальных строк
+ * остаётся access='basic' (замок в списке).
+ * Если витрина ещё без доп. колонок (SQL-пак не применён) — деградация:
+ * легаси-колонки, статус и «Только мои» фильтруются на клиенте по странице.
+ */
+export async function fetchObjectPage(opts: {
+  limit: number
+  offset: number
+  q?: string
+  status?: string
+  onlyMine?: boolean
+  ownerId?: string
+}): Promise<ObjectPage> {
+  const s = sanitizeSearchObj(opts.q ?? '')
+  const pat = s ? '*' + s.replace(/\s/g, '*') + '*' : ''
+
+  const build = (light: boolean) => {
+    let req = supabase
+      .from('objects_overview')
+      .select(light ? OBJECT_PAGE_SELECT_LIGHT : OBJECT_PAGE_SELECT_LEGACY, { count: 'exact' })
+      .order('created_at', { ascending: false })
+    if (s)
+      req = req.or(`object_code.ilike.${pat},object_name.ilike.${pat},address.ilike.${pat}`)
+    if (light && opts.status) req = req.eq('status', opts.status)
+    if (light && opts.onlyMine && opts.ownerId) req = req.eq('owner_id', opts.ownerId)
+    return req.range(opts.offset, opts.offset + opts.limit - 1)
+  }
+
+  let light = true
+  let res = await build(light)
+  if (res.error) {
+    // витрина без доп. колонок (миграция 20261116 не применена) — легаси-режим
+    light = false
+    res = await build(false)
+  }
+  if (res.error) return { rows: [], total: 0 }
+
+  type PageRow = OverviewRow & {
+    status?: string | null
+    type_id?: number | null
+    owner_id?: string | null
+  }
+  // типизированный клиент парсит select-строку в момент компиляции; новые
+  // колонки витрины появятся после SQL-пака 20261116 — кастуем через unknown
+  const rows = (res.data ?? []) as unknown as PageRow[]
+  const ids = rows.map((r) => r.id)
+
+  // Полные строки только для этой страницы: RLS сам отсечёт чужие
+  const fullMap = new Map<string, ObjectRow>()
+  if (ids.length) {
+    const { data: full } = await supabase.from('objects').select('*').in('id', ids)
+    for (const r of (full ?? []) as unknown as ObjectRow[]) fullMap.set(r.id, r)
+  }
+  return {
+    rows: rows.map((r) => {
+      const f = fullMap.get(r.id)
+      return f ? rowToProject(f) : overviewToProject(r)
+    }),
+    total: res.count ?? 0,
+  }
+}
+
+/** Полная карточка объекта по id — по требованию (открытие/редактирование). */
+export async function fetchObject(id: string): Promise<Project | null> {
+  if (!isUuid(id)) return null
+  const { data, error } = await supabase
+    .from('objects')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle()
+  if (error || !data) return null
+  return rowToProject(data as unknown as ObjectRow)
+}
+
+/** id объекта по коду М00090001 (после сохранения — открыть карточку). */
+export async function fetchObjectIdByCode(code: string): Promise<string | null> {
+  const c = String(code ?? '').trim()
+  if (!c) return null
+  const { data, error } = await supabase
+    .from('objects_overview')
+    .select('id')
+    .eq('object_code', c)
+    .maybeSingle()
+  if (error || !data) return null
+  return String((data as { id: string }).id)
+}
+
+/**
+ * Число объектов по каждому статусу в скоупе видимости (чипы фильтра).
+ * RPC objects_status_counts (security invoker, скоуп как у objects_overview:
+ * admin/see_all — все; остальные — свои и соучастные). Возвращает null,
+ * если функция ещё не создана (SQL-пак 20261116 не применён).
+ */
+export async function fetchObjectStatusCounts(): Promise<Record<string, number> | null> {
+  const { data, error } = await supabase.rpc('objects_status_counts')
+  if (error || !Array.isArray(data)) return null
+  const map: Record<string, number> = {}
+  for (const r of data as Array<{ status: string | null; cnt: number | string }>) {
+    map[r.status ?? ''] = Number(r.cnt) || 0
+  }
+  return map
+}
+
+/**
+ * Число объектов по каждому владельцу (вкладка «Аккаунты»).
+ * RPC objects_count_by_owner (security invoker, скоуп как у objects_overview).
+ * Возвращает null, если функция ещё не создана.
+ */
+export async function fetchObjectsCountByOwner(): Promise<Record<string, number> | null> {
+  const { data, error } = await supabase.rpc('objects_count_by_owner')
+  if (error || !Array.isArray(data)) return null
+  const map: Record<string, number> = {}
+  for (const r of data as Array<{ owner_id: string; cnt: number | string }>) {
+    map[r.owner_id] = Number(r.cnt) || 0
+  }
+  return map
+}
+
 /** Справочник типов объектов (таблица object_types). */
 export async function fetchObjectTypes(): Promise<Array<{ id: number; name: string }>> {
   const { data, error } = await supabase
@@ -691,7 +845,7 @@ export async function saveObject(
   form: FormData,
   existing?: Project,
   opts?: SaveObjectOptions,
-): Promise<{ ok: boolean; error?: string; objectCode?: string }> {
+): Promise<{ ok: boolean; error?: string; objectCode?: string; id?: string }> {
   const f = sanitizeForm(form)
   const row: Record<string, unknown> = {
     object_name: f.objectName.trim(),
@@ -716,9 +870,10 @@ export async function saveObject(
     return error ? { ok: false, error: dbError(error) } : { ok: true, objectCode: existing.objectCode }
   }
   row.owner_id = opts?.ownerId || me.id
-  const { data, error } = await supabase.from('objects').insert(row).select('object_code').single()
+  const { data, error } = await supabase.from('objects').insert(row).select('id, object_code').single()
   if (error) return { ok: false, error: dbError(error) }
-  return { ok: true, objectCode: String((data as { object_code: string }).object_code ?? '') }
+  const saved = data as { id: string; object_code: string }
+  return { ok: true, objectCode: String(saved.object_code ?? ''), id: saved.id }
 }
 
 export async function deleteObject(id: string): Promise<{ ok: boolean; error?: string }> {

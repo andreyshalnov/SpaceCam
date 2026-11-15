@@ -55,8 +55,13 @@ import {
   exportObjectJson,
   fetchAccounts,
   fetchAllSpecItems,
+  fetchObject,
+  fetchObjectIdByCode,
+  fetchObjectPage,
+  fetchObjectStatusCounts,
   fetchObjectTypes,
   fetchObjects,
+  fetchObjectsCountByOwner,
   fetchParticipants,
   fetchSetting,
   fetchSpecs,
@@ -268,12 +273,14 @@ function AccountsView({
   me,
   accounts,
   objects,
+  countsByOwner,
   onRefresh,
   onSaveProfile,
 }: {
   me: Account
   accounts: Account[]
   objects: Project[]
+  countsByOwner: Record<string, number> | null
   onRefresh: () => Promise<void>
   onSaveProfile: (
     id: string,
@@ -359,7 +366,10 @@ function AccountsView({
           </thead>
           <tbody>
             {accounts.map((a) => {
-              const cnt = objects.filter((p) => p.ownerId === a.id).length
+              // точные счётчики — RPC objects_count_by_owner; если RPC ещё
+              // не создан (SQL-пак не применён) — считаем по загруженному
+              const cnt =
+                countsByOwner?.[a.id] ?? objects.filter((p) => p.ownerId === a.id).length
               const editing = editId === a.id
               return (
                 <React.Fragment key={a.id}>
@@ -993,8 +1003,20 @@ function ReportView({ objects }: { objects: Project[] }) {
 export default function ProjectRegistry() {
   const [ready, setReady] = useState(false)
   const [me, setMe] = useState<Account | null>(null)
+  // Список объектов: СЕРВЕРНАЯ ПАГИНАЦИЯ (16.11.2026). В `objects` — только
+  // текущая страница сводок (PAGE_SIZE), в `total` — общее число в скоупе.
+  // Полные формы больше не грузятся списком: карточка/редактирование —
+  // fetchObject(id) по требованию; весь список (fetchObjects) — только для
+  // отчёта админа и экспорта CSV по явному действию.
   const [objects, setObjects] = useState<Project[]>([])
+  const [total, setTotal] = useState(0)
+  const [listLoading, setListLoading] = useState(false)
   const [objectsError, setObjectsError] = useState('')
+  const [statusCounts, setStatusCounts] = useState<Record<string, number> | null>(null)
+  const [countsByOwner, setCountsByOwner] = useState<Record<string, number> | null>(null)
+  const [fullObjects, setFullObjects] = useState<Project[] | null>(null)
+  const [reportLoading, setReportLoading] = useState(false)
+  const [cardFull, setCardFull] = useState<Project | null>(null)
   const [types, setTypes] = useState<Array<{ id: number; name: string }>>([])
   const [accounts, setAccounts] = useState<Account[]>([])
   const [dadataKey, setDadataKey] = useState('')
@@ -1002,6 +1024,7 @@ export default function ProjectRegistry() {
   const [view, setView] = useState<MainView>({ kind: 'list' })
   const [tab, setTab] = useState<Tab>('objects')
   const [q, setQ] = useState('')
+  const [qDeb, setQDeb] = useState('')
   const [statusF, setStatusF] = useState('')
   const [onlyMine, setOnlyMine] = useState(false)
   const [toast, setToast] = useState('')
@@ -1018,35 +1041,89 @@ export default function ProjectRegistry() {
   const [cardBusy, setCardBusy] = useState(false)
 
   const importRef = useRef<HTMLInputElement>(null)
+  const reqSeq = useRef(0)
 
   const notify = useCallback((msg: string) => {
     setToast(msg)
     window.setTimeout(() => setToast(''), 4000)
   }, [])
 
-  const loadObjects = useCallback(async (): Promise<Project[]> => {
-    const { objects: list, error } = await fetchObjects()
-    setObjects(list)
-    setObjectsError(error ?? '')
-    setParticipants(await fetchParticipants(list.map((o) => o.id)))
-    return list
+  const PAGE_SIZE = 25
+
+  /**
+   * Серверная страница списка: сводки из objects_overview (лёгкие поля),
+   * поиск/статус/«Только мои» — на сервере. Полные строки страницы .in(id),
+   * соучастники — только для id страницы.
+   */
+  const loadPage = useCallback(
+    async (who: Account, offset: number, replace: boolean) => {
+      const seq = ++reqSeq.current
+      setListLoading(true)
+      try {
+        const page = await fetchObjectPage({
+          limit: PAGE_SIZE,
+          offset,
+          q: qDeb,
+          status: statusF,
+          onlyMine,
+          ownerId: who.id,
+        })
+        if (seq !== reqSeq.current) return
+        setObjects((prev) => (replace ? page.rows : [...prev, ...page.rows]))
+        setTotal(page.total)
+        setObjectsError('')
+        const ids = page.rows.map((o) => o.id)
+        if (ids.length) {
+          const part = await fetchParticipants(ids)
+          if (seq !== reqSeq.current) return
+          setParticipants((prev) => ({ ...prev, ...part }))
+        }
+      } finally {
+        if (seq === reqSeq.current) setListLoading(false)
+      }
+    },
+    [qDeb, statusF, onlyMine],
+  )
+
+  /** Обновить счётчик статусов (чипы) — после мутаций. */
+  const refreshStatusCounts = useCallback(async () => {
+    setStatusCounts(await fetchObjectStatusCounts())
   }, [])
 
+  /** Аккаунты, справочники, ключи, счётчики и первая страница списка. */
   const loadAll = useCallback(
     async (who: Account) => {
-      const [objsP, typesP, accountsP, keyP] = [
-        loadObjects(),
+      const [, t, a, k, cc, sc] = await Promise.all([
+        loadPage(who, 0, true),
         fetchObjectTypes(),
         who.role === 'admin' ? fetchAccounts() : Promise.resolve([who]),
         fetchSetting(DADATA_KEY_SETTING),
-      ]
-      const [, t, a, k] = await Promise.all([objsP, typesP, accountsP, keyP])
+        who.role === 'admin' ? fetchObjectsCountByOwner() : Promise.resolve(null),
+        fetchObjectStatusCounts(),
+      ])
       setTypes(t)
       setAccounts(a)
       setDadataKey(k)
+      setCountsByOwner(cc)
+      setStatusCounts(sc)
     },
-    [loadObjects],
+    [loadPage],
   )
+
+  // Серверная страница при смене фильтров (поиск — с дебаунсом 350 мс).
+  // Старт сессии/мутации идут через loadAll/loadPage, смены фильтров — здесь.
+  useEffect(() => {
+    if (!me) return
+    const t = window.setTimeout(() => void loadPage(me, 0, true), q === qDeb ? 0 : 350)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [me?.id, loadPage])
+
+  // Дебаунс поискового ввода
+  useEffect(() => {
+    const t = window.setTimeout(() => setQDeb(q.trim()), 350)
+    return () => window.clearTimeout(t)
+  }, [q])
 
   useEffect(() => {
     let alive = true
@@ -1064,10 +1141,15 @@ export default function ProjectRegistry() {
       if (event === 'SIGNED_OUT') {
         setMe(null)
         setObjects([])
+        setTotal(0)
         setAccounts([])
         setParticipants({})
         setDadataKey('')
         setSpecs([])
+        setFullObjects(null)
+        setStatusCounts(null)
+        setCountsByOwner(null)
+        setCardFull(null)
         setView({ kind: 'list' })
         setTab('objects')
       } else if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
@@ -1085,13 +1167,61 @@ export default function ProjectRegistry() {
     }
   }, [loadAll])
 
-  // Спецификации открытой карточки (только полный доступ)
+  // Карточка: строка страницы с полным доступом или полная запись по требованию
   const cardId = view.kind === 'card' ? view.id : null
-  const card = cardId ? objects.find((o) => o.id === cardId) ?? null : null
+  const cardFromList = cardId ? objects.find((o) => o.id === cardId) ?? null : null
+  const card =
+    cardFromList && cardFromList.access === 'full'
+      ? cardFromList
+      : cardFull && cardFull.id === cardId
+        ? cardFull
+        : null
   const cardParticipants = useMemo(
     () => (card ? participants[card.id] ?? [] : []),
     [participants, card],
   )
+
+  // Если карточки нет на странице (или она basic) — полная запись по id
+  useEffect(() => {
+    if (!cardId) {
+      setCardFull(null)
+      return
+    }
+    if (cardFromList && cardFromList.access === 'full') {
+      setCardFull(null)
+      return
+    }
+    let alive = true
+    void fetchObject(cardId).then((p) => {
+      if (alive) setCardFull(p)
+    })
+    return () => {
+      alive = false
+    }
+  }, [cardId, cardFromList])
+
+  // Соучастники карточки, если их нет среди загруженных страниц
+  useEffect(() => {
+    if (!card || participants[card.id]) return
+    let alive = true
+    void fetchParticipants([card.id]).then((part) => {
+      if (alive && Object.keys(part).length) setParticipants((prev) => ({ ...prev, ...part }))
+    })
+    return () => {
+      alive = false
+    }
+  }, [card, participants])
+
+  // Отчёт админа: полный список грузится лениво при открытии вкладки
+  useEffect(() => {
+    if (tab !== 'report' || !me || me.role !== 'admin' || fullObjects || reportLoading) return
+    setReportLoading(true)
+    void fetchObjects().then(({ objects: list, error }) => {
+      setFullObjects(list)
+      if (error) notify('Ошибка отчёта: ' + error)
+      setReportLoading(false)
+    })
+  }, [tab, me, fullObjects, reportLoading, notify])
 
   useEffect(() => {
     if (!card || card.access !== 'full') {
@@ -1111,10 +1241,15 @@ export default function ProjectRegistry() {
     void signOut()
     setMe(null)
     setObjects([])
+    setTotal(0)
     setAccounts([])
     setParticipants({})
     setDadataKey('')
     setSpecs([])
+    setFullObjects(null)
+    setStatusCounts(null)
+    setCountsByOwner(null)
+    setCardFull(null)
     setView({ kind: 'list' })
     setTab('objects')
     notify('Вы вышли из раздела')
@@ -1160,13 +1295,19 @@ export default function ProjectRegistry() {
   }
 
   function openEdit(id: string) {
-    const p = objects.find((o) => o.id === id)
-    if (!p || p.access !== 'full') return
-    setForm(toForm(p))
-    setOwnerId(p.ownerId || user.id)
-    setEntryDate(p.entryDate)
-    setErrs({})
-    setView({ kind: 'form', id })
+    void (async () => {
+      // объект может не быть на текущей странице — тянем полную запись по id
+      const p = objects.find((o) => o.id === id) ?? (await fetchObject(id))
+      if (!p || p.access !== 'full') {
+        notify('Нет полного доступа к объекту')
+        return
+      }
+      setForm(toForm(p))
+      setOwnerId(p.ownerId || user.id)
+      setEntryDate(p.entryDate)
+      setErrs({})
+      setView({ kind: 'form', id })
+    })()
   }
 
   async function saveForm(editing: Project | undefined) {
@@ -1188,10 +1329,15 @@ export default function ProjectRegistry() {
       notify('Ошибка сохранения: ' + (res.error ?? 'неизвестная'))
       return
     }
-    const fresh = await loadObjects()
+    // перезагружаем только первую страницу + счётчики (не весь список)
+    await Promise.all([loadPage(user, 0, true), refreshStatusCounts()])
     notify(`Объект сохранён. ID: ${res.objectCode ?? '—'}`)
-    const created = res.objectCode ? fresh.find((o) => o.objectCode === res.objectCode) : undefined
-    setView(created ? { kind: 'card', id: created.id } : { kind: 'list' })
+    let createdId = res.id
+    if (!createdId && res.objectCode) {
+      const byCode = await fetchObjectIdByCode(res.objectCode)
+      createdId = byCode ?? undefined
+    }
+    setView(createdId ? { kind: 'card', id: createdId } : { kind: 'list' })
   }
 
   // --- Карточка объекта ---
@@ -1206,7 +1352,7 @@ export default function ProjectRegistry() {
         return
       }
       notify('Объект удалён')
-      await loadObjects()
+      await Promise.all([loadPage(user, 0, true), refreshStatusCounts()])
       setView({ kind: 'list' })
     })()
   }
@@ -1220,7 +1366,10 @@ export default function ProjectRegistry() {
       notify('Ошибка сохранения доступов: ' + (res.error ?? 'неизвестная'))
       return false
     }
-    setParticipants(await fetchParticipants(objects.map((o) => o.id)))
+    // обновляем соучастников только для открытой карточки и текущей страницы
+    const reloadIds = Array.from(new Set([card.id, ...objects.map((o) => o.id)]))
+    const part = await fetchParticipants(reloadIds)
+    setParticipants((prev) => ({ ...prev, ...part }))
     notify('Доступы сохранены')
     return true
   }
@@ -1262,7 +1411,8 @@ export default function ProjectRegistry() {
         `Импорт завершён: добавлено ${res.added}, пропущено ${res.skipped}.` +
         (res.errors.length ? '\n\nОшибки:\n' + res.errors.slice(0, 10).join('\n') : '')
       window.alert(msg)
-      await loadObjects()
+      await Promise.all([loadPage(user, 0, true), refreshStatusCounts()])
+      setFullObjects(null) // экспорт/отчёт перечитают полный список по требованию
     } catch (err) {
       window.alert('Ошибка импорта: ' + (err instanceof Error ? err.message : 'неизвестная'))
     }
@@ -1277,7 +1427,10 @@ export default function ProjectRegistry() {
 
   // ---- Форма объекта ----
   if (view.kind === 'form' && form) {
-    const editing = view.id ? objects.find((o) => o.id === view.id) : undefined
+    // редактируемый объект: со страницы или полная запись, вытянутая по id
+    const editing = view.id
+      ? objects.find((o) => o.id === view.id) ?? cardFull ?? undefined
+      : undefined
     return (
       <PageShell>
         <div className="mx-auto max-w-4xl">
@@ -1409,31 +1562,11 @@ export default function ProjectRegistry() {
   }
 
   // ---- Список / аккаунты / профиль / настройки ----
-  // Ограничение видимости (см. миграцию 20261113): чужие объекты отсекает
-  // уже сама БД (витрина objects_overview) — фильтр ниже дублирует её в UI.
-  // «Свои» = полный доступ RLS: владелец (owner_id) + соучастник (participants).
-  const scoped = seeAllProjects
-    ? objects
-    : seeOwnProjects
-      ? objects.filter((o) => o.access === 'full')
-      : [] // оба чекбокса выключены — пустой список + баннер
-  const visible = onlyMine ? scoped.filter((o) => o.ownerId === user.id) : scoped
-  const s = q.trim().toLowerCase()
-  const base = visible.filter((o) => {
-    if (!s) return true
-    const code = o.objectCode.toLowerCase()
-    if (code.includes(s)) return true
-    // «90001» и «м00090001» должны находить один и тот же код
-    const codeNum = code.replace(/^[мm]/, '')
-    const sNum = s.replace(/^[мm]/, '')
-    if (sNum && codeNum.includes(sNum)) return true
-    return (
-      o.objectName.toLowerCase().includes(s) ||
-      o.address.toLowerCase().includes(s) ||
-      o.contractor.toLowerCase().includes(s)
-    )
-  })
-  const filtered = statusF ? base.filter((o) => o.status === statusF) : base
+  // Ограничение видимости — на сервере: витрина objects_overview отдаёт
+  // только разрешённые строки, счёт total — точное число доступных.
+  // Поиск (q/qDeb), фильтр статуса и «Только мои» применяются на сервере
+  // (fetchObjectPage) — на клиенте список не фильтруем.
+  const filtered = objects
   const statusChips: Array<{ key: string; label: string }> = [
     { key: '', label: 'Все' },
     ...OBJECT_STATUSES.map((st) => ({ key: st, label: st })),
@@ -1456,7 +1589,7 @@ export default function ProjectRegistry() {
           >
             <FolderKanban className="h-4 w-4" aria-hidden />
             Объекты
-            <span className="rounded bg-black/10 px-1.5 text-xs">{visible.length}</span>
+            <span className="rounded bg-black/10 px-1.5 text-xs">{total}</span>
           </button>
           {isAdmin && (
             <>
@@ -1605,14 +1738,30 @@ export default function ProjectRegistry() {
                 )}
                 <button
                   type="button"
-                  onClick={() =>
-                    downloadFile(
-                      `sc-objects-${new Date().toISOString().slice(0, 10)}.csv`,
-                      objectsToCsv(filtered, accounts),
-                      'text/csv',
-                    )
-                  }
-                  className="inline-flex items-center gap-1.5 rounded-md border border-[#e6e8de] bg-white px-3 py-2 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]"
+                  disabled={reportLoading}
+                  onClick={() => {
+                    // Экспорт всех доступных объектов: полный список грузится
+                    // по явному действию (лениво), с индикатором
+                    void (async () => {
+                      setReportLoading(true)
+                      let all = fullObjects
+                      if (!all) {
+                        const { objects: list, error } = await fetchObjects()
+                        all = list
+                        setFullObjects(list)
+                        if (error) notify('Ошибка выгрузки: ' + error)
+                      }
+                      setReportLoading(false)
+                      if (all?.length)
+                        downloadFile(
+                          `sc-objects-${new Date().toISOString().slice(0, 10)}.csv`,
+                          objectsToCsv(all, accounts),
+                          'text/csv',
+                        )
+                    })()
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-[#e6e8de] bg-white px-3 py-2 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec] disabled:opacity-60"
+                  title="Выгрузить все доступные объекты в CSV"
                 >
                   <FileDown className="h-4 w-4" aria-hidden /> Экспорт CSV
                 </button>
@@ -1626,10 +1775,15 @@ export default function ProjectRegistry() {
               </div>
             </div>
 
-            {/* Фильтр по статусам */}
+            {/* Фильтр по статусам: счётчики — с сервера (RPC objects_status_counts),
+                скоуп видимости совпадает со списком; поиск счётчики не сужает */}
             <div className="flex flex-wrap gap-1.5">
               {statusChips.map((c) => {
-                const n = c.key ? base.filter((o) => o.status === c.key).length : base.length
+                const n = statusCounts
+                  ? c.key
+                    ? statusCounts[c.key] ?? 0
+                    : Object.values(statusCounts).reduce((x, v) => x + v, 0)
+                  : null
                 const active = statusF === c.key
                 return (
                   <button
@@ -1643,7 +1797,7 @@ export default function ProjectRegistry() {
                         : 'border-[#e6e8de] bg-white text-[#4b4d45] hover:bg-[#f4f6ec]')
                     }
                   >
-                    {c.label} <span className="opacity-60">{n}</span>
+                    {c.label} {n !== null && <span className="opacity-60">{n}</span>}
                   </button>
                 )
               })}
@@ -1656,19 +1810,21 @@ export default function ProjectRegistry() {
             </div>
           )}
 
-          {/* Список объектов */}
-          {!objects.length ? (
-            <div className="rounded-xl border border-dashed border-[#c8ccba] bg-white px-6 py-14 text-center">
-              <FolderKanban className="mx-auto h-10 w-10 text-[#c8ccba]" aria-hidden />
-              <p className="mt-3 text-sm font-semibold text-[#111112]">Пока нет ни одного объекта строительства</p>
-              <p className="mt-1 text-sm text-[#707075]">
-                Создайте первый объект кнопкой «Новый объект»{isAdmin ? ' или импортируйте CSV из 1С.' : '.'}
-              </p>
-            </div>
-          ) : !filtered.length ? (
-            <div className="rounded-xl border border-dashed border-[#c8ccba] bg-white px-6 py-12 text-center text-sm text-[#707075]">
-              Ничего не найдено — измените поиск или фильтры.
-            </div>
+          {/* Список объектов: серверная страница + «Показать ещё» */}
+          {!objects.length && !listLoading ? (
+            qDeb || statusF || onlyMine ? (
+              <div className="rounded-xl border border-dashed border-[#c8ccba] bg-white px-6 py-12 text-center text-sm text-[#707075]">
+                Ничего не найдено — измените поиск или фильтры.
+              </div>
+            ) : (
+              <div className="rounded-xl border border-dashed border-[#c8ccba] bg-white px-6 py-14 text-center">
+                <FolderKanban className="mx-auto h-10 w-10 text-[#c8ccba]" aria-hidden />
+                <p className="mt-3 text-sm font-semibold text-[#111112]">Пока нет ни одного объекта строительства</p>
+                <p className="mt-1 text-sm text-[#707075]">
+                  Создайте первый объект кнопкой «Новый объект»{isAdmin ? ' или импортируйте CSV из 1С.' : '.'}
+                </p>
+              </div>
+            )
           ) : (
             <div className="overflow-hidden rounded-xl border border-[#e6e8de] bg-white shadow-sm">
               {filtered.map((o) => (
@@ -1708,6 +1864,26 @@ export default function ProjectRegistry() {
                   </span>
                 </button>
               ))}
+              {listLoading && (
+                <div className="border-t border-[#f0f1ea] px-4 py-3 text-center text-xs text-[#707075]">
+                  Загрузка…
+                </div>
+              )}
+            </div>
+          )}
+
+          {objects.length < total && !listLoading && (
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => void loadPage(user, objects.length, false)}
+                className="inline-flex items-center gap-2 rounded-md border border-[#e6e8de] bg-white px-4 py-2 text-sm font-semibold text-[#111112] hover:bg-[#f4f6ec]"
+              >
+                Показать ещё
+              </button>
+              <span className="text-xs text-[#707075]">
+                загружено {objects.length} из {total}
+              </span>
             </div>
           )}
 
@@ -1718,13 +1894,24 @@ export default function ProjectRegistry() {
         </>
       )}
 
-      {tab === 'report' && isAdmin && <ReportView objects={objects} />}
+      {tab === 'report' && isAdmin && (
+        fullObjects ? (
+          <ReportView objects={fullObjects} />
+        ) : (
+          <div className="rounded-xl border border-dashed border-[#c8ccba] bg-white px-6 py-14 text-center text-sm text-[#707075]">
+            {reportLoading
+              ? 'Готовим отчёт: загружаем полный список объектов…'
+              : 'Отчёт считает по всем доступным объектам — откройте вкладку ещё раз, если загрузка не началась.'}
+          </div>
+        )
+      )}
 
       {tab === 'accounts' && isAdmin && (
         <AccountsView
           me={user}
           accounts={accounts}
           objects={objects}
+          countsByOwner={countsByOwner}
           onRefresh={async () => {
             await loadAll(user)
           }}
