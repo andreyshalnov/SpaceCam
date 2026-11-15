@@ -1057,6 +1057,14 @@ export default function ProjectRegistry() {
    */
   const loadPage = useCallback(
     async (who: Account, offset: number, replace: boolean) => {
+      // Решение 13.11.2026: оба чекбокса выключены -> пустой список + баннер;
+      // запрос к базе не выполняем вовсе (свои объекты остаются доступны
+      // через прямые ссылки/RLS, но список скрыт)
+      if (who.role !== 'admin' && !who.seeAllProjects && !who.seeOwnProjects) {
+        setObjects([])
+        setTotal(0)
+        return
+      }
       const seq = ++reqSeq.current
       setListLoading(true)
       try {
@@ -1093,13 +1101,14 @@ export default function ProjectRegistry() {
   /** Аккаунты, справочники, ключи, счётчики и первая страница списка. */
   const loadAll = useCallback(
     async (who: Account) => {
+      const canList = who.role === 'admin' || who.seeAllProjects || who.seeOwnProjects
       const [, t, a, k, cc, sc] = await Promise.all([
         loadPage(who, 0, true),
         fetchObjectTypes(),
         who.role === 'admin' ? fetchAccounts() : Promise.resolve([who]),
         fetchSetting(DADATA_KEY_SETTING),
         who.role === 'admin' ? fetchObjectsCountByOwner() : Promise.resolve(null),
-        fetchObjectStatusCounts(),
+        canList ? fetchObjectStatusCounts() : Promise.resolve(null),
       ])
       setTypes(t)
       setAccounts(a)
