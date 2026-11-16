@@ -1285,3 +1285,106 @@ export function downloadFile(name: string, content: string, mime = 'application/
   a.remove()
   window.setTimeout(() => URL.revokeObjectURL(url), 2000)
 }
+
+// ---------------------------------------------------------------------------
+// Аудит доступа (вкладка «Аудит доступа», видна только супер-администратору)
+// ---------------------------------------------------------------------------
+
+/** E-mail супер-администратора: сводка прав и доступов видна только ему. */
+export const SUPER_ADMIN_EMAIL = 'andrey.shalnov@gmail.com'
+
+export function isSuperAdmin(acc: Account | null): boolean {
+  return !!acc && acc.email.trim().toLowerCase() === SUPER_ADMIN_EMAIL
+}
+
+export interface OwnerAuditRow {
+  ownerId: string | null // null — объекты без владельца
+  login: string | null
+  role: string | null
+  total: number
+  demo: number // с меткой [ДЕМО]
+  live: number // живые (1C)
+}
+
+export interface ObjectsAudit {
+  viaRpc: boolean // true — RPC objects_audit_by_owner; false — построчные head-запросы
+  rows: OwnerAuditRow[]
+  totals: { objects: number; demo: number; live: number; unowned: number }
+}
+
+/** head-запрос count=exact: тела строк не передаются, быстро даже на 22+ тыс. строк. */
+async function auditHeadCount(
+  filters: { owner?: string; demo?: boolean; unowned?: boolean } = {},
+): Promise<number> {
+  let q = supabase.from('objects').select('id', { count: 'exact', head: true })
+  if (filters.unowned) q = q.is('owner_id', null)
+  else if (filters.owner !== undefined) q = q.eq('owner_id', filters.owner)
+  if (filters.demo) q = q.like('object_name', '[ДЕМО]%')
+  const { count, error } = await q
+  if (error) throw new Error(error.message)
+  return count ?? 0
+}
+
+/**
+ * Сводка объектов по владельцам для вкладки «Аудит доступа».
+ * Полные цифры по базе получает только супер-администратор (RLS роли admin
+ * видит всё). Быстрый путь — RPC objects_audit_by_owner (security definer,
+ * проверка супер-админа по e-mail в auth.users; SQL в docs/sql/). Если RPC
+ * ещё не создан — резервные head-запросы по каждому профилю.
+ */
+export async function fetchObjectsAudit(accounts?: Account[]): Promise<ObjectsAudit> {
+  const { data: rpcRows, error: rpcErr } = await supabase.rpc('objects_audit_by_owner')
+  if (!rpcErr && Array.isArray(rpcRows)) {
+    const rows: OwnerAuditRow[] = (rpcRows as Array<Record<string, unknown>>).map((r) => {
+      const total = Number(r.total ?? 0)
+      const demo = Number(r.demo ?? 0)
+      return {
+        ownerId: (r.owner_id as string | null) ?? null,
+        login: (r.login as string | null) ?? null,
+        role: (r.role as string | null) ?? null,
+        total,
+        demo,
+        live: Math.max(0, total - demo),
+      }
+    })
+    const sum = (k: 'total' | 'demo' | 'live') => rows.reduce((acc, r) => acc + r[k], 0)
+    const unowned = rows.find((r) => !r.ownerId)?.total ?? 0
+    return {
+      viaRpc: true,
+      rows,
+      totals: { objects: sum('total'), demo: sum('demo'), live: sum('live'), unowned },
+    }
+  }
+
+  // Резервный путь: count=exact по каждому профилю (RLS сам ограничит выборку)
+  const profs = accounts ?? (await fetchAccounts())
+  const owned = await Promise.all(
+    profs.map(async (a): Promise<OwnerAuditRow> => {
+      const total = await auditHeadCount({ owner: a.id })
+      const demo = await auditHeadCount({ owner: a.id, demo: true })
+      return { ownerId: a.id, login: a.login, role: a.role, total, demo, live: total - demo }
+    }),
+  )
+  const [unownedTotal, unownedDemo, total, demoTotal] = await Promise.all([
+    auditHeadCount({ unowned: true }),
+    auditHeadCount({ unowned: true, demo: true }),
+    auditHeadCount(),
+    auditHeadCount({ demo: true }),
+  ])
+  const rows: OwnerAuditRow[] = [
+    ...owned,
+    {
+      ownerId: null,
+      login: null,
+      role: null,
+      total: unownedTotal,
+      demo: unownedDemo,
+      live: unownedTotal - unownedDemo,
+    },
+  ]
+  return {
+    viaRpc: false,
+    rows,
+    totals: { objects: total, demo: demoTotal, live: total - demoTotal, unowned: unownedTotal },
+  }
+}

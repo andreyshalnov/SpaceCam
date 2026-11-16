@@ -10,6 +10,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   BarChart3,
   Building2,
+  Database,
   FileDown,
   FilePlus2,
   FolderKanban,
@@ -58,6 +59,7 @@ import {
   fetchObject,
   fetchObjectIdByCode,
   fetchObjectPage,
+  fetchObjectsAudit,
   fetchObjectStatusCounts,
   fetchObjectTypes,
   fetchObjects,
@@ -68,6 +70,8 @@ import {
   formatDateInput,
   getSessionAccount,
   importObjectsCsv,
+  isSuperAdmin,
+  ObjectsAudit,
   objectsToCsv,
   requestPasswordReset,
   ruDateTime,
@@ -82,7 +86,7 @@ import {
   validateProject,
 } from '@/lib/registry'
 
-type Tab = 'objects' | 'accounts' | 'report' | 'profile' | 'settings'
+type Tab = 'objects' | 'accounts' | 'audit' | 'report' | 'profile' | 'settings'
 type MainView = { kind: 'list' } | { kind: 'form'; id: string | null } | { kind: 'card'; id: string }
 
 const STATUS_BADGE: Record<string, string> = {
@@ -262,6 +266,152 @@ function LoginView({ onLogin }: { onLogin: (acc: Account) => void }) {
         </div>
       </div>
     </PageShell>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Аудит доступа (только для супер-администратора andrey.shalnov)
+// ---------------------------------------------------------------------------
+
+function AuditStatCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-[#e6e8de] bg-white p-4 shadow-sm">
+      <div className="text-2xl font-extrabold text-[#111112]">{value}</div>
+      <div className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-[#707075]">{label}</div>
+    </div>
+  )
+}
+
+function AuditView({ accounts }: { accounts: Account[] }) {
+  const [audit, setAudit] = useState<ObjectsAudit | null>(null)
+  const [busy, setBusy] = useState(true)
+  const [err, setErr] = useState('')
+
+  const load = useCallback(async () => {
+    setBusy(true)
+    setErr('')
+    try {
+      setAudit(await fetchObjectsAudit(accounts))
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : 'Не удалось собрать данные аудита')
+    } finally {
+      setBusy(false)
+    }
+  }, [accounts])
+
+  useEffect(() => {
+    void load()
+  }, [load])
+
+  const rowFor = (id: string) => audit?.rows.find((r) => r.ownerId === id)
+  const unowned = audit?.rows.find((r) => r.ownerId === null)
+  const sorted = [...accounts].sort((a, b) => {
+    if ((a.role === 'admin') !== (b.role === 'admin')) return a.role === 'admin' ? -1 : 1
+    return a.login.localeCompare(b.login)
+  })
+
+  return (
+    <div className="space-y-5">
+      <div className="rounded-xl border border-[#e6e8de] bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Database className="h-5 w-5 text-[#5c7a12]" aria-hidden />
+            <div>
+              <h3 className="text-base font-bold text-[#111112]">Аудит доступа: пользователи и объекты</h3>
+              <p className="mt-0.5 max-w-2xl text-xs leading-relaxed text-[#707075]">
+                Раздел виден только супер-администратору. «Своих объектов» — записи, владельцем которых является
+                пользователь: партнёр видит только их (плюс пул и соучастие, если настроены в RLS), администратор —
+                всю базу. Флаги «видит все/свои проекты» управляют отображением списка, но не владением.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => void load()}
+            className="inline-flex items-center gap-2 rounded-md border border-[#e6e8de] bg-white px-4 py-2 text-sm font-medium text-[#111112] hover:bg-[#f4f6ec]"
+          >
+            <RefreshCw className={'h-4 w-4' + (busy ? ' animate-spin' : '')} aria-hidden /> Обновить
+          </button>
+        </div>
+        {err && (
+          <div className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+            {err}
+          </div>
+        )}
+        {audit && (
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            <AuditStatCard label="Объектов всего" value={String(audit.totals.objects)} />
+            <AuditStatCard label="С меткой [ДЕМО]" value={String(audit.totals.demo)} />
+            <AuditStatCard label="Живых (1C)" value={String(audit.totals.live)} />
+            <AuditStatCard label="Профилей" value={String(accounts.length)} />
+            <AuditStatCard label="Без владельца" value={String(audit.totals.unowned)} />
+          </div>
+        )}
+      </div>
+
+      <div className="overflow-x-auto rounded-xl border border-[#e6e8de] bg-white shadow-sm">
+        <table className="w-full min-w-[760px] text-left text-sm">
+          <thead>
+            <tr className="border-b border-[#e6e8de] bg-[#fafaf6] text-xs uppercase tracking-wide text-[#707075]">
+              <th className="px-4 py-3 font-semibold">Логин</th>
+              <th className="px-4 py-3 font-semibold">Роль</th>
+              <th className="px-4 py-3 font-semibold">Компания</th>
+              <th className="px-4 py-3 font-semibold">ФИО</th>
+              <th className="px-4 py-3 font-semibold">E-mail</th>
+              <th className="px-4 py-3 text-right font-semibold">Своих объектов</th>
+              <th className="px-4 py-3 text-right font-semibold">из них [ДЕМО]</th>
+              <th className="px-4 py-3 text-right font-semibold">из них живых</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((a) => {
+              const r = rowFor(a.id)
+              return (
+                <tr key={a.id} className="border-b border-[#f0f1ea] last:border-0 hover:bg-[#fafaf6]">
+                  <td className="px-4 py-3 font-semibold text-[#111112]">{a.login}</td>
+                  <td className="px-4 py-3">
+                    {a.role === 'admin' ? (
+                      <Badge className="bg-[#111112] text-white">
+                        <ShieldCheck className="h-3 w-3" aria-hidden /> Администратор
+                      </Badge>
+                    ) : (
+                      <Badge className="bg-[#f4f8e4] text-[#4a6b12]">Партнёр</Badge>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-xs text-[#4b4d45]">{a.company || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-[#4b4d45]">{a.profile.managerName || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-[#4b4d45]">{a.profile.email || '—'}</td>
+                  <td className="px-4 py-3 text-right text-sm font-semibold text-[#111112]">{r ? r.total : '…'}</td>
+                  <td className="px-4 py-3 text-right text-xs text-[#4b4d45]">{r ? r.demo : '…'}</td>
+                  <td className="px-4 py-3 text-right text-xs text-[#4b4d45]">{r ? r.live : '…'}</td>
+                </tr>
+              )
+            })}
+            {unowned && (
+              <tr className="bg-[#fafaf6]">
+                <td className="px-4 py-3 text-xs font-semibold text-[#a3a5ab]" colSpan={5}>
+                  Объекты без владельца (owner_id пуст)
+                </td>
+                <td className="px-4 py-3 text-right text-sm font-semibold text-[#111112]">{unowned.total}</td>
+                <td className="px-4 py-3 text-right text-xs text-[#4b4d45]">{unowned.demo}</td>
+                <td className="px-4 py-3 text-right text-xs text-[#4b4d45]">{unowned.live}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        {busy && !audit && <p className="px-4 py-4 text-sm text-[#707075]">Собираем данные аудита…</p>}
+        {!audit && !busy && !err && (
+          <p className="px-4 py-4 text-sm text-[#707075]">Данные пока не загружены.</p>
+        )}
+      </div>
+
+      {audit && !audit.viaRpc && (
+        <p className="text-xs leading-relaxed text-[#707075]">
+          Сводка собрана построчными запросами. Примените SQL-пак docs/sql/20261116_superadmin_objects_audit.sql в
+          Supabase — тогда сводка будет собираться одним запросом на сервере.
+        </p>
+      )}
+    </div>
   )
 }
 
@@ -1629,6 +1779,20 @@ export default function ProjectRegistry() {
               >
                 <BarChart3 className="h-4 w-4" aria-hidden /> Отчёт
               </button>
+              {isSuperAdmin(user) && (
+                <button
+                  type="button"
+                  onClick={() => setTab('audit')}
+                  className={
+                    'inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-semibold transition-colors ' +
+                    (tab === 'audit'
+                      ? 'bg-[#111112] text-white'
+                      : 'border border-[#e6e8de] bg-white text-[#111112] hover:bg-[#f4f6ec]')
+                  }
+                >
+                  <Database className="h-4 w-4" aria-hidden /> Аудит доступа
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setTab('settings')}
@@ -1940,6 +2104,8 @@ export default function ProjectRegistry() {
           }}
         />
       )}
+
+      {tab === 'audit' && isSuperAdmin(user) && <AuditView accounts={accounts} />}
 
       {tab === 'settings' && isAdmin && (
         <SettingsView
