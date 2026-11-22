@@ -354,7 +354,7 @@ export function Home({ products }: { products: Product[] }) {
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight text-black sm:text-3xl">Подберём оборудование под ваш объект</h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#3c4a17] sm:text-base">
-              Проектный отдел рассчитает состав, бюджет PoE и схему сети. Пилотная версия каталога — актуальное наличие
+              Проектный отдел рассчитает состав, бюджет PoE и схему сети. Версия каталога 1.0 — актуальное наличие
               и цены по выгрузкам от 20.10.2026.
             </p>
           </div>

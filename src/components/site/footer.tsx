@@ -108,7 +108,7 @@ export function Footer() {
       <div className="border-t border-[#232325]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-[#85878d] sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <span>© 2026 ООО «Технолайт». Бренд SpaceCam. Все права защищены.</span>
-          <span>Пилотная версия сайта · Цены и наличие — по выгрузкам от 20.10 и 29.10.2026</span>
+          <span>Версия сайта 1.0 · Цены и наличие — по выгрузкам от 20.10 и 29.10.2026</span>
         </div>
       </div>
     </footer>

@@ -1,7 +1,7 @@
 'use client'
 
-// Админ-панель «Цены и наличие» (#/admin-prices, только для роли admin):
-//  - Цены: таблица 13 типов цен по всем SKU (сохранение по blur);
+// Админ-панель «B2B» (#/admin-prices, только для роли admin):
+//  - B2B: таблица 13 типов цен по всем SKU (сохранение по blur);
 //  - Наличие: остатки по складам РФ (сохранение по blur);
 //  - Импорт: xlsx/csv выгрузка 1С → цены или остатки (+ автоматический снимок);
 //  - Пользователи: права партнёров (типы цен, доступ к наличию);
@@ -292,7 +292,7 @@ function ImportTab({ pd }: { pd: PriceData }) {
                 mode === m ? 'bg-[#f4f8e4] text-[#4a6b12]' : 'text-[#707075]'
               }`}
             >
-              {m === 'prices' ? 'Цены' : 'Остатки по складам'}
+              {m === 'prices' ? 'B2B' : 'Остатки по складам'}
             </button>
           ))}
         </div>
@@ -1039,7 +1039,7 @@ export function AdminPrices() {
 
   const isAdmin = account.role === 'admin'
   const tabs: [TabKey, string, React.ReactNode][] = [
-    ['prices', isAdmin ? 'Цены' : 'Мои цены', <Tag key="t" className="h-4 w-4" aria-hidden />],
+    ['prices', 'B2B', <Tag key="t" className="h-4 w-4" aria-hidden />],
   ]
   if (pd.canSeeStock) tabs.push(['stock', 'Наличие', <Package key="s" className="h-4 w-4" aria-hidden />])
   if (isAdmin)
@@ -1060,7 +1060,7 @@ export function AdminPrices() {
               <div className="text-xs font-medium uppercase tracking-wider text-[#a6ce39]">
                 {isAdmin ? 'Администрирование' : 'Личный кабинет'}
               </div>
-              <h1 className="mt-1 text-3xl font-extrabold tracking-tight">Цены и наличие</h1>
+              <h1 className="mt-1 text-3xl font-extrabold tracking-tight">B2B</h1>
               <p className="mt-2 text-sm text-[#b8bab0]">
                 {isAdmin
                   ? `База Supabase: ${FALLBACK_PRICE_TYPES.length} типов цен, остатки по складам РФ, права пользователей.`
@@ -1146,7 +1146,7 @@ function useCatalogProducts(): Product[] {
 }
 
 // ---------------------------------------------------------------------------
-// Вкладки «Цены» и «Наличие»
+// Вкладки «B2B» и «Наличие»
 // ---------------------------------------------------------------------------
 
 /** Форматирование цены для отображения: 1234567.5 → «1 234 567,5». */

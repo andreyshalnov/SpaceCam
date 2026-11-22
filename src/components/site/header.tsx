@@ -1,7 +1,7 @@
 'use client'
 
 // Шапка: «О бренде» → «Новости» → «Продукция» (dropdown) → «Решения» → «Поддержка»
-// → «Где купить» → «Регистрация проекта»; справа — аккаунт (Цены/Выйти) и «Запросить КП».
+// → «Где купить» → «Регистрация проекта»; справа — аккаунт (B2B/Выйти) и «Запросить КП».
 
 import { useEffect, useRef, useState } from 'react'
 import { Battery, BatteryCharging, Cable, Cctv, ChevronDown, Flame, KeyRound, Lock, LogOut, Menu, Network, Package, Tag, X } from 'lucide-react'
@@ -36,7 +36,7 @@ export function Logo() {
   )
 }
 
-/** Кнопка аккаунта: «Цены» + логин + выход для авторизованных, «Войти» — для остальных. */
+/** Кнопка аккаунта: «B2B» + логин + выход для авторизованных, «Войти» — для остальных. */
 export function AccountButton({ onNavigate }: { onNavigate?: () => void }) {
   const { account } = useAccount()
   if (account)
@@ -46,9 +46,9 @@ export function AccountButton({ onNavigate }: { onNavigate?: () => void }) {
           href="#/admin-prices"
           onClick={onNavigate}
           className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-sm font-medium text-[#111112] transition-colors hover:bg-[#f4f6ec]"
-          title="Цены и наличие"
+          title="B2B — цены и наличие"
         >
-          <Tag className="h-4 w-4 text-[#a6ce39]" aria-hidden /> Цены
+          <Tag className="h-4 w-4 text-[#a6ce39]" aria-hidden /> B2B
         </a>
         <span className="max-w-24 truncate text-sm font-medium text-[#111112]" title={account.login}>
           {account.login}
